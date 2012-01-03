@@ -1,4 +1,5 @@
 #Liber - Software livre para gestão comercial
+##### Versão 0.1
 
 ###Sobre
 Criado em php, utilizando o framework CakePHP em sua versão 1.3.
