@@ -73,7 +73,7 @@ class PedidoVendasController extends AppController {
 		$valor_bruto = 0;
 		$valor_liquido = 0;
 		foreach ($data['PedidoVendaItem'] as $c) {
-			$valor_bruto += ($c['quantidade']) * ($this->Geral->moeda2numero($c['preco_venda']));
+			$valor_bruto += ($this->Geral->moeda2numero($c['quantidade'])) * ($this->Geral->moeda2numero($c['preco_venda']));
 		}
 		// se ha outros custos, somo para obter o valor bruto
 		if (isset($data['PedidoVenda']['custo_frete']) && (! empty($data['PedidoVenda']['custo_frete']))) {
@@ -116,6 +116,67 @@ class PedidoVendasController extends AppController {
 		return true;
 	}
 	
+	/**
+	 * Faz a baixe do estoque de determinados produtos	
+	 * 
+	 * @return true em caso de sucesso
+	 * @return false em caso de falha
+	 * @return null caso a baixa no estoque nao seja aplicavel a situacao
+	 * @return dados modificados no banco
+	 */
+	function _baixar_estoque() {
+		// apenas baixa o estoque se o pedido estiver Vendido
+		if (strtoupper($this->data['PedidoVenda']['situacao']) != 'V' ) return null;
+		
+		$erro=0;
+		foreach ($this->data['PedidoVendaItem'] as $item) {
+			$temEstoqueIlimitado = $this->PedidoVenda->PedidoVendaItem->Produto->field('tem_estoque_ilimitado',array('Produto.id'=>$item['produto_id']));
+			if ($temEstoqueIlimitado) return null;
+		
+			$quantidadeNaoFiscal = $this->PedidoVenda->PedidoVendaItem->Produto->field('quantidade_estoque_nao_fiscal',array('Produto.id'=>$item['produto_id']));
+			if (empty($quantidadeNaoFiscal)) {
+				$this->Session->setFlash('Erro na baixa de estoque: não foi possível recuperar a quantidade do produto.','flash_erro');
+				return false;
+			}
+			
+			$quantidadeFiscal = $this->PedidoVenda->PedidoVendaItem->Produto->field('quantidade_estoque_fiscal',array('Produto.id'=>$item['produto_id']));
+			if (empty($quantidadeFiscal)) {
+				$this->Session->setFlash('Erro na baixa de estoque: não foi possível recuperar a quantidade do produto.','flash_erro');
+				return false;
+			}
+			
+			$quantidadeReservada = $this->PedidoVenda->PedidoVendaItem->Produto->field('quantidade_reservada',array('Produto.id'=>$item['produto_id']));
+			if (empty($quantidadeReservada)) $quantidadeReservada = 0;
+			
+			$quantidadeDisponivel = $quantidadeNaoFiscal - $quantidadeReservada;
+			if (! is_numeric($quantidadeDisponivel)) {
+				$this->Session->setFlash('Erro na baixa de estoque: não foi possível determinar a quantidade reservada.','flash_erro');
+				return false;
+			}
+			
+			if ($this->Geral->moeda2numero($item['quantidade']) > $quantidadeDisponivel) {
+				$this->Session->setFlash("O produto ${item['produto_id']} não está disponível na quantidade informada.",'flash_erro');
+				$erro++;
+			}
+			else if ($erro == 0) {
+				$dados = array (
+					'Produto' => array (
+						'quantidade_estoque_fiscal' => $quantidadeFiscal - $this->Geral->moeda2numero($item['quantidade']),
+						'quantidade_estoque_nao_fiscal' => $quantidadeNaoFiscal - $this->Geral->moeda2numero($item['quantidade']),
+					),
+				);
+				$this->PedidoVenda->PedidoVendaItem->Produto->id = $item['produto_id'];
+				if (! $this->PedidoVenda->PedidoVendaItem->Produto->save($dados) ) {
+					$this->Session->setFlash('Erro ao realizar baixa no estoque!','flash_erro');
+					return false;
+				}
+			}
+		}
+		
+		if ( (isset($erro) && ($erro>1)) ) return false;
+		
+	}
+	
 	function index() {
 		$dados = $this->paginate('PedidoVenda');
 		$this->set('consulta',$dados);
@@ -148,6 +209,11 @@ class PedidoVendasController extends AppController {
 			$this->data['PedidoVenda'] += array ('valor_bruto' => $valor_bruto);
 			$this->data['PedidoVenda'] += array ('valor_liquido' => $valor_liquido);
 			
+			// evito que o conteudo seja preenchido com 0000-00-00
+			if (empty($this->data['PedidoVenda']['data_saida'])) $this->data['PedidoVenda']['data_saida'] = null;
+			if (empty($this->data['PedidoVenda']['data_entrega'])) $this->data['PedidoVenda']['data_entrega'] = null;
+			if (empty($this->data['PedidoVenda']['data_venda'])) $this->data['PedidoVenda']['data_venda'] = null;
+			
 			//Inicia uma transaction
 			$this->PedidoVenda->begin();
 			
@@ -155,9 +221,12 @@ class PedidoVendasController extends AppController {
 				if ( $this->_gerar_conta_receber($valor_liquido) !== true ) {
 					$this->PedidoVenda->rollback();
 				}
+				else if ($this->_baixar_estoque() === false) {
+					$this->PedidoVenda->rollback();
+				}
 				else {
 					$this->PedidoVenda->commit();
-					$this->Session->setFlash('Pedido de venda cadastrado com sucesso.','flash_sucesso');
+					$this->Session->setFlash("Pedido de venda, código {$this->PedidoVenda->id}, cadastrado com sucesso.",'flash_sucesso');
 					$this->redirect(array('action'=>'index'));
 				}
 			}
@@ -223,6 +292,11 @@ class PedidoVendasController extends AppController {
 			$this->data['PedidoVenda'] += array ('valor_bruto' => $valor_bruto);
 			$this->data['PedidoVenda'] += array ('valor_liquido' => $valor_liquido);
 			
+			// evito que o conteudo seja preenchido com 0000-00-00
+			if (empty($this->data['PedidoVenda']['data_saida'])) $this->data['PedidoVenda']['data_saida'] = null;
+			if (empty($this->data['PedidoVenda']['data_entrega'])) $this->data['PedidoVenda']['data_entrega'] = null;
+			if (empty($this->data['PedidoVenda']['data_venda'])) $this->data['PedidoVenda']['data_venda'] = null;
+			
 			//Inicia uma transaction
 			$this->PedidoVenda->begin();
 			
@@ -239,10 +313,13 @@ class PedidoVendasController extends AppController {
 				if ($this->_gerar_conta_receber($valor_liquido) !== true ) {
 					$this->PedidoVenda->rollback();
 				}
+				else if ($this->_baixar_estoque() === false) {
+					$this->PedidoVenda->rollback();
+				}
 				else {
 					$this->PedidoVenda->commit();
 					$this->Session->setFlash('Pedido de venda cadastrado com sucesso.','flash_sucesso');
-					$this->redirect(array('action'=>'index'));
+					//$this->redirect(array('action'=>'index'));
 				}
 			}
 			else {

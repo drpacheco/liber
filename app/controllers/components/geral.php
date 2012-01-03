@@ -2,6 +2,8 @@
 
 /**
  * Provê métodos para diversos fins
+ * 
+ * @see GeralHelper
  */
 class GeralComponent {
 	
@@ -10,6 +12,8 @@ class GeralComponent {
 	 * @return number
 	 */
 	function moeda2numero ($variavel) {
+		// toda 'moeda' tem uma virgula; eu espero
+		if (! preg_match_all('/,/', $variavel,$retorno)) return $variavel;
 		$variavel = preg_replace('/\./', '', $variavel);
 		$variavel = preg_replace('/,/', '.', $variavel);
 		return number_format($variavel,2,'.','');
@@ -20,6 +24,8 @@ class GeralComponent {
 	 * @return number/string
 	 */
 	function numero2moeda ($variavel) {
+		// este metodo deve receber apenas numeros
+		if (! is_numeric($numero)) return $numero;
 		return number_format($variavel,2,',','.');
 	}
 	

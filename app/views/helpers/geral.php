@@ -1,9 +1,14 @@
 <?php
 
+/**
+ * Provê métodos para diversos fins
+ * 
+ * @see GeralComponent
+ */
 class GeralHelper extends AppHelper {
 	
 	function moeda2numero ($moeda) {
-		// toda 'moeda' tem uma virgula. Eu espero
+		// toda 'moeda' tem uma virgula; eu espero
 		if (! preg_match_all('/,/', $moeda,$retorno)) return $moeda;
 		$moeda = preg_replace('/\./', '', $moeda);
 		$moeda = preg_replace('/,/', '.', $moeda); 

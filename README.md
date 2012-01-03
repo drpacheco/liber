@@ -1,17 +1,16 @@
-#Liber
-##Software livre para gestão comercial
+#Liber - Software livre para gestão comercial
 
 ###Sobre
 Criado em php, utilizando o framework CakePHP em sua versão 1.3.
 
-Destina-se a ser um software de fácil entendimento e utilização, por parte do usuário.
+Destina-se a ser um software de fácil entendimento e utilização.
 
 ###Instalação
 * Obtenha o CakePHP em: *https://github.com/cakephp/cakephp/archives/1.3*
 * Faça download do Liber em: *https://github.com/tobiasgnu/liber/zipball/master*
 * Extraia ambos os arquivos baixados. 
 * Substitua o diretório *app* do Cakephp pelo do Liber
-* Mova o diretório obitdo na extração do Cakephp para uma área acessível do seu servidor web**\***
+* Mova o diretório obitdo na extração do Cakephp para uma área acessível do seu servidor web** \* **
 * Certifique-se de que o diretório app/tmp tem permissoes de leitura e escrita para o usuário que executa o servidor web
 * Importe o arquivo app/config/schema/dump.sql no MySQL Server
 * Edite o arquivo app/config/database.php com as informações de acesso do banco de dados a ser utilizado
@@ -21,7 +20,7 @@ Destina-se a ser um software de fácil entendimento e utilização, por parte do
 
 Mais acerca da instalação, acesse: *http://book.cakephp.org/pt/view/909/Preparando-a-instala%C3%A7%C3%A3o*
 
-**\***Nota: esta localização dos arquivos é a mais simples possível e não é recomendada para servidores de produção. Para mais informações visite: *http://book.cakephp.org/pt/view/912/Instala%C3%A7%C3%A3o*
+** \* **Nota: esta localização dos arquivos é a mais simples possível e não é recomendada para servidores de produção. Para mais informações visite: *http://book.cakephp.org/pt/view/912/Instala%C3%A7%C3%A3o*
 
 ###Contribuições/Dúvidas/Sugestões
 Para sugestões e reportar erros utilize *https://github.com/tobiasgnu/liber/issues*

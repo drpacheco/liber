@@ -33,9 +33,16 @@ class Fornecedor extends AppModel {
 		),
 		
 		'nome' => array(
-			'allowEmpty' => false,
-			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório. Somente letras e números.'
+			'obrigatorio' => array (
+				'allowEmpty' => false,
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório. Somente letras e números.'
+			),
+			'unico' => array(
+				'allowEmpty' => true,
+				'rule' => 'isUnique',
+				'message' => 'Já cadastrado.'
+			)
 		),
 		
 		'nome_fantasia' => array(

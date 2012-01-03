@@ -105,7 +105,7 @@ $javascript->link('formatar_moeda.js',false);
 								print '<tr>'.
 								'<td> <input type="text" name="data[PedidoVendaItem]['.$i.'][produto_id]" value="'.$item['produto_id'].'" class="noinput item_id" /> </td>'.
 								'<td> <input type="text" name="data[PedidoVendaItem]['.$i.'][produto_nome]" value="'.$item['produto_nome'].'" class="noinput item_nome" /> </td>'.
-								'<td> <input type="text" name="data[PedidoVendaItem]['.$i.'][quantidade]" value="'.$item['quantidade'].'" class="noinput item_qtd" /> </td>'.
+								'<td> <input type="text" name="data[PedidoVendaItem]['.$i.'][quantidade]" value="'.$geral->numero2moeda($item['quantidade']).'" class="noinput item_qtd" /> </td>'.
 								'<td> <input type="text" name="data[PedidoVendaItem]['.$i.'][preco_venda]" value="'.$geral->numero2moeda($item['preco_venda']).'" class="noinput item_val" /> </td>'.
 								'<td> <img src="'.$this->Html->url('/',true).'/img/del24x24.png" class="remover_linha"/> </td>'.
 								'</tr>'."\n";

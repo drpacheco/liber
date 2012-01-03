@@ -36,20 +36,6 @@
 					</li>
 				</ul>
 			</li>
-			<li>
-				<?php print $html -> link('Pedido de compra', "/pedidoCompras");?>
-				<ul>
-					<li><?php print $html -> link('Cadastrar', "/pedidoCompras/cadastrar");?></li>
-					<li><?php print $html -> link('Pesquisar', "/pedidoCompras/pesquisar");?></li>
-					<li><?php print $html -> link('Listar', "/pedidoCompras/");?></li>
-				</ul>
-			</li>
-			<li>
-				<a href="#">Relatórios</a>
-				<ul>
-					<li><?php print $html -> link('Fornecedores cadastrados', "fornecedores/relatorios/fornecedoresCadastrados");?></li>
-				</ul>
-			</li>
 		</ul>
 	</li>
 	
@@ -77,12 +63,6 @@
 					<li><?php print $html -> link('Cadastrar', "/pedidoVendas/cadastrar");?></li>
 					<li><?php print $html -> link('Pesquisar', "/pedidoVendas/pesquisar");?></li>
 					<li><?php print $html -> link('Listar', "/pedidoVendas/");?></li>
-				</ul>
-			</li>
-			<li>
-				<a href="#">Relatórios</a>
-				<ul>
-					<li><?php print $html -> link('ABC de vendas', "pedidoVendas/relatorios/abcVendas");?></li>
 				</ul>
 			</li>
 		</ul>

@@ -34,14 +34,14 @@ class AppController extends Controller {
 		// Action da tela após o login (com sucesso)
 		// sem url de referencia
 		$this->Auth->loginRedirect = array(
-			'controller' => 'pages',
-			'action' => 'display', 'home'
+			'controller' => 'sistema',
+			'action' => 'inicio',
 		);
 
 		// Action para redirecionamento após o logout
 		$this->Auth->logoutRedirect = array(
-			'controller' => 'pages',
-			'action' => 'display', 'home'
+			'controller' => 'sistema',
+			'action' => 'inicio',
 		);
 
 		// Mensagens de erro
