@@ -162,6 +162,8 @@ class ServicoOrdensController extends AppController {
 			$this->data['ServicoOrdem'] += array ('valor_bruto' => $valor_bruto);
 			$this->data['ServicoOrdem'] += array ('valor_liquido' => $valor_liquido);
 			
+			if (empty($this->data['ServicoOrdem']['data_hora_fim'])) $this->data['ServicoOrdem']['data_hora_fim'] = null;
+			
 			//Inicia uma transaction
 			$this->ServicoOrdem->begin();
 			
@@ -221,6 +223,8 @@ class ServicoOrdensController extends AppController {
 			}
 			$this->data['ServicoOrdem'] += array ('valor_bruto' => $valor_bruto);
 			$this->data['ServicoOrdem'] += array ('valor_liquido' => $valor_liquido);
+			
+			if (empty($this->data['ServicoOrdem']['data_hora_fim'])) $this->data['ServicoOrdem']['data_hora_fim'] = null;
 			
 			//Inicia uma transaction
 			$this->PedidoVenda->begin();

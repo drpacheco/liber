@@ -20,34 +20,6 @@ $(function() {
 		$('#PedidoVendaDataVenda').val(data_fim);
 	}
 	
-	$('#PedidoVendaFormaPagamentoId').change(function(){
-		$('.numeroparcelas').remove();
-		id = $(this).val();
-		$.getJSON(ajaxPesqFormaPagamento, {'id': id}, function(data) {
-			if (data == null) {
-				alert ('Forma de pagamento '+id+' não foi encontrada!');
-			}
-			else { //encontrou resultados
-				
-				if (data.numero_maximo_parcelas > 0) {
-					var opcoes='';
-					for (i=1;i<=data.numero_maximo_parcelas;i++) {
-						opcoes+= '<option value='+i+'>'+i+'</option>';
-					}
-					html = '<select id="ReceberContaNumeroParcelas" name="data[ReceberConta][numero_parcelas]" class="numeroparcelas">\n\
-							'+opcoes+'\n\
-							</select>';
-				}
-				else {
-					html = '<select id="ReceberContaNumeroParcelas" name="data[ReceberConta][numero_parcelas]" class="numeroparcelas">\n\
-								<option value=""></option>\n\
-							</select>';
-				}
-				$('label[for="ReceberContaNumeroParcelas"]').after(html);
-			}
-		});
-	});
-	
 	//pesquisa cliente
 	//autocomplete
 	$("#pesquisar_cliente").autocomplete({
@@ -116,8 +88,8 @@ $(function() {
 				$('#ProdutoQuantidade').val('');
 				$('#ProdutoQuantidadeEstoque').val('');
 				$('#ProdutoId')
-				.val('')
-				.focus();
+					.val('')
+					.focus();
 				return false;
 			}
 			if (! ui.item.eh_vendido) {
@@ -127,13 +99,20 @@ $(function() {
 				$('#ProdutoQuantidade').val('');
 				$('#ProdutoQuantidadeEstoque').val('');
 				$('#ProdutoId')
-				.val('')
-				.focus();
+					.val('')
+					.focus();
 				return false;
 			}
 			if (ui.item.tem_estoque_ilimitado == 0) {
 				if (ui.item.estoque_disponivel <= 0) {
 					alert ('Produto '+ui.item.id+' não está disponível em estoque!');
+					$('#ProdutoNome').val('');
+					$('#ProdutoPrecoVenda').val('');
+					$('#ProdutoQuantidade').val('');
+					$('#ProdutoQuantidadeEstoque').val('');
+					$('#ProdutoId')
+						.val('')
+						.focus();
 					return false;
 				}
 				else $('#ProdutoQuantidadeEstoque').val(ui.item.estoque_disponivel);
@@ -221,6 +200,13 @@ function procurar_por_codigo(codigo) {
 				if (data.tem_estoque_ilimitado == 0) {
 					if (data.estoque_disponivel <= 0) {
 						alert ('Produto '+codigo+' não está disponível em estoque!');
+						$('#ProdutoNome').val('');
+						$('#ProdutoPrecoVenda').val('');
+						$('#ProdutoQuantidade').val('');
+						$('#ProdutoQuantidadeEstoque').val('');
+						$('#ProdutoId')
+							.val('')
+							.focus();
 						return false;
 					}
 					else $('#ProdutoQuantidadeEstoque').val(data.estoque_disponivel);
@@ -253,16 +239,20 @@ function adicionar_produto() {
 			return false;
 		}
 		
-		campo_alerta = null;
-		if ( ! eh_inteiro(id) ) campo_alerta = 'código';
-		else if (! eh_inteiro(quantidade) ) campo_alerta = 'quantidade';
-		if (campo_alerta != null) {
-			alert ('O campo '+campo_alerta+' não é um número inteiro!');
+		if ( ! eh_inteiro(id) ) {
+			alert ('O campo código é inválido!');
+			return false;
+		}
+		
+		if ( ! eh_numero(moeda2numero(quantidade)) ) {
+			alert ('A quantidade informada é inválida!');
 			return false;
 		}
 		
 		if (quantidade_estoque != 'ilimitado') {
-			if (quantidade > quantidade_estoque) {
+			q = parseFloat(moeda2numero(quantidade));
+			q2 = parseFloat(number_format(quantidade_estoque,2,'.',''));
+			if ( q > q2) {
 				alert ('A quantidade disponível do produto é menor do que a inserida!');
 				return false;
 			}
@@ -297,7 +287,7 @@ function adicionar_produto() {
 		
 		valor_total = moeda2numero($('#valor_total').html());
 		valor_total = parseFloat(valor_total);
-		valor_total += quantidade * (moeda2numero(valor));
+		valor_total += moeda2numero(quantidade) * (moeda2numero(valor));
 		valor_total = arredonda_float(valor_total);
 		$('#valor_total').html(numero2moeda(valor_total));
 		
@@ -317,7 +307,7 @@ function remover_linha(objeto_jquery) {
 		
 		valor_total = moeda2numero($('#valor_total').html());
 		valor_total = parseFloat(valor_total);
-		valor_total -= quantidade * (moeda2numero(valor));
+		valor_total -= moeda2numero(quantidade) * (moeda2numero(valor));
 		valor_total = arredonda_float(valor_total);
 		
 		if (valor_total == 0) {
