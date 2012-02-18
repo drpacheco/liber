@@ -33,6 +33,8 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
+
+ // #TODO debug 0 retorna um erro generico ao acessar /
 	Configure::write('debug', 1);
 
 /**
