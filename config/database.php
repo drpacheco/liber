@@ -84,7 +84,7 @@ class DATABASE_CONFIG {
 		//'encoding' => 'utf8',
 	);
 
-	/*var $test = array(
+	var $test = array(
 		'driver' => 'mysql',
 		'persistent' => false,
 		'host' => 'localhost',
@@ -92,6 +92,6 @@ class DATABASE_CONFIG {
 		'password' => 'password',
 		'database' => 'test_database_name',
 		'prefix' => '',
-		'encoding' => 'utf8',
-	);*/
+		//'encoding' => 'utf8',
+	);
 }

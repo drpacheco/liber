@@ -28,7 +28,7 @@
 		?>
 		<div class="input text required">
 			<label for="EmpresaUf">UF:</label>
-			<?php print $estados->select('uf'); ?>
+			<?php print $estados->select('estado'); ?>
 		</div>
 		<?php
 		?>
