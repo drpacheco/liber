@@ -187,6 +187,13 @@ function eh_float (mixed_var) {
 	return +mixed_var === mixed_var && !!(mixed_var % 1);
 }
 
+function popup(destino,largura,altura,titulo) {
+	if (titulo == "") {
+		titulo = "Liber";
+	}
+	window.open(destino,titulo,"width="+largura+",height="+altura);
+}
+
 $(function() {
 	
 	/*

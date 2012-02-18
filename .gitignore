@@ -14,4 +14,5 @@ app/tmp/logs/*
 app/tmp/sessions/*
 app/tmp/tests/*
 /NetBeansProjects
-/outros/anotacoes.txt
+/outros/anotacoes.txtNetBeansProjects
+outros/anotacoes.txt

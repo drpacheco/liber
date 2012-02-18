@@ -226,7 +226,9 @@ class PedidoVendasController extends AppController {
 				}
 				else {
 					$this->PedidoVenda->commit();
-					$this->Session->setFlash("Pedido de venda, código {$this->PedidoVenda->id}, cadastrado com sucesso.",'flash_sucesso');
+					$this->Session->setFlash("Pedido de venda, código {$this->PedidoVenda->id}, cadastrado com sucesso.<br/>"
+					."<a href='#' onclick=popup('pedido_vendas/cupomNaoFiscal/{$this->PedidoVenda->id}','300','300') > Imprimir cupom não fiscal</a>"."
+					",'flash_sucesso');
 					$this->redirect(array('action'=>'index'));
 				}
 			}
@@ -318,12 +320,14 @@ class PedidoVendasController extends AppController {
 				}
 				else {
 					$this->PedidoVenda->commit();
-					$this->Session->setFlash('Pedido de venda cadastrado com sucesso.','flash_sucesso');
+					$this->Session->setFlash("Pedido de venda alterado com sucesso.<br/>"
+					."<a href='#' onclick=popup('pedido_vendas/cupomNaoFiscal/{$this->PedidoVenda->id}','300','300') > Imprimir cupom não fiscal</a>"."
+					",'flash_sucesso');
 					//$this->redirect(array('action'=>'index'));
 				}
 			}
 			else {
-				$this->Session->setFlash('Erro ao cadastrar o pedido de venda.','flash_erro');
+				$this->Session->setFlash('Erro ao editar o pedido de venda.','flash_erro');
 				$this->PedidoVenda->rollback();
 			}
 			
@@ -432,6 +436,22 @@ class PedidoVendasController extends AppController {
 				$this->Session->setFlash("Informe algum campo para realizar a pesquisa",'flash_erro');
 			}
 		}
+	}
+
+	function cupomNaoFiscal ($id = null) {
+		$this->layout = 'limpo';
+		$this->set("title_for_layout","Cupom não fiscal (venda $id)");
+		
+		$this->PedidoVenda->id = $id;
+		$venda = $this->PedidoVenda->read();
+		$i=0;
+		foreach ($venda['PedidoVendaItem'] as $item) {
+			$this->PedidoVenda->PedidoVendaItem->Produto->id = $item['produto_id'];
+			$produto_nome = $this->PedidoVenda->PedidoVendaItem->Produto->field('nome');
+			$venda['PedidoVendaItem'][$i] = array_merge( $venda['PedidoVendaItem'][$i], array('produto_nome'=>$produto_nome));
+			$i++;
+		}
+		$this->set('venda',$venda);
 	}
 	
 }
