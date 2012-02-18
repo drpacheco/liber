@@ -33,7 +33,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 2);
+	Configure::write('debug', 1);
 
 /**
  * CakePHP Log Level:
@@ -164,7 +164,7 @@
  * characters."
  * @link http://php.net/session_name
  */
-	Configure::write('Session.cookie', 'CAKEPHP');
+	Configure::write('Session.cookie', 'LIBER');
 
 /**
  * Session time out time (in seconds).
