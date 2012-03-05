@@ -3,7 +3,7 @@
 
 <?php print $this->element('painel_index'); ?>
 
-<table>
+<table class="padrao">
 	<thead>
 		<tr>
 			<th><?php print $paginator->sort('Código','id'); ?></th>

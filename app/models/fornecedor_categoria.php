@@ -5,8 +5,15 @@ class FornecedorCategoria extends AppModel {
 	var $hasMany = array('Fornecedor');
 	var $validate = array(
 		'descricao' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório.'
+			'obrigatorio' => array (
+				'allowEmpty' => false,
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
+			'unico' => array(
+				'rule' => 'isUnique',
+				'message' => 'Já cadastrado.'
+			)
 		)
 	);
 }

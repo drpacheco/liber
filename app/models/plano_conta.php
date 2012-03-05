@@ -4,8 +4,15 @@ class PlanoConta extends  Model {
 	var $hasMany = array('PagarConta','ReceberConta');
 	var $validate = array(
 		'nome' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório.'
+			'obrigatorio' => array (
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
+			'unico' => array(
+				'allowEmpty' => false,
+				'rule' => 'isUnique',
+				'message' => 'Já cadastrado.'
+			)
 		),
 		'tipo' => array(
 			'rule' => 'notEmpty',

@@ -2,7 +2,8 @@
 
 class FornecedorCategoriasController extends AppController {
 	var $name = 'FornecedorCategorias';
-	var $components = array('Sanitizacao');
+	var $components = array('Sanitizacao','RequestHandler');
+	var $helpers = array('Js' => array('Jquery'),'Ajax');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (
@@ -10,17 +11,27 @@ class FornecedorCategoriasController extends AppController {
 		)
 	);
 	
+	/**
+	* @var $FornecedorCategoria
+	*/
+	var $FornecedorCategoria;
+
 	function index() {
-		$dados = $this->paginate('FornecedorCategoria');
-		$this->set('consulta',$dados);
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
+		$this->ClienteCategoria->recursive = 0;
+		$this->set('consulta',$this->paginate());
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			
 			if ($this->FornecedorCategoria->save($this->data)) {
 				$this->Session->setFlash('Categoria de fornecedor cadastrada com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
 			}
 			else {
 				$this->Session->setFlash('Erro ao cadastrar a categoria de fornecedor.','flash_erro');
@@ -29,6 +40,9 @@ class FornecedorCategoriasController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (empty ($this->data)) {
 			$this->data = $this->FornecedorCategoria->read();
 			if ( ! $this->data) {
@@ -50,6 +64,9 @@ class FornecedorCategoriasController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->FornecedorCategoria->delete($id)) $this->Session->setFlash("Categoria de fornecedor $id excluída com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Categoria de fornecedor $id não pode ser excluída.",'flash_erro');

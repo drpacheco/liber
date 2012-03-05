@@ -11,8 +11,8 @@
 
 class CarregamentosController extends AppController {
 	var $name = 'Carregamentos';
-	var $components = array('Sanitizacao','ContasReceber','Geral');
-	var $helpers = array('CakePtbr.Formatacao');
+	var $components = array('Sanitizacao','ContasReceber','Geral','RequestHandler');
+	var $helpers = array('CakePtbr.Formatacao','Javascript','Ajax');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (
@@ -26,7 +26,9 @@ class CarregamentosController extends AppController {
 	var $Carregamento;
 	
 	function _obter_opcoes() {
+		$this->Carregamento->Motorista->recursive = -1;
 		$motoristas = $this->Carregamento->Motorista->find('list',array('fields'=>array('Motorista.id','Motorista.nome')));
+		$this->Carregamento->Veiculo->recursive = -1;
 		$veiculos = $this->Carregamento->Veiculo->find('list',array('fields'=>array('Veiculo.id','Veiculo.placa')));
 		$this->set('opcoes_motoristas',$motoristas);
 		$this->set('opcoes_veiculos',$veiculos);
@@ -34,12 +36,18 @@ class CarregamentosController extends AppController {
 	}
 	
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		$dados = $this->paginate('Carregamento');
 		$this->set('consulta',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			$this->data['Carregamento'] += array ('data_hora_criado' => date('Y-m-d H:i:s'));
 			$this->data['Carregamento'] += array ('situacao' => 'L');
@@ -85,6 +93,9 @@ class CarregamentosController extends AppController {
 	
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			$this->Carregamento->id = $id;
 			
@@ -136,6 +147,9 @@ class CarregamentosController extends AppController {
 	}
 	
 	function pesquisar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			//usuario enviou os dados da pesquisa
@@ -192,6 +206,9 @@ class CarregamentosController extends AppController {
 	}
 
 	function detalhar($id = NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if ($id) {
 			$this->Carregamento->id = $id;
 			$r = $this->Carregamento->read();
@@ -207,6 +224,9 @@ class CarregamentosController extends AppController {
 	}
 	
 	function enviar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (empty($this->data)) {
 			
 		}

@@ -37,7 +37,13 @@
 <?php
 // #XXX implementar o escolha automatica do veiculo assim que escolhe o motorista
 // com base no veiculo definido como padrao no cadastro do motorista
-print $form->create('Carregamento',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+if ($ajax->isAjax()) {
+	print $ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'Carregamento','update'=>'conteudo_ajax'));
+
+}
+else {
+	print $form->create('Carregamento',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
 ?>
 <div class="grupo_horizontal">
 	<?php print $form->input('descricao',array('label'=>'Descrição')); ?>
@@ -66,7 +72,7 @@ print $form->create('Carregamento',array('autocomplete'=>'off','onsubmit'=>'subm
 
 	<fieldset>
 		<legend>Pedidos</legend>
-		<table>
+		<table class="padrao">
 			<thead>
 				<th> <input type="checkbox" name="selecionar_checkbox" id="selecionar_checkbox" /> Selecionar</th>
 				<th>Pedido</th>

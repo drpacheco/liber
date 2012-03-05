@@ -1,6 +1,21 @@
+<?php $javascript->link('formatar_moeda.js',false); ?>
+<script type="text/javascript">
+	$(function() {
+		$('#ServicoValor').priceFormat();
+	});
+</script>
+
 <h2 class="descricao_cabecalho">Editar serviço</h2>
 
-<?php print $form->create('Servico',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;')); ?>
+<?php
+if ($ajax->isAjax()) {
+	print $ajax->form('editar','post',array('autocomplete'=>'off','model'=>'Servico','update'=>'conteudo_ajax'));
+
+}
+else {
+	print $form->create('Servico',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
+?>
 <div class="divs_grupo_2">
 	<div class="div1_2">
 		<?php

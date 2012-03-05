@@ -7,13 +7,21 @@
 </script>
 
 <?php
-$javascript->link('ordem_servico.js',false);
-$javascript->link('formatar_moeda.js',false);
+print $javascript->link('ordem_servico.js',false);
+print $javascript->link('formatar_moeda.js',false);
 ?>
 
 <h2 class="descricao_cabecalho">Editar ordem de serviço</h2>
 
-<?php print $form->create('ServicoOrdem',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;')); ?>
+<?php
+if ($ajax->isAjax()) {
+	print $ajax->form('editar','post',array('autocomplete'=>'off','model'=>'ServicoOrdem','update'=>'conteudo_ajax'));
+
+}
+else {
+	print $form->create('ServicoOrdem',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
+?>
 
 <div id="servico_ordem_abas">
 	<ul>
@@ -44,7 +52,8 @@ $javascript->link('formatar_moeda.js',false);
 			</div>
 			<div class="div2_2">
 				<?php
-				print $form->input('data_hora_inicio',array('label'=>'Data e hora do início'));
+				print $form->input('data_cadastrada',array('label'=>'Data do início'));
+				print $form->input('hora_cadastrada',array('label'=>'Hora do início'));
 				print $form->input('situacao',array('label'=>'Situação','options'=>array(
 				'O' => 'Orçamento',
 				'S' => 'Em espera',
@@ -70,7 +79,7 @@ $javascript->link('formatar_moeda.js',false);
 						#TODO adicionar ajustes das colunas da tabela conforme o tamanho do campo input
 						style="border-collapse:collapse;"
 						-->
-					<table>
+					<table class="padrao">
 						<thead>
 							<tr>
 								<th style="width: 10%;">Cód.</th> <th>Nome</th> <th style="width: 15%;">Qtd.</th> <th style="width: 15%;">Valor</th>  <th>Ações</th>

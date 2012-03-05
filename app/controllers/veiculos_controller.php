@@ -10,12 +10,23 @@ class VeiculosController extends AppController {
 		)
 	);
 	
+	/**
+	* @var $Veiculo
+	*/
+	var $Veiculo;
+
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('Veiculo');
 		$this->set('consulta_veiculo',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			
 			if ($this->Veiculo->save($this->data)) {
@@ -29,6 +40,9 @@ class VeiculosController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (empty ($this->data)) {
 			$this->data = $this->Veiculo->read();
 			if ( ! $this->data) {
@@ -50,6 +64,9 @@ class VeiculosController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->Veiculo->delete($id)) $this->Session->setFlash("Veículo $id excluído com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Veículo $id não pode ser excluído.",'flash_erro');

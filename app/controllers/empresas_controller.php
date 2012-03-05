@@ -11,12 +11,23 @@ class EmpresasController extends AppController {
 		)
 	);
 	
+	/**
+	* @var $Empresa
+	*/
+	var $Empresa;
+
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('Empresa');
 		$this->set('consulta_empresa',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			
 			if ($this->Empresa->save($this->data)) {
@@ -30,6 +41,9 @@ class EmpresasController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (empty ($this->data)) {
 			$this->data = $this->Empresa->read();
 			if ( ! $this->data) {
@@ -51,6 +65,9 @@ class EmpresasController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->Empresa->delete($id)) $this->Session->setFlash("Empresa $id excluída com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Empresa $id não pode ser excluída.",'flash_erro');

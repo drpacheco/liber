@@ -10,12 +10,23 @@ class ServicoCategoriasController extends AppController {
 		)
 	);
 	
+	/**
+	* @var $ServicoCategoria
+	*/
+	var $ServicoCategoria;
+
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('ServicoCategoria');
 		$this->set('consulta',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			
 			if ($this->ServicoCategoria->save($this->data)) {
@@ -29,6 +40,9 @@ class ServicoCategoriasController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (empty ($this->data)) {
 			$this->data = $this->ServicoCategoria->read();
 			if ( ! $this->data) {
@@ -50,6 +64,9 @@ class ServicoCategoriasController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->ServicoCategoria->delete($id)) $this->Session->setFlash("Categoria de serviço $id excluída com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Categoria de serviço $id não pode ser excluída.",'flash_erro');

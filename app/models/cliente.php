@@ -44,10 +44,10 @@ class Cliente extends AppModel {
 			'obrigatorio' => array (
 				'allowEmpty' => false,
 				'rule' => 'notEmpty',
-				'message' => 'Campo obrigatório. Somente letras e números.'
+				'message' => 'Campo obrigatório.'
 			),
 			'unico' => array(
-				'allowEmpty' => true,
+				'allowEmpty' => false,
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
 			)
@@ -56,7 +56,7 @@ class Cliente extends AppModel {
 		'nome_fantasia' => array(
 			'allowEmpty' => false,
 			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório. Somente letras e números.'
+			'message' => 'Campo obrigatório.'
 		),
 		
 		'logradouro_nome' => array(
@@ -88,9 +88,14 @@ class Cliente extends AppModel {
 		),
 		
 		'cep' => array(
-			'allowEmpty' => false,
-			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório. Somente números.'
+			'obrigatorio' => array (
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
+			'numerico' => array(
+				'rule' => 'numeric',
+				'message' => 'Somente números.'
+			),
 		),
 		
 		'endereco_email' => array (
@@ -155,7 +160,11 @@ class Cliente extends AppModel {
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),
-		
+		'cliente_categoria_id' => array(
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
 	);
 	
 	

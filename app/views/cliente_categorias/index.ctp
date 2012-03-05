@@ -1,9 +1,9 @@
 
-<h2 class="descricao_cabecalho">Exibindo as categorias de clientes</h2>
+<h2 class="descricao_cabecalho">Exibindo as categorias de cliente</h2>
 
 <?php print $this->element('painel_index'); ?>
 
-<table>
+<table class="padrao">
 	<thead>
 		<tr>
 			<th><?php print $paginator->sort('Código','id'); ?></th>
@@ -18,15 +18,19 @@
 		
 		<tr>
 			<td><?php print $c['ClienteCategoria']['id'];?></td>
-			<td><?php print $html->link($c['ClienteCategoria']['descricao'],'editar/' . $c['ClienteCategoria']['id']) ;?></td>
+			<td><?php print $ajax->link($c['ClienteCategoria']['descricao'],'editar/' . $c['ClienteCategoria']['id'],array('update' => 'conteudo_ajax','indicator'=>'carregando')) ;?></td>
 			<td>
-				<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-				href="'.$html->url(array('action'=>'excluir')).'/'.$c['ClienteCategoria']['id'].'">'.
-				$html->image('del24x24.png', array('alt'=>'Excluir'))
-				.'</a>';?>
+				<?php
+				print $ajax->link($html->image('del24x24.png',array('title'=>'Excluir','alt'=>'Excluir')), array('action' => 'excluir', $c['ClienteCategoria']['id']),
+				array('update' => 'conteudo_ajax','indicator'=>'carregando','escape'=>false), 'Deseja realmente excluir este registro?',false);
+				?>
 			</td>
-			<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-			'alt'=>'Editar','url'=>array('action'=>'editar',$c['ClienteCategoria']['id']))) ?></td>
+			<td>
+				<?php
+				print $ajax->link($html->image('edit24x24.png',array('title'=>'Editar','alt'=>'Editar')), array('action' => 'editar', $c['ClienteCategoria']['id']),
+				array('update' => 'conteudo_ajax','indicator'=>'carregando','escape'=>false),null,false);
+				?>
+			</td>
 		</tr>
 
 <?php endforeach ?>

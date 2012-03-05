@@ -15,8 +15,15 @@ class Carregamento extends AppModel {
 	);
 	var $validate = array(
 		'descricao' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório.'
+			'obrigatorio' => array (
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
+			'unico' => array(
+				'allowEmpty' => false,
+				'rule' => 'isUnique',
+				'message' => 'Já cadastrado.'
+			)
 		),
 		'motorista_id' => array(
 			'rule' => 'notEmpty',

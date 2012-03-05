@@ -1,3 +1,9 @@
+<?php
+/**
+ * Painel utilizado no metodo index dos controladores.
+ */
+?>
+
 <div class="botoes">
 	<?php print $html->image('add24x24.png',array('title'=>'Cadastrar',
 		'alt'=>'Cadastrar','url'=>array('action'=>'cadastrar')));

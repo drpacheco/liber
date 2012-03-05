@@ -52,13 +52,9 @@
 		<?php 
 		print $this->Html->script('menu.superfish.js');
 		print $this->Html->script('jquery-ui.js');
+		print $this->Html->script('mascaras.js');
 		print $scripts_for_layout;
 		?>
-		<script type="text/javascript">
-			$( function() {
-				$('ul.sf-menu').superfish();
-			});
-		</script>
 		
 		<?php
 		print $this->element('sql_dump');

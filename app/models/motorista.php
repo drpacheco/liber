@@ -12,13 +12,26 @@ class Motorista extends AppModel {
 	var $actsAs = array('CakePtbr.AjusteData');
 	var $validate = array(
 		'nome' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório.'
+			'obrigatorio' => array (
+				'allowEmpty' => false,
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
+			'unico' => array(
+				'rule' => 'isUnique',
+				'message' => 'Já cadastrado.'
+			)
 		),
 		'cnh_numero_registro' => array(
-			'allowEmpty' => true,
-			'rule' => 'numeric',
-			'message' => 'Somente números.'
+			'numerico' => array(
+				'allowEmpty' => true,
+				'rule' => 'numeric',
+				'message' => 'Somente números.'
+			),
+			'unico' => array(
+				'rule' => 'isUnique',
+				'message' => 'Já cadastrado.'
+			)
 		),
 		'cnh_data_validade' => array(
 			'allowEmpty' => true,

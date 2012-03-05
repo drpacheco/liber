@@ -10,26 +10,22 @@ class FornecedoresController extends AppController {
 			'Fornecedor.id' => 'desc'
 		)
 	);
-	var $opcoes_categoria_fornecedor = array();
-	var $opcoes_empresa = array();
-	
+
 	/**
-	 * Obtem dados do banco e popula as variaveis globais
-	 * $opcoes_categoria_fornecedor
-	 * $opcoes_empresa
-	 */
+	* @var $Fornecedor
+	*/
+	var $Fornecedor;
+
 	function _obter_opcoes() {
 		$this->loadModel('FornecedorCategoria');
-		$consulta1 = $this->FornecedorCategoria->find('all',array('fields'=>array('FornecedorCategoria.id','FornecedorCategoria.descricao')));
-		foreach ($consulta1 as $op)
-			$this->opcoes_categoria_fornecedor += array($op['FornecedorCategoria']['id']=>$op['FornecedorCategoria']['descricao']);
-		$this->set('opcoes_categoria_fornecedor',$this->opcoes_categoria_fornecedor);
+		$this->FornecedorCategoria->recursive = -1;
+		$consulta1 = $this->FornecedorCategoria->find('list',array('fields'=>array('FornecedorCategoria.id','FornecedorCategoria.descricao')));
+		$this->set('opcoes_categoria_fornecedor',$consulta1);
 		
 		$this->loadModel('Empresa');
-		$consulta2 = $this->Empresa->find('all');
-		foreach ($consulta2 as $op)
-			$this->opcoes_empresa += array($op['Empresa']['id']=>$op['Empresa']['nome']);
-		$this->set('opcoes_empresa',$this->opcoes_empresa);
+		$this->Empresa->recursive = -1;
+		$consulta2 = $this->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
+		$this->set('opcoes_empresa',$consulta2);
 		return null;
 	}
 	
@@ -38,11 +34,17 @@ class FornecedoresController extends AppController {
 	 * Lista todos os Fornecedores
 	 */
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('Fornecedor');
 		$this->set('consulta_fornecedor',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			$this->data['Fornecedor'] += array ('data_cadastrado' => date('Y-m-d H:i:s'));
@@ -59,6 +61,9 @@ class FornecedoresController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
 			$this->data = $this->Fornecedor->read();
@@ -83,6 +88,9 @@ class FornecedoresController extends AppController {
 	}
 	
 	function pesquisar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		
 		if (! empty($this->data)) {
 			//usuario enviou os dados da pesquisa
@@ -127,6 +135,9 @@ class FornecedoresController extends AppController {
 	}
 	
 	function detalhar($id = NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if ($id) {
 			$this->Fornecedor->id = $id;
 			$r = $this->Fornecedor->read();

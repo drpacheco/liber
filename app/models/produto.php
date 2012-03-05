@@ -6,8 +6,15 @@ class Produto extends AppModel {
 	var $actsAs = array('CakePtbr.AjusteFloat');
 	var $validate = array(
 		'nome' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório.'
+			'obrigatorio' => array (
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
+			'unico' => array(
+				'allowEmpty' => false,
+				'rule' => 'isUnique',
+				'message' => 'Já cadastrado.'
+			)
 		),
 		'categoria_produto_id' => array(
 			'rule' => 'notEmpty',

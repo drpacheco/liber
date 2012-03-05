@@ -5,8 +5,15 @@ class CategoriaProduto extends AppModel {
 	var $hasMany = array('Produto');
 	var $validate = array(
 		'nome' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório.'
+			'obrigatorio' => array (
+				'allowEmpty' => false,
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
+			'unico' => array(
+				'rule' => 'isUnique',
+				'message' => 'Já cadastrado.'
+			)
 		)
 	);
 }

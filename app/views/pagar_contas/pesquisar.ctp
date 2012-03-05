@@ -38,7 +38,7 @@ print $form->create(null,array('action'=>'pesquisar','autocomplete'=>'off'));
 </div>
 
 <?php if (isset($num_resultados) && $num_resultados > 0) : ?>
-	<table class="resultados">
+	<table class="resultados padrao">
 		<thead>
 			<tr>
 				<th><?php print $paginator->sort('Cód','id'); ?></th>

@@ -10,34 +10,27 @@ class PagarContasController extends AppController {
 			'PagarConta.id' => 'desc'
 		)
 	);
-	var $opcoes_tipo_documento = array(''=>'');
-	var $opcoes_conta_origem = array(''=>'');
-	var $opcoes_plano_contas = array(''=>'');
-	
+
 	/**
-	 * Obtem dados do banco e popula as variaveis globais
-	 * $opcoes_tipo_documentos
-	 * $opcoes_conta_origem
-	 * $opcoes_plano_contas
-	 */
+	* @var $PagarConta
+	*/
+	var $PagarConta;
+	
 	function _obter_opcoes() {
 		$this->loadModel('TipoDocumento');
-		$consulta1 = $this->TipoDocumento->find('all',array('fields'=>array('TipoDocumento.id','TipoDocumento.nome')));
-		foreach ($consulta1 as $op)
-			$this->opcoes_tipo_documento += array($op['TipoDocumento']['id']=>$op['TipoDocumento']['nome']);
-		$this->set('opcoes_tipo_documento',$this->opcoes_tipo_documento);
+		$this->TipoDocumento->recursive = -1;
+		$consulta1 = $this->TipoDocumento->find('list',array('fields'=>array('TipoDocumento.id','TipoDocumento.nome')));
+		$this->set('opcoes_tipo_documento',$consulta1);
 		
 		$this->loadModel('Conta');
-		$consulta2 = $this->Conta->find('all');
-		foreach ($consulta2 as $op)
-			$this->opcoes_conta_origem += array($op['Conta']['id']=>$op['Conta']['apelido']);
-		$this->set('opcoes_conta_origem',$this->opcoes_conta_origem);
+		$this->Conta->recursive = -1;
+		$consulta2 = $this->Conta->find('list',array('fields'=>array('Conta.id','Conta.apelido')));
+		$this->set('opcoes_conta_origem',$consulta2);
 		
 		$this->loadModel('PlanoConta');
-		$consulta3 = $this->PlanoConta->find('all');
-		foreach ($consulta3 as $op)
-			$this->opcoes_plano_contas += array($op['PlanoConta']['id']=>$op['PlanoConta']['nome']);
-		$this->set('opcoes_plano_contas',$this->opcoes_plano_contas);
+		$this->PlanoConta->recursive = -1;
+		$consulta3 = $this->PlanoConta->find('list',array('fields'=>array('PlanoConta.id','PlanoConta.nome')));
+		$this->set('opcoes_plano_contas',$consulta3);
 		
 		$consulta4 = $this->PagarConta->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
 		$this->set('opcoes_empresas',$consulta4);
@@ -52,12 +45,18 @@ class PagarContasController extends AppController {
 	}
 	
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('PagarConta');
 		$this->set('consulta_conta_pagar',$dados);
 		$this->_obter_opcoes();
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			if (strtoupper($this->data['PagarConta']['eh_cliente_ou_fornecedor']) == 'C') {
@@ -95,6 +94,9 @@ class PagarContasController extends AppController {
 	}
 	
 	function editar($id=null) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
 			$this->data = $this->PagarConta->read();
@@ -141,6 +143,9 @@ class PagarContasController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->PagarConta->delete($id)) $this->Session->setFlash("Conta a pagar $id excluída com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Conta a pagar $id não pode ser excluída.",'flash_erro');
@@ -152,6 +157,9 @@ class PagarContasController extends AppController {
 	}
 
 	function pesquisar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		//#FIXME pesquisa por valor nao funciona se informar valor em notação brasileira ou valor contiver .
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
@@ -189,6 +197,54 @@ class PagarContasController extends AppController {
 				$this->Session->setFlash("Nenhum resultado encontrado",'flash_erro');
 			}
 		}
+	}
+
+	function resumo() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
+		//grafico de percentual do uso dos itens do plano de contas
+		$consulta = $this->PagarConta->query("SELECT pagar_conta.plano_conta_id,COUNT(*) AS numero_ocorrencias, plano_conta.nome
+		FROM pagar_contas AS pagar_conta, plano_contas AS plano_conta
+		WHERE pagar_conta.plano_conta_id = plano_conta.id
+		GROUP BY pagar_conta.plano_conta_id
+		ORDER BY numero_ocorrencias DESC;");
+		$retorno = array();
+		foreach ($consulta as $r) {
+			$retorno[] = array($r['plano_conta']['nome'],$r[0]['numero_ocorrencias']) ; 
+		}
+		$retorno = json_encode($retorno,JSON_NUMERIC_CHECK);
+		$this->set('data1',$retorno);
+		
+		//grafico de itens do plano de contas ordenados por valor
+		$consulta = $this->PagarConta->query("SELECT pagar_conta.plano_conta_id,sum(valor) AS valores, plano_conta.nome
+		FROM pagar_contas AS pagar_conta, plano_contas AS plano_conta
+		WHERE pagar_conta.plano_conta_id = plano_conta.id
+		GROUP BY pagar_conta.plano_conta_id
+		ORDER BY valores DESC;");
+		$retorno = array();
+		foreach ($consulta as $r) {
+			$retorno[] = array($r['plano_conta']['nome'],$r[0]['valores']) ; 
+		}
+		$retorno = json_encode($retorno,JSON_NUMERIC_CHECK);
+		$this->set('data2',$retorno);
+		
+		// grafico de clientes com mais contas a receber
+		$consulta = $this->PagarConta->query("SELECT pagar_contas.cliente_fornecedor_id, count(pagar_contas.cliente_fornecedor_id) AS contador, pagar_contas.eh_cliente_ou_fornecedor,
+		case pagar_contas.eh_cliente_ou_fornecedor
+			when 'C' then clientes.nome
+			when 'F' then fornecedores.nome
+		end AS nome
+		FROM pagar_contas, clientes,fornecedores
+		WHERE pagar_contas.cliente_fornecedor_id = clientes.id
+		GROUP BY pagar_contas.eh_cliente_ou_fornecedor
+		ORDER BY contador DESC");
+		$retorno = array();
+		foreach ($consulta as $r) {
+			$retorno[] = array($r[0]['nome'],$r[0]['contador']) ; 
+		}
+		$retorno = json_encode($retorno,JSON_NUMERIC_CHECK);
+		$this->set('data3',$retorno);
 	}
 	
 }
