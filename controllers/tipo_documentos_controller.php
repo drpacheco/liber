@@ -10,12 +10,23 @@ class TipoDocumentosController extends AppController {
 		)
 	);
 	
+	/**
+	* @var $TipoDocumento
+	*/
+	var $TipoDocumento;
+
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('TipoDocumento');
 		$this->set('consulta_tipo_documento',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			
 			if ($this->TipoDocumento->save($this->data)) {
@@ -29,6 +40,9 @@ class TipoDocumentosController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (empty ($this->data)) {
 			$this->data = $this->TipoDocumento->read();
 			if ( ! $this->data) {
@@ -50,6 +64,9 @@ class TipoDocumentosController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->TipoDocumento->delete($id)) $this->Session->setFlash("Tipo de documento $id excluído com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Tipo de documento $id não pode ser excluído.",'flash_erro');

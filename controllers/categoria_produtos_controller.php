@@ -2,7 +2,8 @@
 
 class CategoriaProdutosController extends AppController {
 	var $name = 'CategoriaProdutos';
-	var $components = array('Sanitizacao');
+	var $components = array('Sanitizacao','RequestHandler');
+	var $helpers = array('Javascript','Ajax');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (
@@ -10,12 +11,23 @@ class CategoriaProdutosController extends AppController {
 		)
 	);
 	
+	/**
+	* @var $CategoriaProduto
+	*/
+	var $CategoriaProduto;
+
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('CategoriaProduto');
 		$this->set('consulta',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			
 			if ($this->CategoriaProduto->save($this->data)) {
@@ -29,6 +41,9 @@ class CategoriaProdutosController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (empty ($this->data)) {
 			$this->data = $this->CategoriaProduto->read();
 			if ( ! $this->data) {
@@ -50,6 +65,9 @@ class CategoriaProdutosController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->CategoriaProduto->delete($id)) $this->Session->setFlash("Categoria de produto $id excluída com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Categoria de produto $id não pode ser excluída.",'flash_erro');

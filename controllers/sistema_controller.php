@@ -2,25 +2,37 @@
 
 class SistemaController extends AppController {
 	var $name = "Sistema";
-	var $components = array('Sanitizacao');
+	var $components = array('Sanitizacao','RequestHandler');
+	var $helpers = array('Javascript','Ajax');
 	var $uses = array(); //nao ha model para este controller
 	#poderia ser utilizado o controller pages
 	
+	/**
+	* @var $Sistema
+	*/
+	var $Sistema;
+
 	function index() {
-		
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 	}
 	
 	function ajuda() {
-		
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 	}
 	
 	function sobre() {
-		
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 	}
 	
 	function noscript(){
 		/**
-		 *  basicamente defino um novo layout pois este nao pode ter a tag
+		 * defino um novo layout pois este nao pode ter a tag
 		 * noscript que redireciona para a pagina sistema/noscript, pois ficaria em loop infinito.
 		 * O novo layout remove scripts e quase todo o menu.
 		 */
@@ -33,6 +45,9 @@ class SistemaController extends AppController {
 	 * outra alternativa: http://www.phpfreaks.com/forums/index.php?topic=240370.0
 	 */
 	function inicio() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->loadModel('PagarConta');
 		$dadosContasPagar = $this->PagarConta->find('all',array('conditions'=>array('data_vencimento'=>date('Y-m-d')),'limit'=>10,'recursive'=>'1'));
 		if (empty($dadosContasPagar)) $contasPagar = 'Não há contas a pagar que vencem hoje.';

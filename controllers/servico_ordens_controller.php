@@ -19,30 +19,25 @@ class ServicoOrdensController extends AppController {
 			'ServicoOrdem.id' => 'desc'
 		)
 	);
-	
-	var $opcoes_tecnico = array(''=>'');
-	var $opcoes_forma_pamamento = array(''=>'');
-	var $opcoes_usuarios = array(''=>'');
-	
+
 	/**
-	 * Obtem dados do banco e popula as variaveis globais
-	 * $opcoes_tecnico
-	 * $opcoes_forma_pamamento
-	 */
+	* @var $ServicoOrdem
+	*/
+	var $ServicoOrdem;
+	
 	function _obter_opcoes() {
 		$this->loadModel('Usuario');
-		$consulta1 = $this->Usuario->find('all',array('fields'=>array('Usuario.id','Usuario.nome'),
+		$this->Usuario->recursive = -1;
+		$consulta1 = $this->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
 		'conditions'=>array('Usuario.eh_tecnico'=>'1','Usuario.ativo'=>'1')));
-		foreach ($consulta1 as $op)
-			$this->opcoes_tecnico += array($op['Usuario']['id']=>$op['Usuario']['nome']);
-		$this->set('opcoes_tecnico',$this->opcoes_tecnico);
+		$this->set('opcoes_tecnico',$consulta1);
 		
 		$this->loadModel('FormaPagamento');
-		$consulta2 = $this->FormaPagamento->find('all',array('fields'=>array('FormaPagamento.id','FormaPagamento.nome')));
-		foreach ($consulta2 as $op)
-			$this->opcoes_forma_pamamento += array($op['FormaPagamento']['id']=>$op['FormaPagamento']['nome']);
-		$this->set('opcoes_forma_pamamento',$this->opcoes_forma_pamamento);
+		$this->FormaPagamento->recursive = -1;
+		$consulta2 = $this->FormaPagamento->find('list',array('fields'=>array('FormaPagamento.id','FormaPagamento.nome')));
+		$this->set('opcoes_forma_pamamento',$consulta2);
 		
+		$this->ServicoOrdem->Empresa->recursive = -1;
 		$consulta3 = $this->ServicoOrdem->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
 		$this->set('opcoes_empresas',$consulta3);
 		
@@ -50,18 +45,15 @@ class ServicoOrdensController extends AppController {
 	
 	function _obter_opcoes_pesquisa() {
 		$this->loadModel('Usuario');
-		$consulta1 = $this->Usuario->find('all',array('fields'=>array('Usuario.id','Usuario.nome'),
+		$this->Usuario->recursive = -1;
+		$consulta1 = $this->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
 		'conditions'=>array('Usuario.eh_tecnico'=>'1','Usuario.ativo'=>'1')));
-		foreach ($consulta1 as $op)
-			$this->opcoes_tecnico += array($op['Usuario']['id']=>$op['Usuario']['nome']);
-		$this->set('opcoes_tecnico',$this->opcoes_tecnico);
+		$this->set('opcoes_tecnico',$consulta1);
 		
-		$consulta2 = $this->Usuario->find('all',array('fields'=>array('Usuario.id','Usuario.nome'),
+		$consulta2 = $this->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
 		'conditions'=>array('Usuario.ativo'=>'1')));
-		foreach ($consulta2 as $op)
-			$this->opcoes_usuarios += array($op['Usuario']['id']=>$op['Usuario']['nome']);
-		$this->set('opcoes_usuarios',$this->opcoes_usuarios);
-	}	
+		$this->set('opcoes_usuarios',$consulta2);
+	}
 	
 	/**
 	* caso algum item seja enviado (erro na validacao, editando registro, etc),
@@ -132,11 +124,17 @@ class ServicoOrdensController extends AppController {
 	}
 	
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('ServicoOrdem');
 		$this->set('consulta',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->set("title_for_layout","Ordem de serviço"); 
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
@@ -185,6 +183,9 @@ class ServicoOrdensController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->set("title_for_layout","Ordem de serviço"); 
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
@@ -263,6 +264,9 @@ class ServicoOrdensController extends AppController {
 	}
 	
 	function detalhar($id = null) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->set("title_for_layout","Ordem de serviço");
 		$consulta = $this->ServicoOrdem->findById($id);
 		if (empty($consulta)) {
@@ -283,6 +287,9 @@ class ServicoOrdensController extends AppController {
 	}
 
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			$this->ServicoOrdem->id = $id;
 			$r = $this->ServicoOrdem->field('situacao');
@@ -315,6 +322,9 @@ class ServicoOrdensController extends AppController {
 	}
 	
 	function pesquisar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->set("title_for_layout","Ordem de serviço");
 		$this->_obter_opcoes_pesquisa();
 		if (! empty($this->data)) {

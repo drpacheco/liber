@@ -59,7 +59,13 @@ $s = array(
 'F' => 'Finalizada',
 'E' => 'Entregue',
 'C' => 'Cancelada');
-print $form->create(null,array('controller'=>'servicoOrdens','action'=>'pesquisar','autocomplete'=>'off'));
+if ($ajax->isAjax()) {
+	print $ajax->form('pesquisar','post',array('autocomplete'=>'off','model'=>'ServicoOrdem','update'=>'conteudo_ajax'));
+
+}
+else {
+	print $form->create(null,array('controller'=>'servicoOrdens','action'=>'pesquisar','autocomplete'=>'off'));
+}
 ?>
 <div class="divs_grupo_2">
 	
@@ -124,7 +130,7 @@ print $form->create(null,array('controller'=>'servicoOrdens','action'=>'pesquisa
 <?php print $form->end('Pesquisar'); ?>
 
 <?php if (isset($num_resultados) && $num_resultados > 0) : ?>
-	<table class="resultados">
+	<table class="resultados padrao">
 		<thead>
 			<tr>
 				<th><?php print $paginator->sort('Cód','id'); ?></th>

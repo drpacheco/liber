@@ -13,26 +13,36 @@ class ServicosController extends AppController {
 	var $opcoes_servico_categoria = array();
 	
 	/**
+	* @var $Servico
+	*/
+	var $Servico;
+
+	/**
 	 * Obtem dados do banco e popula as variaveis globais
 	 * $opcoes_servico_categoria
 	 */
 	function _obter_opcoes() {
 		$this->loadModel('ServicoCategoria');
-		$consulta1 = $this->ServicoCategoria->find('all',array('fields'=>array('ServicoCategoria.id','ServicoCategoria.nome')));
-		foreach ($consulta1 as $op)
-			$this->opcoes_servico_categoria += array($op['ServicoCategoria']['id']=>$op['ServicoCategoria']['nome']);
-		$this->set('opcoes_servico_categoria',$this->opcoes_servico_categoria);
+		$this->ServicoCategoria->recursive = -1;
+		$consulta1 = $this->ServicoCategoria->find('list',array('fields'=>array('ServicoCategoria.id','ServicoCategoria.nome')));
+		$this->set('opcoes_servico_categoria',$consulta1);
 		
 		return null;
 	}
 	
 	
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('Servico');
 		$this->set('consulta',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			
@@ -47,6 +57,9 @@ class ServicosController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
 			$this->data = $this->Servico->read();
@@ -69,6 +82,9 @@ class ServicosController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->Servico->delete($id)) $this->Session->setFlash("Serviço $id excluído com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Serviço $id não pode ser excluído.",'flash_erro');

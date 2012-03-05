@@ -10,26 +10,23 @@ class ClientesController extends AppController {
 			'Cliente.id' => 'desc'
 		)
 	);
-	var $opcoes_categoria_cliente = array();
-	var $opcoes_empresa = array();
-	
+
 	/**
-	 * Obtem dados do banco e popula as variaveis globais
-	 * $opcoes_categoria_cliente
-	 * $opcoes_empresa
-	 */
+	* @var $Cliente
+	*/
+	var $Cliente;
+
 	function _obter_opcoes() {
 		$this->loadModel('ClienteCategoria');
-		$consulta1 = $this->ClienteCategoria->find('all',array('fields'=>array('ClienteCategoria.id','ClienteCategoria.descricao')));
-		foreach ($consulta1 as $op)
-			$this->opcoes_categoria_cliente += array($op['ClienteCategoria']['id']=>$op['ClienteCategoria']['descricao']);
-		$this->set('opcoes_categoria_cliente',$this->opcoes_categoria_cliente);
+		$this->ClienteCategoria->recursive = -1;
+		$consulta1 = $this->ClienteCategoria->find('list',array('fields'=>array('ClienteCategoria.id','ClienteCategoria.descricao')));
+		$this->set('opcoes_categoria_cliente',$consulta1);
 		
 		$this->loadModel('Empresa');
-		$consulta2 = $this->Empresa->find('all');
-		foreach ($consulta2 as $op)
-			$this->opcoes_empresa += array($op['Empresa']['id']=>$op['Empresa']['nome']);
-		$this->set('opcoes_empresa',$this->opcoes_empresa);
+		$this->Empresa->recursive = -1;
+		$consulta2 = $this->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
+		$this->set('opcoes_empresa',$consulta2);
+
 		return null;
 	}
 	
@@ -38,11 +35,17 @@ class ClientesController extends AppController {
 	 * Lista todos os Clientes
 	 */
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('Cliente');
 		$this->set('consulta_cliente',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			$this->data['Cliente'] += array ('data_cadastrado' => date('Y-m-d H:i:s'));
@@ -59,6 +62,9 @@ class ClientesController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
 			$this->data = $this->Cliente->read();
@@ -83,7 +89,9 @@ class ClientesController extends AppController {
 	}
 	
 	function pesquisar() {
-		
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			//usuario enviou os dados da pesquisa
 			$url = array('controller'=>'Clientes','action'=>'pesquisar');
@@ -127,6 +135,9 @@ class ClientesController extends AppController {
 	}
 	
 	function detalhar($id = NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if ($id) {
 			$this->Cliente->id = $id;
 			$r = $this->Cliente->read();

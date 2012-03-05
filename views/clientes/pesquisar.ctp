@@ -1,6 +1,7 @@
 <script type="text/javascript">
 		$(function(){
 			//pesquisa cliente
+			
 			//autocomplete
 			$("#ClienteNome").autocomplete({
 				source: "<?php print $html->url('/',true); ?>/Clientes/pesquisaAjaxCliente/nome",
@@ -36,9 +37,14 @@
 <?php
 /**
  * Elimino as divs dos campos input para que nao apareça quais campos
- * sao marcados como obrigatorios no BD, pois aqui isso non ecxiste
+ * sao marcados como obrigatorios no BD
  */
-print $form->create(null,array('controller'=>'clientes','action'=>'pesquisar','autocomplete'=>'off'));
+if ($ajax->isAjax()) {
+	print $ajax->form('','post',array('autocomplete'=>'off','model'=>'Cliente','update'=>'conteudo_ajax'));
+}
+else {
+	print $form->create(null,array('controller'=>'clientes','action'=>'pesquisar','autocomplete'=>'off'));
+}
 ?>
 <div class="divs_grupo_2">
 	
@@ -71,7 +77,7 @@ print $form->create(null,array('controller'=>'clientes','action'=>'pesquisar','a
 </div>
 
 <?php if (isset($num_resultados) && $num_resultados > 0) : ?>
-	<table class="resultados">
+	<table class="resultados padrao">
 		<thead>
 			<tr>
 				<th><?php print $paginator->sort('Cód','id'); ?></th>
@@ -91,7 +97,7 @@ print $form->create(null,array('controller'=>'clientes','action'=>'pesquisar','a
 				<tr>
 					<td><?php print $r['Cliente']['id']; ?></td>
 					<td><?php print $r['Cliente']['tipo_pessoa']; ?></td>
-					<td><?php print $html->link($r['Cliente']['nome'],'editar/' . $r['Cliente']['id']) ;?></td>
+					<td><?php print $html->link($r['Cliente']['nome'],'editar/' . $r['Cliente']['id'],array('class' => 'ajax_link_dialog')) ;?></td>
 					<td><?php print $r['Cliente']['nome_fantasia']; ?></td>
 					<td><?php print $r['Cliente']['cidade']; ?></td>
 					<td><?php print $r['Cliente']['cpf'].$r['Cliente']['cnpj']; ?></td>

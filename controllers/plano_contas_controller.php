@@ -10,12 +10,23 @@ class PlanoContasController extends AppController {
 		)
 	);
 	
+	/**
+	* @var $PlanoConta
+	*/
+	var $PlanoConta;
+
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('PlanoConta');
 		$this->set('consulta_plano_contas',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			
 			if ($this->PlanoConta->save($this->data)) {
@@ -29,6 +40,9 @@ class PlanoContasController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (empty ($this->data)) {
 			$this->data = $this->PlanoConta->read();
 			if ( ! $this->data) {
@@ -50,6 +64,9 @@ class PlanoContasController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->PlanoConta->delete($id)) $this->Session->setFlash("Item $id do plano de contas excluído com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Item $id do plano de contas não pode ser excluída.",'flash_erro');

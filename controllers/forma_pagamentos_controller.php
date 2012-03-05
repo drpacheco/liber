@@ -11,10 +11,17 @@ class FormaPagamentosController extends AppController {
 		)
 	);
 	
+	/**
+	* @var $FormaPagamento
+	*/
+	var $FormaPagamento;
+
 	function _obter_opcoes() {
+		$this->FormaPagamento->Conta->recursive = -1;
 		$opcoes_contas = $this->FormaPagamento->Conta->find('list',array('fields'=>array('Conta.id','Conta.nome')));
 		$this->set('opcoes_contas',$opcoes_contas);
 		
+		$this->FormaPagamento->TipoDocumento->recursive = -1;
 		$r = $this->FormaPagamento->TipoDocumento->find('list',array('fields'=>array('TipoDocumento.id','TipoDocumento.nome')));
 		$this->set('opcoes_documentos',$r);
 	}
@@ -41,11 +48,17 @@ class FormaPagamentosController extends AppController {
 	}
 	
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('FormaPagamento');
 		$this->set('consulta_forma_pagamento',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		
 		$this->_obter_opcoes();
 		
@@ -63,6 +76,9 @@ class FormaPagamentosController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		
 		if (empty ($this->data)) {
@@ -98,6 +114,9 @@ class FormaPagamentosController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		#FIXME nao estah deletando
 		if (! empty($id)) {
 			if ($this->FormaPagamento->deleteAll(array('FormaPagamentoItem.forma_pagamento_id'=>$id))) {

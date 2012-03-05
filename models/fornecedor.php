@@ -147,6 +147,11 @@ class Fornecedor extends AppModel {
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),
+		'fornecedor_categoria_id' => array(
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
 		
 	);
 	

@@ -2,7 +2,8 @@
 
 class ClienteCategoriasController extends AppController {
 	var $name = 'ClienteCategorias';
-	var $components = array('Sanitizacao');
+	var $components = array('Sanitizacao','RequestHandler');
+	var $helpers = array('Javascript','Ajax');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (
@@ -10,12 +11,24 @@ class ClienteCategoriasController extends AppController {
 		)
 	);
 	
+	/**
+	* @var $ClienteCategoria
+	*/
+	var $ClienteCategoria;
+
 	function index() {
-		$dados = $this->paginate('ClienteCategoria');
-		$this->set('consulta',$dados);
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
+		$this->ClienteCategoria->recursive = 0;
+		$this->set('consulta',$this->paginate());
+	
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			
 			if ($this->ClienteCategoria->save($this->data)) {
@@ -29,6 +42,9 @@ class ClienteCategoriasController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (empty ($this->data)) {
 			$this->data = $this->ClienteCategoria->read();
 			if ( ! $this->data) {
@@ -50,6 +66,9 @@ class ClienteCategoriasController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->ClienteCategoria->delete($id)) $this->Session->setFlash("Categoria de cliente $id excluída com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Categoria de cliente $id não pode ser excluída.",'flash_erro');

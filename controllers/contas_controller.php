@@ -2,7 +2,7 @@
 
 class ContasController extends AppController {
 	var $name = 'Contas';
-	var $components = array('Sanitizacao');
+	var $components = array('Sanitizacao','RequestHandler');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (
@@ -10,12 +10,23 @@ class ContasController extends AppController {
 		)
 	);
 	
+	/**
+	* @var $Conta
+	*/
+	var $Conta;
+
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('Conta');
 		$this->set('consulta_conta',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($this->data)) {
 			
 			if ($this->Conta->save($this->data)) {
@@ -29,6 +40,9 @@ class ContasController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (empty ($this->data)) {
 			$this->data = $this->Conta->read();
 			if ( ! $this->data) {
@@ -50,6 +64,9 @@ class ContasController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->Conta->delete($id)) $this->Session->setFlash("Conta $id excluída com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Conta $id não pode ser excluída.",'flash_erro');

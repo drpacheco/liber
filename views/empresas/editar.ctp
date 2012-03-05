@@ -17,6 +17,7 @@
 		print $form->input('endereco_email_principal',array('label'=>'Endereço de e-mail principal'));
 		print $form->input('endereco_email_secundario',array('label'=>'Endereço de e-mail secundário'));
 		print $form->input('logradouro',array('label'=>'Logradouro'));
+		print $form->input('cep',array('label'=>'CEP'));
 		?>
 	</div>
 	<div class="div3_3">

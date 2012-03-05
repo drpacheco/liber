@@ -10,26 +10,35 @@ class ProdutosController extends AppController {
 			'Produto.id' => 'desc'
 		)
 	);
-	var $opcoes_categoria_produto = array();
 	
+	/**
+	* @var $Produto
+	*/
+	var $Produto;
+
 	/**
 	 * Obtem dados do banco e popula as variaveis globais
 	 * $opcoes_categoria_produto
 	 */
 	function _obter_opcoes() {
 		$this->loadModel('CategoriaProduto');
-		$consulta1 = $this->CategoriaProduto->find('all',array('fields'=>array('CategoriaProduto.id','CategoriaProduto.nome')));
-		foreach ($consulta1 as $op)
-			$this->opcoes_categoria_produto += array($op['CategoriaProduto']['id']=>$op['CategoriaProduto']['nome']);
-		$this->set('opcoes_categoria_produto',$this->opcoes_categoria_produto);
+		$this->CategoriaProduto->recursive = -1;
+		$consulta1 = $this->CategoriaProduto->find('list',array('fields'=>array('CategoriaProduto.id','CategoriaProduto.nome')));
+		$this->set('opcoes_categoria_produto',$consulta1);
 	}
 	
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('Produto');
 		$this->set('consulta',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			
@@ -44,6 +53,9 @@ class ProdutosController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
 			$this->data = $this->Produto->read();
@@ -66,6 +78,9 @@ class ProdutosController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->Produto->delete($id)) $this->Session->setFlash("Produto $id excluído com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Produto $id não pode ser excluído.",'flash_erro');
@@ -77,6 +92,9 @@ class ProdutosController extends AppController {
 	}
 
 	function pesquisar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			//usuario enviou os dados da pesquisa

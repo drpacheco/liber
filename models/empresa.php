@@ -5,8 +5,15 @@ class Empresa extends AppModel {
 	var $hasMany = array('Cliente','Fornecedor');
 	var $validate = array(
 		'nome' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório.'
+			'obrigatorio' => array (
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
+			'unico' => array(
+				'allowEmpty' => false,
+				'rule' => 'isUnique',
+				'message' => 'Já cadastrado.'
+			)
 		),
 		'site' => array(
 			'allowEmpty' => true,
@@ -34,6 +41,17 @@ class Empresa extends AppModel {
 		'bairro' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
+		),
+		'cep' => array(
+			'obrigatorio' => array (
+				'allowEmpty' => false,
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
+			'numerico' => array(
+				'rule' => 'numeric',
+				'message' => 'Somente números.'
+			),
 		),
 		'cidade' => array(
 			'rule' => 'notEmpty',

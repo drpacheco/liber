@@ -38,7 +38,10 @@
 		<div id="conteudo">
 			
 			<div id="flash">
-				<?php print $this->Session->flash(); ?>
+				<?php
+				print $this->Session->flash();
+				print $this->Session->flash('auth');
+				?>
 				
 			</div>
 			

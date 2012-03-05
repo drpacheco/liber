@@ -3,7 +3,7 @@
 
 <?php print $this->element('painel_index'); ?>
 
-<table>
+<table class="padrao">
 	<thead>
 		<tr>
 			<th><?php print $paginator->sort('Código','id'); ?></th>
@@ -17,16 +17,22 @@
 <?php foreach ($consulta_tipo_documento as $consulta): ?>
 		
 		<tr>
+			
 			<td><?php print $consulta['TipoDocumento']['id'];?></td>
 			<td><?php print $html->link($consulta['TipoDocumento']['nome'],'editar/' . $consulta['TipoDocumento']['id']) ;?></td>
 			<td>
-				<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
+				<?php print '<a title="Excluir" class="ajax_link_dialog"
 				href="'.$html->url(array('action'=>'excluir')).'/'.$consulta['TipoDocumento']['id'].'">'.
 				$html->image('del24x24.png', array('alt'=>'Excluir'))
 				.'</a>';?>
 			</td>
-			<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-			'alt'=>'Editar','url'=>array('action'=>'editar',$consulta['TipoDocumento']['id']))) ?></td>
+			<td>
+				<?php print '<a title="Editar" class="ajax_link_dialog"
+				href="'.$html->url(array('action'=>'editar')).'/'.$consulta['TipoDocumento']['id'].'">'.
+				$html->image('edit24x24.png', array('alt'=>'Editar'))
+				.'</a>';?>
+			</td>
+			
 		</tr>
 
 <?php endforeach ?>

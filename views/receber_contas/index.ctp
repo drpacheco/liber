@@ -1,9 +1,8 @@
-
 <h2 class="descricao_cabecalho">Exibindo as contas a receber</h2>
 
 <?php print $this->element('painel_index'); ?>
 
-<table>
+<table class="padrao">
 	<thead>
 		<tr>
 			<th><?php print $paginator->sort('Código','id'); ?></th>

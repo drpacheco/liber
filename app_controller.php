@@ -5,7 +5,10 @@ class AppController extends Controller {
 	 * Autenticação
 	 */
 	// Componentes utilizados por toda a aplicação
-	var $components = array('Session', 'Cookie', 'Auth');
+	var $components = array('Session', 'Cookie', 'Auth','RequestHandler');
+	// Helpers utilizados por toda a aplicacao
+	var $helpers = array('Session','Javascript','Ajax');
+	
 	function beforeFilter() {
 
 		// para executar o metodo login

@@ -20,11 +20,18 @@ class PedidoVendasController extends AppController {
 			'PedidoVenda.id' => 'desc'
 		)
 	);
+
+	/**
+	* @var $PedidoVenda
+	*/
+	var $PedidoVenda;
 	
 	function _obter_opcoes() {
+		$this->PedidoVenda->FormaPagamento->recursive = -1;
 		$opcoes_forma_pamamento = $this->PedidoVenda->FormaPagamento->find('list',array('fields'=>array('FormaPagamento.id','FormaPagamento.nome')));
 		$this->set('opcoes_forma_pamamento',$opcoes_forma_pamamento);
 		
+		$this->PedidoVenda->Empresa->recursive = -1;
 		$opcoes_empresas = $this->PedidoVenda->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
 		$this->set('opcoes_empresas',$opcoes_empresas);
 		
@@ -38,7 +45,8 @@ class PedidoVendasController extends AppController {
 		$this->set('opcoes_situacoes',$opcoes_situacoes);
 		
 		// view pesquisa
-		$this->loadModel('Usuario');	
+		$this->loadModel('Usuario');
+		$this->Usuario->recursive = -1;	
 		$opcoes_usuarios = $this->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'), 'conditions'=>array('Usuario.ativo'=>'1','Usuario.eh_tecnico'=>'0')));
 		$this->set('opcoes_usuarios',$opcoes_usuarios);
 	}
@@ -178,12 +186,18 @@ class PedidoVendasController extends AppController {
 	}
 	
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('PedidoVenda');
 		$this->set('consulta',$dados);
 		$this->_obter_opcoes();
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->set("title_for_layout","Pedido de venda"); 
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
@@ -240,6 +254,9 @@ class PedidoVendasController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->set("title_for_layout","Pedido de venda"); 
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
@@ -335,6 +352,9 @@ class PedidoVendasController extends AppController {
 	}
 	
 	function detalhar($id = null) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->set("title_for_layout","Pedido de venda");
 		$consulta = $this->PedidoVenda->findById($id);
 		if (empty($consulta)) {
@@ -356,6 +376,9 @@ class PedidoVendasController extends AppController {
 	}
 
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			$this->PedidoVenda->id = $id;
 			$r = $this->PedidoVenda->field('situacao');
@@ -388,6 +411,9 @@ class PedidoVendasController extends AppController {
 	}
 	
 	function pesquisar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->set("title_for_layout","Pedido de venda");
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {

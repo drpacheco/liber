@@ -10,22 +10,31 @@ class MotoristasController extends AppController {
 			'Motorista.id' => 'asc'
 		)
 	);
-	var $opcoes_veiculo = array(''=>'');
 	
+	/**
+	* @var $Motorista
+	*/
+	var $Motorista;
+
 	function _obter_opcoes() {
 		$this->loadModel('Veiculo');
-		$consulta1 = $this->Veiculo->find('all',array('fields'=>array('Veiculo.id','Veiculo.placa')));
-		foreach ($consulta1 as $op)
-			$this->opcoes_veiculo += array($op['Veiculo']['id']=>$op['Veiculo']['placa']);
-		$this->set('opcoes_veiculo',$this->opcoes_veiculo);
+		$this->Veiculo->recursive = -1;
+		$consulta1 = $this->Veiculo->find('list',array('fields'=>array('Veiculo.id','Veiculo.placa')));
+		$this->set('opcoes_veiculo',$consulta1);
 	}
 	
 	function index() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$dados = $this->paginate('Motorista');
 		$this->set('consulta_motorista',$dados);
 	}
 	
 	function cadastrar() {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			
@@ -46,6 +55,9 @@ class MotoristasController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
 			$this->data = $this->Motorista->read();
@@ -78,6 +90,9 @@ class MotoristasController extends AppController {
 	}
 	
 	function excluir($id=NULL) {
+		if ( $this->RequestHandler->isAjax() ) {
+			$this->layout = 'default_ajax';
+		}
 		if (! empty($id)) {
 			if ($this->Motorista->delete($id)) $this->Session->setFlash("Motorista $id excluído com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Motorista $id não pode ser excluído.",'flash_erro');

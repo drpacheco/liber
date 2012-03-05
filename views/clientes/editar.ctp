@@ -3,7 +3,15 @@
 	Editar cliente
 </h2>
 
-<?php print $form->create('Cliente',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;')); ?>
+<?php
+if ($ajax->isAjax()) {
+	print $ajax->form('editar','post',array('autocomplete'=>'off','model'=>'Cliente','update'=>'conteudo_ajax'));
+}
+else {
+	print $form->create('Cliente',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
+
+?>
 
 	<div class="grupo_horizontal">
 		<?php

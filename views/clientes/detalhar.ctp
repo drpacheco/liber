@@ -24,7 +24,7 @@ Tipo pessoa: <?php
 		</small>
 </p>
 
-<table>
+<table class="padrao">
 	<thead>
 		<tr>
 			<th>Nome</th>
