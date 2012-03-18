@@ -2,7 +2,7 @@
 
 class VeiculosController extends AppController {
 	var $name = 'Veiculos';
-	var $components = array('Sanitizacao');
+	var $components = array('Sanitizacao','RequestHandler');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (
@@ -32,7 +32,9 @@ class VeiculosController extends AppController {
 			
 			if ($this->Veiculo->save($this->data)) {
 				$this->Session->setFlash('Veiculo cadastrado com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao cadastrar o veículo.','flash_erro');
@@ -49,7 +51,9 @@ class VeiculosController extends AppController {
 			$this->data = $this->Veiculo->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Veículo não encontrado.','flash_erro');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 		}
 		else {
@@ -72,7 +76,9 @@ class VeiculosController extends AppController {
 		if (! empty($id)) {
 			if ($this->Veiculo->delete($id)) $this->Session->setFlash("Veículo $id excluído com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Veículo $id não pode ser excluído.",'flash_erro');
-			$this->redirect(array('action'=>'index'));
+			if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 		}
 		else {
 			$this->Session->setFlash('Veículo não informado.','flash_erro');

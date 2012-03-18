@@ -46,8 +46,6 @@ else {
 					<input style="margin-left: 1%; width: 80%" type="text" name="pesquisar_cliente" id="pesquisar_cliente" />
 				</div>
 				<?php
-				// #TODO implementar opcoes de resgatar numero de parcelas
-				// armazenar numero de parcelas no banco?
 				print $form->input('forma_pagamento_id',array('label'=>'Forma de pagamento','options'=>$opcoes_forma_pamamento));
 				print $form->input('dias_garantia',array('label'=>'Dias de garantia'));
 				?>

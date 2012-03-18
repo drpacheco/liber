@@ -98,7 +98,7 @@
 				</ul>
 			</li>
 			<li>
-				<a href="#">Serviços</a>
+				<?php print $html -> link('Serviços', "/servicos"); ?>
 				<ul>
 					<li>
 						<?php print $html -> link('Cadastrar', "/servicos/cadastrar",
@@ -111,7 +111,7 @@
 				</ul>
 			</li>
 			<li>
-				<a href="#">Categorias</a>
+				<?php print $html -> link('Categorias', "/servicoCategorias"); ?>
 				<ul>
 					<li>
 						<?php print $html -> link('Cadastrar', "/servicoCategorias/cadastrar",
@@ -139,16 +139,35 @@
 					<li><?php print $html -> link('Listar', "/carregamentos/");?></li>
 				</ul>
 			</li>
-			<li><?php print $html -> link('Motoristas', "/motoristas/");?></li>
-			<li><?php print $html -> link('Veículos', "/veiculos");?></li>
-			<!--
+			
 			<li>
-				<a href="#">Consultar</a>
+				<?php print $html -> link('Motoristas', "/motoristas"); ?>
 				<ul>
-					<li><?php print $html -> link('Pedidos por carregamento', "/carregamentos/pedidosPorCarregamento");?></li>
+					<li>
+						<?php print $html -> link('Cadastrar', "/motoristas/cadastrar",
+						array('class' => 'ajax_link_dialog',
+							'data-ajax_link_dialog_altura'=>'400',
+							'data-ajax_link_dialog_largura'=>'500',
+							'data-ajax_link_dialog_titulo'=>'Cadastro de motorista'));?>
+					</li>
+					<li><?php print $html -> link('Listar', "/motoristas/index"); ?></li>
 				</ul>
 			</li>
-			-->
+			
+			<li>
+				<?php print $html -> link('Veículos', "/veiculos"); ?>
+				<ul>
+					<li>
+						<?php print $html -> link('Cadastrar', "/veiculos/cadastrar",
+						array('class' => 'ajax_link_dialog',
+							'data-ajax_link_dialog_altura'=>'400',
+							'data-ajax_link_dialog_largura'=>'500',
+							'data-ajax_link_dialog_titulo'=>'Cadastro de veículo'));?>
+					</li>
+					<li><?php print $html -> link('Listar', "/veiculos/index"); ?></li>
+				</ul>
+			</li>
+			
 		</ul>
 	</li>
 
