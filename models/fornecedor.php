@@ -1,5 +1,7 @@
 <?php
 
+App::import('Lib', 'Localized.BrValidation');
+
 class Fornecedor extends AppModel {
 	
 	var $name = 'Fornecedor'; // para compatibilidade com o PHP 4
@@ -37,7 +39,7 @@ class Fornecedor extends AppModel {
 			'obrigatorio' => array (
 				'allowEmpty' => false,
 				'rule' => 'notEmpty',
-				'message' => 'Campo obrigatório. Somente letras e números.'
+				'message' => 'Campo obrigatório.'
 			),
 			'unico' => array(
 				'allowEmpty' => true,
@@ -49,7 +51,7 @@ class Fornecedor extends AppModel {
 		'nome_fantasia' => array(
 			'allowEmpty' => false,
 			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório. Somente letras e números.'
+			'message' => 'Campo obrigatório.'
 		),
 		
 		'logradouro_nome' => array(
@@ -71,8 +73,8 @@ class Fornecedor extends AppModel {
 		
 		'cidade' => array(
 			'allowEmpty' => false,
-			'rule' => 'alphanumeric',
-			'message' => 'Campo obrigatório. Somente letras e números.'
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
 		),
 		
 		'uf' => array(
@@ -107,7 +109,11 @@ class Fornecedor extends AppModel {
 				'allowEmpty' => true,
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
-			)
+			),
+		    'tamanho' => array(
+			   'rule' => array('minLength', '14'),
+			   'message' => 'São necessários 14 dígitios',
+		    ),
 		),
 		
 		'inscricao_estadual' => array(
@@ -120,7 +126,11 @@ class Fornecedor extends AppModel {
 				'allowEmpty' => true,
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
-			)
+			),
+		    'tamanho' => array(
+			   'rule' => array('minLength', '12'),
+			   'message' => 'São necessários 12 dígitios',
+		    )
 		),
 		
 		'cpf' => array(
@@ -133,7 +143,11 @@ class Fornecedor extends AppModel {
 				'allowEmpty' => true,
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
-			)
+			),
+		    'tamanho' => array(
+			   'rule' => array('minLength', '11'),
+			   'message' => 'São necessários 11 dígitios',
+		    ),
 		),
 		
 		'rg' => array(

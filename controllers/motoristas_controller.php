@@ -2,7 +2,7 @@
 
 class MotoristasController extends AppController {
 	var $name = 'Motoristas';
-	var $components = array('Geral');
+	var $components = array('Geral','RequestHandler');
 	var $helpers = array('CakePtbr.Formatacao');
 	var $paginate = array (
 		'limit' => 10,
@@ -57,7 +57,9 @@ class MotoristasController extends AppController {
 			}
 			if ($this->Motorista->save($this->data)) {
 				$this->Session->setFlash('Motorista cadastrado com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao cadastrar o motorista.','flash_erro');
@@ -98,7 +100,9 @@ class MotoristasController extends AppController {
 			}
 			if ($this->Motorista->save($this->data)) {
 				$this->Session->setFlash('Motorista atualizado com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao atualizar o motorista.','flash_erro');
@@ -113,7 +117,9 @@ class MotoristasController extends AppController {
 		if (! empty($id)) {
 			if ($this->Motorista->delete($id)) $this->Session->setFlash("Motorista $id excluído com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Motorista $id não pode ser excluído.",'flash_erro');
-			$this->redirect(array('action'=>'index'));
+			if ( ! $this->RequestHandler->isAjax() ) {
+				$this->redirect(array('action'=>'index'));
+			}
 		}
 		else {
 			$this->Session->setFlash('Motorista não informado.','flash_erro');

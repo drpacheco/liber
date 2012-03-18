@@ -53,7 +53,12 @@ class Cliente extends AppModel {
 				'allowEmpty' => false,
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
-			)
+			),
+		    'caracteres' => array (
+			   // se a expressao regular nao for verdadeira
+			   'rule' => array('custom', '/.*[^0-9].*/i'), 
+			   'message' => 'Há caracteres inválidos.'
+		    ),
 		),
 		
 		'nome_fantasia' => array(
@@ -81,8 +86,8 @@ class Cliente extends AppModel {
 		
 		'cidade' => array(
 			'allowEmpty' => false,
-			'rule' => 'alphanumeric',
-			'message' => 'Campo obrigatório. Somente letras e números.'
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
 		),
 		
 		'uf' => array(
@@ -117,7 +122,11 @@ class Cliente extends AppModel {
 				'allowEmpty' => true,
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
-			)
+			),
+		    'tamanho' => array(
+			   'rule' => array('minLength', '14'),
+			   'message' => 'São necessários 14 dígitios'
+		    ),
 		),
 		
 		'inscricao_estadual' => array(
@@ -130,7 +139,11 @@ class Cliente extends AppModel {
 				'allowEmpty' => true,
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
-			)
+			),
+		    'tamanho' => array(
+			   'rule' => array('minLength', '12'),
+			   'message' => 'São necessários 12 dígitios'
+		    )
 		),
 		
 		'cpf' => array(
@@ -143,7 +156,11 @@ class Cliente extends AppModel {
 				'allowEmpty' => true,
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
-			)
+			),
+		    'tamanho' => array(
+			   'rule' => array('minLength', '11'),
+			   'message' => 'São necessários 11 dígitios'
+		    ),
 		),
 		
 		'rg' => array(

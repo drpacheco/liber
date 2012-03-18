@@ -32,6 +32,9 @@ class CategoriaProdutosController extends AppController {
 			
 			if ($this->CategoriaProduto->save($this->data)) {
 				$this->Session->setFlash('Categoria de produto cadastrada com sucesso.','flash_sucesso');
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao cadastrar a categoria de produto.','flash_erro');
@@ -49,7 +52,9 @@ class CategoriaProdutosController extends AppController {
 			$this->data = $this->CategoriaProduto->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Categoria de produto não encontrada.','flash_erro');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 		}
 		else {
@@ -57,7 +62,9 @@ class CategoriaProdutosController extends AppController {
 			
 			if ($this->CategoriaProduto->save($this->data)) {
 				$this->Session->setFlash('Categoria de produto atualizada com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao atualizar a categoria de produto.');

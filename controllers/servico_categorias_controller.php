@@ -32,7 +32,9 @@ class ServicoCategoriasController extends AppController {
 			
 			if ($this->ServicoCategoria->save($this->data)) {
 				$this->Session->setFlash('Categoria de serviço cadastrada com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao cadastrar a categoria de serviço.','flash_erro');
@@ -49,7 +51,9 @@ class ServicoCategoriasController extends AppController {
 			$this->data = $this->ServicoCategoria->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Categoria de serviço não encontrada.','flash_erro');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 		}
 		else {
@@ -57,7 +61,9 @@ class ServicoCategoriasController extends AppController {
 			
 			if ($this->ServicoCategoria->save($this->data)) {
 				$this->Session->setFlash('Categoria de serviço atualizada com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao atualizar a categoria de serviço.','flash_erro');

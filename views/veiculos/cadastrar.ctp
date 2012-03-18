@@ -1,6 +1,14 @@
 <h2 class="descricao_cabecalho">Cadastrar veículo</h2>
 
-<?php print $form->create('Veiculo',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;')); ?>
+<?php
+if ($ajax->isAjax()) {
+	print $ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'Veiculo','update'=>'conteudo_ajax'));
+
+}
+else {
+	print $form->create('Veiculo',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
+?>
 <div class="divs_grupo_2">
 	<div class="div1_2">
 		<?php

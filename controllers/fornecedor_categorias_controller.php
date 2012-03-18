@@ -32,6 +32,9 @@ class FornecedorCategoriasController extends AppController {
 			
 			if ($this->FornecedorCategoria->save($this->data)) {
 				$this->Session->setFlash('Categoria de fornecedor cadastrada com sucesso.','flash_sucesso');
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao cadastrar a categoria de fornecedor.','flash_erro');
@@ -48,7 +51,9 @@ class FornecedorCategoriasController extends AppController {
 			$this->data = $this->FornecedorCategoria->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Categoria de fornecedor não encontrada.','flash_erro');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 		}
 		else {
@@ -56,7 +61,9 @@ class FornecedorCategoriasController extends AppController {
 			
 			if ($this->FornecedorCategoria->save($this->data)) {
 				$this->Session->setFlash('Categoria de fornecedor atualizada com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao atualizar a categoria de fornecedor.','flash_erro');
