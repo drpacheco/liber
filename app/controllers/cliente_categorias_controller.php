@@ -33,7 +33,6 @@ class ClienteCategoriasController extends AppController {
 			
 			if ($this->ClienteCategoria->save($this->data)) {
 				$this->Session->setFlash('Categoria de cliente cadastrada com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
 			}
 			else {
 				$this->Session->setFlash('Erro ao cadastrar a categoria de cliente.','flash_erro');
@@ -46,6 +45,8 @@ class ClienteCategoriasController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (empty ($this->data)) {
+			$this->ClienteCategoria->id = $id;
+			$this->ClienteCategoria->recursive = -1;
 			$this->data = $this->ClienteCategoria->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Categoria de cliente não encontrada.','flash_erro');

@@ -14,7 +14,7 @@
 </style>
 
 <script type="text/javascript">
-	//window.print();
+	window.print();
 </script>
 
 <div id="cupom">
@@ -55,7 +55,7 @@
 					print "<tr>";
 					print "<td> ${item['produto_nome']} </td>";
 					print "<td> ${item['quantidade']} </td>";
-					print "<td> ${item['preco_venda']} </td>";
+					print "<td>". $geral->numero2moeda($item['preco_venda'])." </td>";
 					print "</tr>\n";
 				}
 				?>
@@ -67,9 +67,9 @@
 	<br/>
 	
 	<p>
-		<span class="destaque">Valor bruto</span>: R$<?php print $venda['PedidoVenda']['valor_bruto']; ?>
+		<span class="destaque">Valor bruto</span>: R$<?php print $geral->numero2moeda($venda['PedidoVenda']['valor_bruto']); ?>
 		<br/>
-		<span class="destaque">Valor total</span>: R$<?php print $venda['PedidoVenda']['valor_liquido']; ?>
+		<span class="destaque">Valor total</span>: R$<?php print $geral->numero2moeda($venda['PedidoVenda']['valor_liquido']); ?>
 	</p>
 	
 	<p>

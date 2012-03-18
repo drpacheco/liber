@@ -1,58 +1,63 @@
 <?php
-/**
- * A ordem de serviço tem as seguintes situações:
- * O = Orçamento
- * S = Em espera
- * X = Em execução
- * F = Finalizada
- * E = Entregue
- * C = Cancelada
- */
 
 class ServicoOrdensController extends AppController {
 	var $name = 'ServicoOrdens';
 	var $components = array('RequestHandler','Geral','ContasReceber');
 	var $helpers = array('CakePtbr.Estados','Ajax', 'Javascript','CakePtbr.Formatacao', 'Geral');
-	var $paginate = array (
-		'limit' => 10,
-		'order' => array (
-			'ServicoOrdem.id' => 'desc'
-		)
-	);
 
 	/**
 	* @var $ServicoOrdem
 	*/
 	var $ServicoOrdem;
 	
+	/**
+	 * Obtem dados necessarios ao decorrer deste controller.
+	 * Os dados sao setados em variaveis a serem utilizadas nas views 
+	 */
 	function _obter_opcoes() {
-		$this->loadModel('Usuario');
-		$this->Usuario->recursive = -1;
-		$consulta1 = $this->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
+		$this->ServicoOrdem->Usuario->recursive = -1;
+		$consulta1 = $this->ServicoOrdem->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
 		'conditions'=>array('Usuario.eh_tecnico'=>'1','Usuario.ativo'=>'1')));
 		$this->set('opcoes_tecnico',$consulta1);
 		
-		$this->loadModel('FormaPagamento');
-		$this->FormaPagamento->recursive = -1;
-		$consulta2 = $this->FormaPagamento->find('list',array('fields'=>array('FormaPagamento.id','FormaPagamento.nome')));
+		$this->ServicoOrdem->FormaPagamento->recursive = -1;
+		$consulta2 = $this->ServicoOrdem->FormaPagamento->find('list',array('fields'=>array('FormaPagamento.id','FormaPagamento.nome')));
 		$this->set('opcoes_forma_pamamento',$consulta2);
 		
 		$this->ServicoOrdem->Empresa->recursive = -1;
 		$consulta3 = $this->ServicoOrdem->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
 		$this->set('opcoes_empresas',$consulta3);
 		
+		$situacoes = array (
+			'O' => 'Orçamento',
+			'S' => 'Em espera',
+			'X' => 'Em execução',
+			'F' => 'Finalizada',
+			'E' => 'Entregue',
+			'C' => 'Cancelada',
+		);
+		$this->set('opcoes_situacao',$situacoes);
 	}
 	
 	function _obter_opcoes_pesquisa() {
-		$this->loadModel('Usuario');
-		$this->Usuario->recursive = -1;
-		$consulta1 = $this->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
+		$this->ServicoOrdem->Usuario->recursive = -1;
+		$consulta1 = $this->ServicoOrdem->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
 		'conditions'=>array('Usuario.eh_tecnico'=>'1','Usuario.ativo'=>'1')));
-		$this->set('opcoes_tecnico',$consulta1);
+		$this->set('opcoes_tecnico',array_merge(array(0=>''),$consulta1));
 		
-		$consulta2 = $this->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
+		$consulta2 = $this->ServicoOrdem->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
 		'conditions'=>array('Usuario.ativo'=>'1')));
-		$this->set('opcoes_usuarios',$consulta2);
+		$this->set('opcoes_usuarios',array_merge(array(0=>''),$consulta2));
+		
+		$situacoes = array (
+			'O' => 'Orçamento',
+			'S' => 'Em espera',
+			'X' => 'Em execução',
+			'F' => 'Finalizada',
+			'E' => 'Entregue',
+			'C' => 'Cancelada',
+		);
+		$this->set('opcoes_situacao',$situacoes);
 	}
 	
 	/**
@@ -67,6 +72,7 @@ class ServicoOrdensController extends AppController {
 			$campos_ja_inseridos = array();
 			foreach ($itens as $item) {
 				$this->loadModel('Servico');
+				$this->Servico->recursive = -1;
 				$ret = $this->Servico->findById($item['servico_id']);
 				$n = $ret['Servico']['nome'];
 				$campos_ja_inseridos[$i] = array('servico_id'=>$item['servico_id']);
@@ -127,6 +133,14 @@ class ServicoOrdensController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
+		$this->_obter_opcoes();
+		$this->paginate['ServicoOrdem'] = array (
+			'limit' => 10,
+			'order' => array (
+				'ServicoOrdem.id' => 'desc'
+			),
+		     'contain' => array('Cliente.nome','Usuario.nome')
+		);
 		$dados = $this->paginate('ServicoOrdem');
 		$this->set('consulta',$dados);
 	}
@@ -139,8 +153,8 @@ class ServicoOrdensController extends AppController {
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			$this->_recupera_servicos_inseridos();
-			$this->loadModel('Cliente');
-			$r = $this->Cliente->find('first',
+			$this->ServicoOrdem->Cliente->recursive = -1;
+			$r = $this->ServicoOrdem->Cliente->find('first',
 				array('conditions'=>array(
 					'Cliente.id' => $this->data['ServicoOrdem']['cliente_id'],
 					'Cliente.situacao' => 'A')));
@@ -189,6 +203,7 @@ class ServicoOrdensController extends AppController {
 		$this->set("title_for_layout","Ordem de serviço"); 
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
+			$this->ServicoOrdem->contain('Cliente.nome','ServicoOrdemItem');
 			$this->data = $this->ServicoOrdem->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Ordem de serviço não encontrada.','flash_erro');
@@ -197,8 +212,8 @@ class ServicoOrdensController extends AppController {
 			else $this->_recupera_servicos_inseridos();
 		}
 		else {
-			$this->loadModel('Cliente');
-			$r = $this->Cliente->find('first',
+			$this->ServicoOrdem->Cliente->recursive = -1;
+			$r = $this->ServicoOrdem->Cliente->find('first',
 				array('conditions'=>array(
 					'Cliente.id' => $this->data['ServicoOrdem']['cliente_id'],
 					'Cliente.situacao' => 'A')));
@@ -207,6 +222,7 @@ class ServicoOrdensController extends AppController {
 				return null;
 			}
 			//a ordem de serviço pode ser editada apenas se nao tiver sido cancelada ou entregue
+			$this->ServicoOrdem->recursive = -1;
 			$s = strtoupper($this->ServicoOrdem->field('situacao'));
 			if ( ($s == 'E') || ($s == 'C') ) {
 				$this->Session->setFlash('A situação desta ordem de serviço impede que seja editada','flash_erro');
@@ -267,7 +283,9 @@ class ServicoOrdensController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
+		$this->_obter_opcoes();
 		$this->set("title_for_layout","Ordem de serviço");
+		$this->ServicoOrdem->contain('Cliente.nome','FormaPagamento.nome','ServicoOrdemItem');
 		$consulta = $this->ServicoOrdem->findById($id);
 		if (empty($consulta)) {
 			$this->Session->setFlash('Ordem de serviço não encontrada','flash_erro');
@@ -374,6 +392,13 @@ class ServicoOrdensController extends AppController {
 				$condicoes[] = array('ServicoOrdem.data_hora_fim BETWEEN ? AND ?'=>array($dados['data_hora_fim'].' 00:00:00',$dados['data_hora_fim'].' 23:59:59'));
 			}
 			if (! empty ($condicoes)) {
+				$this->paginate['ServicoOrdem'] = array(
+				    'limit' => 10,
+					'order' => array (
+						'ServicoOrdem.id' => 'desc'
+					),
+					'contain' => array('Cliente.nome')
+				);
 				$resultados = $this->paginate('ServicoOrdem',$condicoes);
 				if (! empty($resultados)) {
 					$num_encontrados = count($resultados);

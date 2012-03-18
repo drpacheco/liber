@@ -1,5 +1,3 @@
-<h2 class="descricao_cabecalho">Resumo das contas a receber</h2>
-
 <?php
 $javascript->link('jqplot/jquery.jqplot.js',false);
 $javascript->link('jqplot/plugins/jqplot.donutRenderer.js',false);
@@ -7,6 +5,7 @@ $javascript->link('jqplot/plugins/jqplot.pieRenderer.js',false);
 
 print $html->css('jquery.jqplot.css');
 ?>
+<h2 class="descricao_cabecalho">Resumo das contas a receber</h2>
 
 <script type="text/javascript">
 	$(document).ready(function(){

@@ -44,6 +44,7 @@ class FornecedorCategoriasController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (empty ($this->data)) {
+			$this->FornecedorCategoria->recursive = -1;
 			$this->data = $this->FornecedorCategoria->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Categoria de fornecedor não encontrada.','flash_erro');

@@ -46,7 +46,7 @@
 }
 
 .divs_grupo_2 {
-	background-color: white;
+	clear:both;
 }
 
 .div1_2, .div2_2 {
@@ -58,7 +58,7 @@
 }
 
 .divs_grupo_3 {
-	background-color: #FFFFFF;
+	clear:both;
 }
 
 .div1_3, .div2_3, .div3_3 {
@@ -113,7 +113,6 @@ table tr:nth-child(2n) td .noinput {
 	width: 100%;
 	border: none;
 	clear: none;
-	background-color: #FFFFFF;
 }
 
 div .grafico {

@@ -3,34 +3,29 @@
 class ReceberContasController extends AppController {
 	var $name = 'ReceberContas';
 	var $components = array('Sanitizacao');
-	var $helpers = array('CakePtbr.Formatacao','Javascript');
-	var $paginate = array (
-		'limit' => 10,
-		'order' => array (
-			'ReceberConta.id' => 'desc'
-		)
-	);
+	var $helpers = array('CakePtbr.Formatacao','Javascript','Jqplot');
 
 	/**
 	* @var $ReceberConta
 	*/
 	var $ReceberConta;
-
+	
+	/**
+	 * Obtem dados necessarios ao decorrer deste controller.
+	 * Os dados sao setados em variaveis a serem utilizadas nas views 
+	 */
 	function _obter_opcoes() {
-		$this->loadModel('TipoDocumento');
-		$this->TipoDocumento->recursive = -1;
-		$consulta1 = $this->TipoDocumento->find('list',array('fields'=>array('TipoDocumento.id','TipoDocumento.nome')));
-		$this->set('opcoes_tipo_documento',$consulta1);
+		$this->ReceberConta->TipoDocumento->recursive = -1;
+		$consulta1 = $this->ReceberConta->TipoDocumento->find('list',array('fields'=>array('TipoDocumento.id','TipoDocumento.nome')));
+		$this->set('opcoes_tipo_documento',array_merge(array(0=>''),$consulta1));
 		
-		$this->loadModel('Conta');
-		$this->Conta->recursive = -1;
-		$consulta2 = $this->Conta->find('list',array('fields'=>array('Conta.id','Conta.apelido')));
-		$this->set('opcoes_conta_origem',$consulta2);
+		$this->ReceberConta->Conta->recursive = -1;
+		$consulta2 = $this->ReceberConta->Conta->find('list',array('fields'=>array('Conta.id','Conta.apelido')));
+		$this->set('opcoes_conta_origem',array_merge(array(0=>''),$consulta2));
 		
-		$this->loadModel('PlanoConta');
-		$this->PlanoConta->recursive = -1;
-		$consulta3 = $this->PlanoConta->find('list',array('fields'=>array('PlanoConta.id','PlanoConta.nome')));
-		$this->set('opcoes_plano_contas',$consulta3);
+		$this->ReceberConta->PlanoConta->recursive = -1;
+		$consulta3 = $this->ReceberConta->PlanoConta->find('list',array('fields'=>array('PlanoConta.id','PlanoConta.nome')));
+		$this->set('opcoes_plano_contas',array_merge(array(0=>''),$consulta3));
 		
 		$this->ReceberConta->Empresa->recursive = -1;
 		$consulta4 = $this->ReceberConta->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
@@ -49,6 +44,13 @@ class ReceberContasController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
+		$this->paginate['ReceberConta'] = array (
+		    'limit' => 10,
+			'order' => array (
+				'ReceberConta.id' => 'desc'
+			),
+		    'contain' => array('TipoDocumento.nome','Conta.nome','PlanoConta.nome','Empresa.nome','Cliente.nome','Fornecedor.nome'),
+		);
 		$dados = $this->paginate('ReceberConta');
 		$this->set('consulta_conta_receber',$dados);
 		$this->_obter_opcoes();
@@ -62,16 +64,16 @@ class ReceberContasController extends AppController {
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			if (strtoupper($this->data['ReceberConta']['eh_cliente_ou_fornecedor']) == 'C') {
-				$this->loadModel('Cliente');
-				$r = $this->Cliente->find('first',
+				$this->ReceberConta->Cliente->recursive = -1;
+				$r = $this->ReceberConta->Cliente->find('first',
 					array('conditions'=>array(
 						'Cliente.id' => $this->data['ReceberConta']['cliente_fornecedor_id'],
 						'Cliente.situacao' => 'A')));
 				if (! empty($r)) $cliente_fornecedor_encontrado = true;
 			}
 			else if (strtoupper($this->data['ReceberConta']['eh_cliente_ou_fornecedor']) == 'F') {
-				$this->loadModel('Fornecedor');
-				$r = $this->Fornecedor->find('first',
+				$this->ReceberConta->Fornecedor->recursive = -1;
+				$r = $this->ReceberConta->Fornecedor->find('first',
 					array('conditions'=>array(
 						'Fornecedor.id' => $this->data['ReceberConta']['cliente_fornecedor_id'],
 						'Fornecedor.situacao' => 'A')));
@@ -101,6 +103,7 @@ class ReceberContasController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
+			$this->ReceberConta->contain('TipoDocumento.nome','Conta.nome','PlanoConta.nome','Empresa.nome','Cliente.nome','Fornecedor.nome');
 			$this->data = $this->ReceberConta->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Conta a receber não encontrada.','flash_erro');
@@ -113,16 +116,16 @@ class ReceberContasController extends AppController {
 		else {
 			$this->data['ReceberConta']['id'] = $id;
 			if (strtoupper($this->data['ReceberConta']['eh_cliente_ou_fornecedor']) == 'C') {
-				$this->loadModel('Cliente');
-				$r = $this->Cliente->find('first',
+				$this->ReceberConta->Cliente->recursive = -1;
+				$r = $this->ReceberConta->Cliente->find('first',
 					array('conditions'=>array(
 						'Cliente.id' => $this->data['ReceberConta']['cliente_fornecedor_id'],
 						'Cliente.situacao' => 'A')));
 				if (! empty($r)) $cliente_fornecedor_encontrado = true;
 			}
 			else if (strtoupper($this->data['ReceberConta']['eh_cliente_ou_fornecedor']) == 'F') {
-				$this->loadModel('Fornecedor');
-				$r = $this->Fornecedor->find('first',
+				$this->ReceberConta->Fornecedor->recursive = -1;
+				$r = $this->ReceberConta->Fornecedor->find('first',
 					array('conditions'=>array(
 						'Fornecedor.id' => $this->data['ReceberConta']['cliente_fornecedor_id'],
 						'Fornecedor.situacao' => 'A')));
@@ -167,6 +170,9 @@ class ReceberContasController extends AppController {
 		if (! empty($this->data)) {
 			//usuario enviou os dados da pesquisa
 			$url = array('controller'=>'receberContas','action'=>'pesquisar');
+			// as / das datas sao trocas por - para nao interferir no padrao de url do CAKE
+			if ( ! empty($this->data['ReceberConta']['data_inicio']) ) $this->data['ReceberConta']['data_inicio'] = preg_replace ('/\//', '-', $this->data['ReceberConta']['data_inicio']);
+			if ( ! empty($this->data['ReceberConta']['data_fim']) ) $this->data['ReceberConta']['data_fim'] = preg_replace ('/\//', '-', $this->data['ReceberConta']['data_fim']);
 			$params = array_merge($url,$this->data['ReceberConta']);
 			$this->redirect($params);
 		}
@@ -182,9 +188,26 @@ class ReceberContasController extends AppController {
 			if (! empty($dados['id'])) $condicoes[] = array('ReceberConta.id'=>$dados['id']);
 			if (! empty($dados['tipo_documento'])) $condicoes[] = array('ReceberConta.tipo_documento'=>$dados['tipo_documento']);
 			if (! empty($dados['conta_origem'])) $condicoes[] = array('ReceberConta.conta_origem'=>$dados['conta_origem']);
-			if (! empty($dados['plano_conta_id'])) $condicoes[] = array('ReceberConta.rg'=>$dados['plano_conta_id']);
+			if (! empty($dados['plano_conta_id'])) $condicoes[] = array('ReceberConta.id'=>$dados['plano_conta_id']);
 			if (! empty($dados['situacao'])) $condicoes[] = array('ReceberConta.situacao'=>$dados['situacao']);
+			if (! empty($dados['data_inicio'])) {
+				$data = explode('-',$dados['data_inicio']);
+				$data = "${data[2]}-${data[1]}-${data[0]}";
+				$condicoes[] = array('ReceberConta.data_hora_cadastrada <='=> $data);
+			}
+			if (! empty($dados['data_fim'])) {
+				$data = explode('-',$dados['data_fim']);
+				$data = "${data[2]}-${data[1]}-${data[0]}";
+				$condicoes[] = array('ReceberConta.data_hora_cadastrada >='=> $data);
+			}
 			if (! empty ($condicoes)) {
+				$this->paginate['ReceberConta'] = array (
+				'limit' => 10,
+					'order' => array (
+						'ReceberConta.id' => 'desc'
+					),
+				'contain' => array('TipoDocumento.nome','Conta.nome','PlanoConta.nome','Cliente.nome','Fornecedor.nome'),
+				);
 				$resultados = $this->paginate('ReceberConta',$condicoes);
 				if (! empty($resultados)) {
 					$num_encontrados = count($resultados);

@@ -1,7 +1,7 @@
 <?php
 class ServicoOrdem extends AppModel {
 	var $name = 'ServicoOrdem';
-	var $actsAs = array('CakePtbr.AjusteFloat');
+	var $actsAs = array('CakePtbr.AjusteFloat','containable');
 	var $belongsTo = array(
 		'Cliente' => array(
 			'className' => 'Cliente',

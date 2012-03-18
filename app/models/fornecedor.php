@@ -3,6 +3,7 @@
 class Fornecedor extends AppModel {
 	
 	var $name = 'Fornecedor'; // para compatibilidade com o PHP 4
+	var $actsAs = array('Containable');
 	var $belongsTo = array(
 		'FornecedorCategoria' => array(
 			'className' => 'FornecedorCategoria'
@@ -80,9 +81,14 @@ class Fornecedor extends AppModel {
 		),
 		
 		'cep' => array(
-			'allowEmpty' => false,
-			'rule' => 'notEmpty',
-			'message' => 'Campo obrigatório. Somente números.'
+			'obrigatorio' => array (
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
+			'valido' => array(
+				'rule' => array('postal',null,'br'),
+				'message' => 'CEP inválido.'
+			),
 		),
 		
 		'endereco_email' => array (

@@ -37,13 +37,11 @@
 			<td><?php print $usuario['Usuario']['ultimo_login']; ?></td>
 			<td><?php print $usuario['Usuario']['ultimo_logout']; ?></td>
 			<td>
-				<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-				href="'.$html->url(array('action'=>'excluir')).'/'.$usuario['Usuario']['id'].'">'.
-				$html->image('del24x24.png', array('alt'=>'Excluir'))
-				.'</a>';?>
+				<?php print $this->element('painel_editar',array('id'=>$usuario['Usuario']['id'])) ;?>
 			</td>
-			<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-			'alt'=>'Editar','url'=>array('action'=>'editar',$usuario['Usuario']['id']))) ?></td>
+			<td>
+				<?php print $this->element('painel_excluir',array('id'=>$usuario['Usuario']['id'])) ;?>
+			</td>
 		</tr>
 
 <?php endforeach ?>

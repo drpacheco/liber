@@ -18,3 +18,7 @@ outros/anotacoes.txt
 app/config/database.php
 app/aptana_helpers.php
 outros/ico
+!/app/plugins/
+!/app/vendors/
+!/plugins/
+!/vendors/

@@ -16,6 +16,10 @@ class FornecedoresController extends AppController {
 	*/
 	var $Fornecedor;
 
+	/**
+	 * Obtem dados necessarios ao decorrer deste controller.
+	 * Os dados sao setados em variaveis a serem utilizadas nas views 
+	 */
 	function _obter_opcoes() {
 		$this->loadModel('FornecedorCategoria');
 		$this->FornecedorCategoria->recursive = -1;
@@ -66,6 +70,7 @@ class FornecedoresController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
+			$this->Fornecedor->recursive = -1;
 			$this->data = $this->Fornecedor->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Fornecedor não encontrado.','flash_erro');
@@ -140,6 +145,7 @@ class FornecedoresController extends AppController {
 		}
 		if ($id) {
 			$this->Fornecedor->id = $id;
+			$this->Fornecedor->contain('Usuario','Usuario2');
 			$r = $this->Fornecedor->read();
 			if (empty($r)) {
 				$this->Session->setFlash("Fornecedor $id não encontrado");

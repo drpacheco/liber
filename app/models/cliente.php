@@ -1,8 +1,11 @@
 <?php
 
+App::import('Lib', 'Localized.BrValidation');
+
 class Cliente extends AppModel {
 	#FIXME corrigir o tipo de validação dos campos somente letras e numeros
 	var $name = 'Cliente';
+	var $actsAs = array('Containable');
 	var $belongsTo = array(
 		'ClienteCategoria' => array(
 			'className' => 'ClienteCategoria'
@@ -92,9 +95,9 @@ class Cliente extends AppModel {
 				'rule' => 'notEmpty',
 				'message' => 'Campo obrigatório.'
 			),
-			'numerico' => array(
-				'rule' => 'numeric',
-				'message' => 'Somente números.'
+			'valido' => array(
+				'rule' => array('postal',null,'br'),
+				'message' => 'CEP inválido.'
 			),
 		),
 		

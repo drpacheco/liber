@@ -2,6 +2,7 @@
 
 class Veiculo extends AppModel {
 	var $name = 'Veiculo';
+	var $actsAs = array('Containable');
 	var $hosOne = array(
 		'Veiculo' => array(
 			'className' => 'veiculo',

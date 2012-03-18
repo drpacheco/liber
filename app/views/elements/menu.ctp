@@ -13,10 +13,16 @@
 					<li><?php print $html -> link('Pesquisar', "/fornecedores/pesquisar");?></li>
 					<li><?php print $html -> link('Listar', "/fornecedores/");?></li>
 					<li>
-						<?php print $html -> link('Categorias', "/fornecedorCategorias",array('class' => 'ajax_link_dialog'));?>
+						<?php print $html -> link('Categorias', "/fornecedorCategorias");?>
 						<ul>
-							<li><?php print $html -> link('Cadastrar', "/fornecedorCategorias/cadastrar",array('class' => 'ajax_link_dialog'));?></li>
-							<li><?php print $html -> link('Listar', "/fornecedorCategorias",array('class' => 'ajax_link_dialog'));?></li>
+							<li>
+								<?php print $html -> link('Cadastrar', "/fornecedorCategorias/cadastrar",
+									   array('class' => 'ajax_link_dialog',
+										'data-ajax_link_dialog_altura'=>'300',
+										'data-ajax_link_dialog_largura'=>'500',
+										'data-ajax_link_dialog_titulo'=>'Categoria de fornecedores'));?>
+							</li>
+							<li><?php print $html -> link('Listar', "/fornecedorCategorias");?></li>
 						</ul>
 					</li>
 				</ul>
@@ -28,10 +34,16 @@
 					<li><?php print $html -> link('Pesquisar', "/produtos/pesquisar");?></li>
 					<li><?php print $html -> link('Listar', "/produtos/");?></li>
 					<li>
-						<?php print $html -> link('Categorias', "/categoriaProdutos",array('class' => 'ajax_link_dialog'));?>
+						<?php print $html -> link('Categorias', "/categoriaProdutos");?>
 						<ul>
-							<li><?php print $html -> link('Cadastrar', "/categoriaProdutos/cadastrar",array('class' => 'ajax_link_dialog'));?></li>
-							<li><?php print $html -> link('Listar', "/categoriaProdutos",array('class' => 'ajax_link_dialog'));?></li>
+							<li>
+								<?php print $html -> link('Cadastrar', "/categoriaProdutos/cadastrar",
+									    array('class' => 'ajax_link_dialog',
+										'data-ajax_link_dialog_altura'=>'300',
+										'data-ajax_link_dialog_largura'=>'500',
+										'data-ajax_link_dialog_titulo'=>'Categoria de produtos'));?>
+							</li>
+							<li><?php print $html -> link('Listar', "/categoriaProdutos");?></li>
 						</ul>
 					</li>
 				</ul>
@@ -46,13 +58,19 @@
 				<?php print $html -> link('Clientes', "/clientes");?>
 				<ul>
 					<li><?php print $html -> link('Cadastrar', "/clientes/cadastrar");?></li>
-					<li><?php print $html -> link('Pesquisar', "/clientes/pesquisar",array('class' => 'ajax_link_dialog'));?></li>
+					<li><?php print $html -> link('Pesquisar', "/clientes/pesquisar");?></li>
 					<li><?php print $html -> link('Listar', "/clientes/");?></li>
 					<li>
-						<?php print $html -> link('Categorias', "/clienteCategorias",array('class' => 'ajax_link_dialog','data-ajax_link_dialog_altura'=>'500','data-ajax_link_dialog_largura'=>'500','data-ajax_link_dialog_titulo'=>'categorias de cliente'));?>
+						<?php print $html -> link('Categorias', "/clienteCategorias");?>
 						<ul>
-							<li><?php print $html -> link('Cadastrar', "/clienteCategorias/cadastrar",array('class' => 'ajax_link_dialog','data-ajax_link_dialog_altura'=>'500','data-ajax_link_dialog_largura'=>'500','data-ajax_link_dialog_titulo'=>'cadastrar categorias de cliente'));?></li>
-							<li><?php print $html -> link('Listar', "/clienteCategorias",array('class' => 'ajax_link_dialog','data-ajax_link_dialog_altura'=>'500','data-ajax_link_dialog_largura'=>'500','data-ajax_link_dialog_titulo'=>'categorias de cliente'));?></li>
+							<li>
+								<?php print $html -> link('Cadastrar', "/clienteCategorias/cadastrar",
+								    array('class' => 'ajax_link_dialog',
+										'data-ajax_link_dialog_altura'=>'300',
+										'data-ajax_link_dialog_largura'=>'500',
+										'data-ajax_link_dialog_titulo'=>'Categoria de clientes'));?>
+							</li>
+							<li><?php print $html -> link('Listar', "/clienteCategorias");?></li>
 						</ul>
 					</li>
 				</ul>
@@ -79,8 +97,33 @@
 					<li><?php print $html -> link('Listar', "/servicoOrdens");?></li>
 				</ul>
 			</li>
-			<li><?php print $html -> link('Serviços', "/servicos/",array('class' => 'ajax_link_dialog'));?></li>
-			<li><?php print $html -> link('Categorias de serviços', "/servicoCategorias",array('class' => 'ajax_link_dialog'));?></li>
+			<li>
+				<a href="#">Serviços</a>
+				<ul>
+					<li>
+						<?php print $html -> link('Cadastrar', "/servicos/cadastrar",
+							   array('class' => 'ajax_link_dialog',
+							'data-ajax_link_dialog_altura'=>'400',
+							'data-ajax_link_dialog_largura'=>'500',
+							'data-ajax_link_dialog_titulo'=>'Cadastrar serviço'));?>
+					</li>
+					<li><?php print $html -> link('Listar', "/servicos");?></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">Categorias</a>
+				<ul>
+					<li>
+						<?php print $html -> link('Cadastrar', "/servicoCategorias/cadastrar",
+						array('class' => 'ajax_link_dialog',
+							'data-ajax_link_dialog_altura'=>'300',
+							'data-ajax_link_dialog_largura'=>'500',
+							'data-ajax_link_dialog_titulo'=>'Categoria de serviços'));?>
+					</li>
+					<li><?php print $html -> link('Listar', "/servicoCategorias/index"); ?></li>
+				</ul>
+			</li>
+			
 		</ul>
 	</li>
 	
@@ -88,7 +131,7 @@
 		<a href="#">Expedição</a>
 		<ul>
 			<li>
-				<?php print $html -> link('Carregamento', "/carregamentos/",array('class' => 'ajax_link_dialog'));?>
+				<?php print $html -> link('Carregamento', "/carregamentos/");?>
 				<ul>
 					<li><?php print $html -> link('Cadastrar', "/carregamentos/cadastrar");?></li>
 					<li><?php print $html -> link('Enviar', "/carregamentos/enviar");?></li>
@@ -131,7 +174,7 @@
 				</ul>
 			</li>
 			<li><?php print $html -> link('Plano de contas', "/planoContas/");?></li>
-			<li><?php print $html -> link('Tipos de documentos', "/tipoDocumentos/",array('class' => 'ajax_link_dialog'));?></li>
+			<li><?php print $html -> link('Tipos de documentos', "/tipoDocumentos/");?></li>
 			<li class="separador"></li>
 			<li><?php print $html -> link('Formas de pagamento', "/formaPagamentos");?></li>
 			<li><?php print $html -> link('Contas', "/contas/");?></li>
@@ -149,8 +192,22 @@
 				</ul>
 			</li>
 			<li><?php print $html -> link('Usuários', "/usuarios/");?></li>
-			<li><?php print $html -> link('Ajuda', "/sistema/ajuda",array('class' => 'ajax_link_dialog'));?></li>
-			<li><?php print $html -> link('Sobre', "/sistema/sobre",array('class' => 'ajax_link_dialog'));?></li>
+			<li>
+				<?php print $html -> link('Ajuda', "/sistema/ajuda",
+					   array('class' => 'ajax_link_dialog',
+						  'data-ajax_link_dialog_altura'=>'500',
+						  'data-ajax_link_dialog_largura'=>'500',
+						  'data-ajax_link_dialog_titulo'=>'Ajuda'));
+				?>
+			</li>
+			<li>
+				<?php print $html -> link('Sobre', "/sistema/sobre",
+				   array('class' => 'ajax_link_dialog',
+						  'data-ajax_link_dialog_altura'=>'500',
+						  'data-ajax_link_dialog_largura'=>'500',
+						  'data-ajax_link_dialog_titulo'=>'Sobre'));
+				?>
+			</li>
 			<li><?php print $html -> link('Sair', "/usuarios/logout");?></li>
 		</ul>
 	</li>

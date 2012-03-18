@@ -26,13 +26,11 @@
 			<td><?php print $veiculo['Veiculo']['fabricante']; ?></td>
 			<td><?php print $veiculo['Veiculo']['ano']; ?></td>
 			<td>
-				<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-				href="'.$html->url(array('action'=>'excluir')).'/'.$veiculo['Veiculo']['id'].'">'.
-				$html->image('del24x24.png', array('alt'=>'Excluir'))
-				.'</a>';?>
+				<?php print $this->element('painel_editar',array('id'=>$veiculo['Veiculo']['id'])) ;?>
 			</td>
-			<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-			'alt'=>'Editar','url'=>array('action'=>'editar',$veiculo['Veiculo']['id']))) ?></td>
+			<td>
+				<?php print $this->element('painel_excluir',array('id'=>$veiculo['Veiculo']['id'])) ;?>
+			</td>
 		</tr>
 
 <?php endforeach ?>

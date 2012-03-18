@@ -23,7 +23,7 @@
 	<p>
 		Liber é um <a target="_blank" href="http://br-linux.org/faq-softwarelivre/">software livre</a>
 		disponibilizado sob a Licença Pública Geral GNU (<a target="_blank" href="http://pt.wikipedia.org/wiki/GNU_General_Public_License">GPL</a>)
-		criado por <a target="_blank" href="http://identi.ca/tobiassf">Tobias</a>.
+		em sua versão 3 ou posterior.
 		<br/>
 		<br/>
 		<input type="button" id="verlicenca" value="Visualizar licença" />

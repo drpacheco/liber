@@ -4,13 +4,6 @@ class ServicosController extends AppController {
 	var $name = 'Servicos';
 	var $components = array('RequestHandler');
 	var $helpers = array('Ajax', 'Javascript');
-	var $paginate = array (
-		'limit' => 10,
-		'order' => array (
-			'Servico.id' => 'desc'
-		)
-	);
-	var $opcoes_servico_categoria = array();
 	
 	/**
 	* @var $Servico
@@ -18,13 +11,12 @@ class ServicosController extends AppController {
 	var $Servico;
 
 	/**
-	 * Obtem dados do banco e popula as variaveis globais
-	 * $opcoes_servico_categoria
+	 * Obtem dados necessarios ao decorrer deste controller.
+	 * Os dados sao setados em variaveis a serem utilizadas nas views 
 	 */
 	function _obter_opcoes() {
-		$this->loadModel('ServicoCategoria');
-		$this->ServicoCategoria->recursive = -1;
-		$consulta1 = $this->ServicoCategoria->find('list',array('fields'=>array('ServicoCategoria.id','ServicoCategoria.nome')));
+		$this->Servico->ServicoCategoria->recursive = -1;
+		$consulta1 = $this->Servico->ServicoCategoria->find('list',array('fields'=>array('ServicoCategoria.id','ServicoCategoria.nome')));
 		$this->set('opcoes_servico_categoria',$consulta1);
 		
 		return null;
@@ -35,6 +27,13 @@ class ServicosController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
+		$this->paginate = array (
+			'limit' => 10,
+			'order' => array (
+				'Servico.id' => 'desc'
+			),
+		    'contain' => array('ServicoCategoria'),
+		);
 		$dados = $this->paginate('Servico');
 		$this->set('consulta',$dados);
 	}
@@ -48,7 +47,6 @@ class ServicosController extends AppController {
 			
 			if ($this->Servico->save($this->data)) {
 				$this->Session->setFlash('Serviço cadastrado com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
 			}
 			else {
 				$this->Session->setFlash('Erro ao cadastrar o serviço.','flash_erro');
@@ -62,6 +60,7 @@ class ServicosController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
+			$this->Servico->contain('ServicoCategoria');
 			$this->data = $this->Servico->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Serviço não encontrado.','flash_erro');
@@ -113,6 +112,7 @@ class ServicosController extends AppController {
 			else {
 				$condicoes = array("Servico.$campo LIKE" => '%'.$termo.'%');
 			}
+			$this->Servico->recursive = -1;
 			$resultados = $this->Servico->find('all',array('fields' => array('id','nome','valor'),'conditions'=>$condicoes));
 			if (!empty($resultados)) {
 				foreach ($resultados as $r) {

@@ -107,7 +107,7 @@ print $form->create(null,array('controller'=>'pedidoVendas','action'=>'pesquisar
 <?php print $form->end('Pesquisar'); ?>
 
 <?php if (isset($num_resultados) && $num_resultados > 0) : ?>
-	<table class="resultados">
+	<table class="padrao">
 		<thead>
 			<tr>
 				<th><?php print $paginator->sort('Cód','id'); ?></th>
@@ -127,15 +127,14 @@ print $form->create(null,array('controller'=>'pedidoVendas','action'=>'pesquisar
 					<td><?php print $r['PedidoVenda']['cliente_id'].' '.$r['Cliente']['nome']; ?></td>
 					<td><?php print $opcoes_situacoes[$r['PedidoVenda']['situacao']]; ?></td>
 					<td><?php print $r['PedidoVenda']['valor_liquido']; ?></td>
-					<td><?php print $html->image('detalhar24x24.png',array('title'=>'Detalhar',
-					'alt'=>'Detalhar','url'=>array('action'=>'detalhar',$r['PedidoVenda']['id']))) ?></td>
-					<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-					'alt'=>'Editar','url'=>array('action'=>'editar',$r['PedidoVenda']['id']))) ?></td>
 					<td>
-						<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-						href="'.$html->url(array('action'=>'excluir')).'/'.$r['PedidoVenda']['id'].'">'.
-						$html->image('del24x24.png', array('alt'=>'Excluir'))
-						.'</a>';?>
+						<?php print $this->element('painel_detalhar',array('id'=>$r['PedidoVenda']['id'])) ;?>
+					</td>
+					<td>
+						<?php print $this->element('painel_editar',array('id'=>$r['PedidoVenda']['id'])) ;?>
+					</td>
+					<td>
+						<?php print $this->element('painel_excluir',array('id'=>$r['PedidoVenda']['id'])) ;?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

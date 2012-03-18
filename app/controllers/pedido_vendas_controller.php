@@ -1,12 +1,4 @@
 <?php
-/**
- * O pedido de venda tem as seguintes situações:
- * A = Aberto
- * O = Orçamento
- * C = Cancelado
- * V = Vendido
- * T = Travado
- */
 
 //#TODO criar alerta caso o(s) pedido(s) totalize(m) um valor maior que o limite de credito  
 //#TODO ao cancelar um pedido de venda a conta a receber nao é cancela. Cancelar?
@@ -26,10 +18,14 @@ class PedidoVendasController extends AppController {
 	*/
 	var $PedidoVenda;
 	
+	/**
+	 * Obtem dados necessarios ao decorrer deste controller.
+	 * Os dados sao setados em variaveis a serem utilizadas nas views 
+	 */
 	function _obter_opcoes() {
 		$this->PedidoVenda->FormaPagamento->recursive = -1;
-		$opcoes_forma_pamamento = $this->PedidoVenda->FormaPagamento->find('list',array('fields'=>array('FormaPagamento.id','FormaPagamento.nome')));
-		$this->set('opcoes_forma_pamamento',$opcoes_forma_pamamento);
+		$opcoes_forma_pagamento = $this->PedidoVenda->FormaPagamento->find('list',array('fields'=>array('FormaPagamento.id','FormaPagamento.nome')));
+		$this->set('opcoes_forma_pamamento',$opcoes_forma_pagamento);
 		
 		$this->PedidoVenda->Empresa->recursive = -1;
 		$opcoes_empresas = $this->PedidoVenda->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
@@ -59,9 +55,9 @@ class PedidoVendasController extends AppController {
 		if (isset($data['PedidoVendaItem'])) {
 			$itens = $data['PedidoVendaItem'];
 			$i = 0;
-			$valor_total = 0;
 			$campos_ja_inseridos = array();
 			foreach ($itens as $item) {
+                    $this->PedidoVenda->PedidoVendaItem->Produto->recursive = -1;
 				$n = $this->PedidoVenda->PedidoVendaItem->Produto->findById($item['produto_id']);
 				$n = $n['Produto']['nome'];
 				$campos_ja_inseridos[$i] = array('produto_id'=>$item['produto_id']);
@@ -77,6 +73,12 @@ class PedidoVendasController extends AppController {
 		return 0;
 	}
 	
+	/**
+	 * Calcula valor bruto e liquido do pedido de venda
+	 * 
+	 * @param $data Geralmente é o mesmo que $this->data
+	 * @return array ('valor_bruto' => $valor_bruto, 'valor_liquido' => $valor_liquido)
+	 */
 	function _calcular_valores($data) {
 		$valor_bruto = 0;
 		$valor_liquido = 0;
@@ -108,6 +110,8 @@ class PedidoVendasController extends AppController {
 	}
 	
 	/**
+	 * Caso o pedido de venda esteja finalizado é gerada uma conta a receber
+	 * utilizando o Componente ContasReceber
 	 * @see Component ContasReceber
 	 */
 	function _gerar_conta_receber($valor_total=null) {
@@ -125,12 +129,11 @@ class PedidoVendasController extends AppController {
 	}
 	
 	/**
-	 * Faz a baixe do estoque de determinados produtos	
+	 * Faz a baixa do estoque dos itens contidos em $this->data['PedidoVendaItem']
 	 * 
-	 * @return true em caso de sucesso
+	 * @return true e dados modificados no banco em caso de sucesso
 	 * @return false em caso de falha
 	 * @return null caso a baixa no estoque nao seja aplicavel a situacao
-	 * @return dados modificados no banco
 	 */
 	function _baixar_estoque() {
 		// apenas baixa o estoque se o pedido estiver Vendido
@@ -189,6 +192,12 @@ class PedidoVendasController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
+		// Filtrando os dados solicitados na query
+		$dados = $this->paginate['PedidoVenda'] = array(
+		    'contain' => array('Cliente.nome','FormaPagamento.nome'),
+		    'order' => 'PedidoVenda.id DESC',
+		    'limit' => 10,
+		);
 		$dados = $this->paginate('PedidoVenda');
 		$this->set('consulta',$dados);
 		$this->_obter_opcoes();
@@ -202,8 +211,8 @@ class PedidoVendasController extends AppController {
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			$this->_recupera_produtos_inseridos($this->data);
-			$this->loadModel('Cliente');
-			$r = $this->Cliente->find('first',
+			$this->PedidoVenda->Cliente->recursive = -1;
+			$r = $this->PedidoVenda->Cliente->find('first',
 				array('conditions'=>array(
 					'Cliente.id' => $this->data['PedidoVenda']['cliente_id'],
 					'Cliente.situacao' => 'A')));
@@ -261,6 +270,7 @@ class PedidoVendasController extends AppController {
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
 			$this->PedidoVenda->id = $id;
+			$this->PedidoVenda->contain('PedidoVendaItem','Cliente.nome');
 			$this->data = $this->PedidoVenda->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Pedido de venda não encontrado.','flash_erro');
@@ -281,8 +291,8 @@ class PedidoVendasController extends AppController {
 		}
 		else {
 			$this->_recupera_produtos_inseridos($this->data);
-			$this->loadModel('Cliente');
-			$r = $this->Cliente->find('first',
+			$this->PedidoVenda->Cliente->recursive = -1;
+			$r = $this->PedidoVenda->Cliente->find('first',
 				array('conditions'=>array(
 					'Cliente.id' => $this->data['PedidoVenda']['cliente_id'],
 					'Cliente.situacao' => 'A')));
@@ -340,7 +350,7 @@ class PedidoVendasController extends AppController {
 					$this->Session->setFlash("Pedido de venda alterado com sucesso.<br/>"
 					."<a href='#' onclick=popup('pedido_vendas/cupomNaoFiscal/{$this->PedidoVenda->id}','300','300') > Imprimir cupom não fiscal</a>"."
 					",'flash_sucesso');
-					//$this->redirect(array('action'=>'index'));
+					$this->redirect(array('action'=>'index'));
 				}
 			}
 			else {
@@ -356,6 +366,7 @@ class PedidoVendasController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		$this->set("title_for_layout","Pedido de venda");
+		$this->PedidoVenda->contain('PedidoVendaItem','Cliente.nome','FormaPagamento.nome');
 		$consulta = $this->PedidoVenda->findById($id);
 		if (empty($consulta)) {
 			$this->Session->setFlash('Pedido de venda não encontrado','flash_erro');
@@ -381,6 +392,7 @@ class PedidoVendasController extends AppController {
 		}
 		if (! empty($id)) {
 			$this->PedidoVenda->id = $id;
+			$this->PedidoVenda->recursive = -1;
 			$r = $this->PedidoVenda->field('situacao');
 			if (empty ($r)) {
 				$this->Session->setFlash('Pedido de venda não encontrado','flash_erro');
@@ -390,7 +402,7 @@ class PedidoVendasController extends AppController {
 			//Uma pedido de venda apenas pode ser deletado se sua situacao for 'Orçamento' ou 'Aberto'
 			$r = strtoupper($r);
 			if ( ($r != 'O') && ($r != 'A') ) {
-				$this->Session->setFlash('A situação do pedido de venda impede a sua exclusão. Talvez você deva apenas cancelá-lo','flash_erro');
+				$this->Session->setFlash("A situação do pedido de venda ${id} impede a sua exclusão. Talvez você deva apenas cancelá-lo",'flash_erro');
 				$this->redirect(array('action'=>'index'));
 				return false;
 			}
@@ -419,7 +431,7 @@ class PedidoVendasController extends AppController {
 		if (! empty($this->data)) {
 			//usuario enviou os dados da pesquisa
 			$url = array('controller'=>'PedidoVendas','action'=>'pesquisar');
-			//trocandos as barras dos campos de data, pois estes parametros, caso existam, vou para a url
+			//trocando as barras dos campos de data, pois estes parametros, caso existam, vao para a url
 			if (!empty($this->data['PedidoVenda']['data_hora_cadastrado'])) $this->data['PedidoVenda']['data_hora_cadastrado'] = preg_replace('/\//', '-', $this->data['PedidoVenda']['data_hora_cadastrado']);
 			// codificando os parametros
 			if( is_array($this->data['PedidoVenda']) ) {
@@ -448,6 +460,11 @@ class PedidoVendasController extends AppController {
 				$condicoes[] = array('PedidoVenda.data_hora_cadastrada BETWEEN ? AND ?'=>array($dados['data_hora_cadastrada'].' 00:00:00',$dados['data_hora_cadastrada'].' 23:59:59'));
 			}
 			if (! empty ($condicoes)) {
+				$this->paginate['PedidoVenda'] = array(
+				    'limit' => 10,
+				    'order' => 'PedidoVenda.id DESC',
+				    'contain' => array ('Cliente.nome'),
+				);
 				$resultados = $this->paginate('PedidoVenda',$condicoes);
 				if (! empty($resultados)) {
 					$num_encontrados = count($resultados);
@@ -464,11 +481,16 @@ class PedidoVendasController extends AppController {
 		}
 	}
 
+	/**
+	 * Gera um simples cupom de venda, que não tem valor fiscal.
+	 * @param $id do pedido de venda
+	 */
 	function cupomNaoFiscal ($id = null) {
 		$this->layout = 'limpo';
 		$this->set("title_for_layout","Cupom não fiscal (venda $id)");
 		
 		$this->PedidoVenda->id = $id;
+		$this->PedidoVenda->contain('Empresa','Cliente.nome','FormaPagamento.nome','PedidoVendaItem');
 		$venda = $this->PedidoVenda->read();
 		$i=0;
 		foreach ($venda['PedidoVendaItem'] as $item) {

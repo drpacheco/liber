@@ -71,7 +71,7 @@ print $form->create(null,array('controller'=>'fornecedores','action'=>'pesquisar
 </div>
 
 <?php if (isset($num_resultados) && $num_resultados > 0) : ?>
-	<table class="resultados">
+	<table class="padrao">
 		<thead>
 			<tr>
 				<th><?php print $paginator->sort('Cód','id'); ?></th>
@@ -97,10 +97,12 @@ print $form->create(null,array('controller'=>'fornecedores','action'=>'pesquisar
 					<td><?php print $r['Fornecedor']['cpf'].$r['Fornecedor']['cnpj']; ?></td>
 					<td><?php print $r['Fornecedor']['rg'].$r['Fornecedor']['inscricao_estadual']; ?></td>
 					<td><?php print $r['Usuario']['login']; ?></td>
-					<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-					'alt'=>'Editar','url'=>array('action'=>'editar',$r['Fornecedor']['id']))) ?></td>
-					<td><?php print $html->image('detalhar24x24.png',array('title'=>'Detalhar',
-					'alt'=>'Detalhar','url'=>array('action'=>'detalhar',$r['Fornecedor']['id']))) ?></td>
+					<td>
+						<?php print $this->element('painel_detalhar',array('id'=>$r['Fornecedor']['id'])) ;?>
+					</td>
+					<td>
+						<?php print $this->element('painel_editar',array('id'=>$r['Fornecedor']['id'])) ;?>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

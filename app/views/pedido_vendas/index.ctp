@@ -32,17 +32,16 @@ foreach ($consulta as $c): ?>
 			<td><?php print $c['PedidoVenda']['valor_liquido']; ?></td>
 			<td><?php print $opcoes_situacoes[$c['PedidoVenda']['situacao']]; ?></td>
 			
-			<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-			'alt'=>'Editar','url'=>array('action'=>'editar',$c['PedidoVenda']['id']))) ?></td>
-			
-			<td><?php print $html->image('detalhar24x24.png',array('title'=>'Detalhar',
-			'alt'=>'Detalhar','url'=>array('action'=>'detalhar',$c['PedidoVenda']['id']))) ?></td>
+			<td>
+				<?php print $this->element('painel_editar',array('id'=>$c['PedidoVenda']['id'])) ;?>
+			</td>
 			
 			<td>
-				<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-				href="'.$html->url(array('action'=>'excluir')).'/'.$c['PedidoVenda']['id'].'">'.
-				$html->image('del24x24.png', array('alt'=>'Excluir'))
-				.'</a>';?>
+				<?php print $this->element('painel_detalhar',array('id'=>$c['PedidoVenda']['id'])) ;?>
+			</td>
+			
+			<td>
+				<?php print $this->element('painel_excluir',array('id'=>$c['PedidoVenda']['id'])) ;?>
 			</td>
 		</tr>
 

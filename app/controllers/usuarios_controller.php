@@ -6,6 +6,7 @@ class UsuariosController extends AppController {
 	var $helpers = array('Javascript','Ajax');
 	var $paginate = array (
 		'limit' => 10,
+		'contain' => array(), // a paginacao nao utiliza outro model
 		'order' => array (
 			'Usuario.id' => 'asc'
 		)
@@ -51,8 +52,7 @@ class UsuariosController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
-		$dados = $this->paginate('Usuario');
-		$this->set('consulta_usuario',$dados);
+		$this->set('consulta_usuario',$this->paginate('Usuario'));
 	}
 	
 	function cadastrar() {
@@ -86,6 +86,7 @@ class UsuariosController extends AppController {
 		}
 		//popular o formulario, na primeira carga
 		if (empty ($this->data)) {
+			$this->Usuario->recursive = -1;
 			$this->data = $this->Usuario->read();
 			// formulario carrega sem as senhas
 			unset($this->data['Usuario']['senha']);
@@ -105,6 +106,7 @@ class UsuariosController extends AppController {
 				 * por isso vejo se a segunda senha informada está em branco
 				 */
 				if (empty($this->data['Usuario']['senha_confirma'])) {
+					$this->Usuario->recursive = -1;
 					$old = $this->Usuario->read();
 					$this->data['Usuario']['senha'] = $old['Usuario']['senha'];
 					$this->data['Usuario']['senha_confirma'] = $old['Usuario']['senha'];

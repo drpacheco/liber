@@ -54,8 +54,7 @@ else {
 			</div>
 			<div class="div2_2">
 				<?php
-				print $form->input('data_cadastrada',array('label'=>'Data do início'));
-				print $form->input('hora_cadastrada',array('label'=>'Hora do início'));
+				print $form->input('data_hora_cadastrada',array('label'=>'Data e hora do início'));
 				print $form->input('situacao',array('label'=>'Situação','options'=>array(
 				'O' => 'Orçamento',
 				'S' => 'Em espera',
@@ -67,6 +66,7 @@ else {
 				print $form->input('usuario_id',array('label'=>'Técnico','options'=>$opcoes_tecnico));
 				?>
 			</div>
+			<div class="limpar"></div>
 		</div>
 		<div class="limpar">&nbsp;</div>
 	</div> <!-- fim de informacoes -->
@@ -140,7 +140,7 @@ else {
 					</div>
 				</fieldset>
 			</div>
-			
+			<div class="limpar"></div>
 		</div>
 		<div class="limpar">&nbsp;</div>
 	</div> <!-- fim de servicos -->

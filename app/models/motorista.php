@@ -2,6 +2,7 @@
 
 class Motorista extends AppModel {
 	var $name = 'Motorista';
+	var $actsAs = array('CakePtbr.AjusteData','Containable');
 	var $hasOne = array('Carregamento');
 	var $belongsTo = array(
 		'Veiculo' => array(
@@ -9,7 +10,6 @@ class Motorista extends AppModel {
 			'foreignKey' => 'veiculo_padrao'
 		)
 	);
-	var $actsAs = array('CakePtbr.AjusteData');
 	var $validate = array(
 		'nome' => array(
 			'obrigatorio' => array (

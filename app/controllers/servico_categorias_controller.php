@@ -7,7 +7,8 @@ class ServicoCategoriasController extends AppController {
 		'limit' => 10,
 		'order' => array (
 			'ServicoCategoria.id' => 'desc'
-		)
+		),
+	    'contain' => array()
 	);
 	
 	/**
@@ -44,6 +45,7 @@ class ServicoCategoriasController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (empty ($this->data)) {
+			$this->ServicoCategoria->recursive = -1;
 			$this->data = $this->ServicoCategoria->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Categoria de serviço não encontrada.','flash_erro');

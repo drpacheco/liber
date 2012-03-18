@@ -8,7 +8,7 @@ Motorista: <h1><?php print $carregamento['Motorista']['nome'] ?></h1>
 Veículo: <h1><?php print $carregamento['Veiculo']['placa'] ?></h1>
 
 <h3>Pedidos de venda incluídos neste carregamento:</h3>
-<table>
+<table class="padrao">
 	<thead>
 		<tr>
 			<th>Número pedido de venda</th>

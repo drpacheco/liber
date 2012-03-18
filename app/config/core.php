@@ -35,7 +35,7 @@
  */
 
  // #TODO debug 0 retorna um erro generico ao acessar /
-	Configure::write('debug', 1);
+	Configure::write('debug', 2);
 
 /**
  * CakePHP Log Level:
@@ -172,7 +172,7 @@
  * Session time out time (in seconds).
  * Actual value depends on 'Security.level' setting.
  */
-	Configure::write('Session.timeout', '120');
+	Configure::write('Session.timeout', '300');
 
 /**
  * If set to false, sessions are not automatically started.
