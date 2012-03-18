@@ -7,7 +7,8 @@ class VeiculosController extends AppController {
 		'limit' => 10,
 		'order' => array (
 			'Veiculo.id' => 'asc'
-		)
+		),
+	    'contain' => array()
 	);
 	
 	/**
@@ -44,6 +45,7 @@ class VeiculosController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (empty ($this->data)) {
+			$this->Veiculo->recursive = -1;
 			$this->data = $this->Veiculo->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Veículo não encontrado.','flash_erro');

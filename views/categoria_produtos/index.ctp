@@ -20,13 +20,11 @@
 			<td><?php print $c['CategoriaProduto']['id'];?></td>
 			<td><?php print $html->link($c['CategoriaProduto']['nome'],'editar/' . $c['CategoriaProduto']['id']) ;?></td>
 			<td>
-				<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-				href="'.$html->url(array('action'=>'excluir')).'/'.$c['CategoriaProduto']['id'].'">'.
-				$html->image('del24x24.png', array('alt'=>'Excluir'))
-				.'</a>';?>
+				<?php print $this->element('painel_editar',array('id'=>$c['CategoriaProduto']['id'])) ;?>
 			</td>
-			<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-			'alt'=>'Editar','url'=>array('action'=>'editar',$c['CategoriaProduto']['id']))) ?></td>
+			<td>
+				<?php print $this->element('painel_excluir',array('id'=>$c['CategoriaProduto']['id'])) ;?>
+			</td>
 		</tr>
 
 <?php endforeach ?>

@@ -1,12 +1,3 @@
-<?php
-$s = array(
-			'O' => 'Orçamento',
-			'E' => 'Em espera',
-			'X' => 'Em execução',
-			'F' => 'Finalizada',
-			'E' => 'Entregue',
-			'C' => 'Cancelada');
-?>
 <h2 class="descricao_cabecalho">Detalhando ordem de serviço número <?php print $c['ServicoOrdem']['id']; ?></h2>
 
 <fieldset>
@@ -22,7 +13,7 @@ $s = array(
 		<label>Forma de pagamento </label> <input class="noinput" value="<?php print $c['ServicoOrdem']['forma_pagamento_id'].' '.$c['FormaPagamento']['nome'] ;?>" />
 	</div>
 	<div class="grupo_horizontal">
-		<label>Situação </label> <input class="noinput" value="<?php print $s[$c['ServicoOrdem']['situacao']] ;?>" />
+		<label>Situação </label> <input class="noinput" value="<?php print $opcoes_situacao[$c['ServicoOrdem']['situacao']] ;?>" />
 	</div>
 	<div class="grupo_horizontal">
 		<label>Início</label> <input class="noinput" value="<?php print $formatacao->dataHora($c['ServicoOrdem']['data_hora_inicio']) ;?>" />
@@ -36,7 +27,7 @@ $s = array(
 <fieldset>
 	<legend>Serviços incluídos</legend>
 
-	<table>
+	<table class="padrao">
 		<thead>
 			<tr>
 				<th>Cód.</th>
@@ -60,6 +51,7 @@ $s = array(
 		
 	</table>
 	<div class="grupo_horizontal">
-		<label><b>Valor total</b></label> <input class="noinput" value="R$<?php print $c['ServicoOrdem']['valor_total'] ;?>" />
+		<label class="grupo_horizontal"><b>Valor bruto</b></label> <input class="grupo_horizontal noinput" value="R$<?php print $c['ServicoOrdem']['valor_bruto'] ;?>" />
+		<label class="grupo_horizontal"><b>Valor líquido</b></label> <input class="grupo_horizontal noinput" value="R$<?php print $c['ServicoOrdem']['valor_liquido'] ;?>" />
 	</div>
 </fieldset>

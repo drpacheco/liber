@@ -38,13 +38,11 @@
 				}
 				?>
 			</td>
-			<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-			'alt'=>'Editar','url'=>array('action'=>'editar',$consulta['PlanoConta']['id']))) ?></td>
 			<td>
-				<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-				href="'.$html->url(array('action'=>'excluir')).'/'.$consulta['PlanoConta']['id'].'">'.
-				$html->image('del24x24.png', array('alt'=>'Excluir'))
-				.'</a>';?>
+				<?php print $this->element('painel_editar',array('id'=>$consulta['PlanoConta']['id'])) ;?>
+			</td>
+			<td>
+				<?php print $this->element('painel_excluir',array('id'=>$consulta['PlanoConta']['id'])) ;?>
 			</td>
 		</tr>
 

@@ -21,16 +21,10 @@
 			<td><?php print $consulta['TipoDocumento']['id'];?></td>
 			<td><?php print $html->link($consulta['TipoDocumento']['nome'],'editar/' . $consulta['TipoDocumento']['id']) ;?></td>
 			<td>
-				<?php print '<a title="Excluir" class="ajax_link_dialog"
-				href="'.$html->url(array('action'=>'excluir')).'/'.$consulta['TipoDocumento']['id'].'">'.
-				$html->image('del24x24.png', array('alt'=>'Excluir'))
-				.'</a>';?>
+				<?php print $this->element('painel_editar',array('id'=>$consulta['TipoDocumento']['id'])) ;?>
 			</td>
 			<td>
-				<?php print '<a title="Editar" class="ajax_link_dialog"
-				href="'.$html->url(array('action'=>'editar')).'/'.$consulta['TipoDocumento']['id'].'">'.
-				$html->image('edit24x24.png', array('alt'=>'Editar'))
-				.'</a>';?>
+				<?php print $this->element('painel_excluir',array('id'=>$consulta['TipoDocumento']['id'])) ;?>
 			</td>
 			
 		</tr>

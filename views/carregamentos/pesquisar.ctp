@@ -47,7 +47,7 @@ print $form->create(null,array('controller'=>'carregamentos','action'=>'pesquisa
 </div>
 
 <?php if (isset($num_resultados) && $num_resultados > 0) : ?>
-	<table class="resultados">
+	<table class="padrao">
 		<thead>
 			<tr>
 				<th><?php print $paginator->sort('Cód','id'); ?></th>

@@ -103,10 +103,12 @@ else {
 					<td><?php print $r['Cliente']['cpf'].$r['Cliente']['cnpj']; ?></td>
 					<td><?php print $r['Cliente']['rg'].$r['Cliente']['inscricao_estadual']; ?></td>
 					<td><?php print $r['Usuario']['login']; ?></td>
-					<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-					'alt'=>'Editar','url'=>array('action'=>'editar',$r['Cliente']['id']))) ?></td>
-					<td><?php print $html->image('detalhar24x24.png',array('title'=>'Detalhar',
-					'alt'=>'Detalhar','url'=>array('action'=>'detalhar',$r['Cliente']['id']))) ?></td>
+					<td>
+						<?php print $this->element('painel_detalhar',array('id'=>$r['Cliente']['id'])) ;?>
+					</td>
+					<td>
+						<?php print $this->element('painel_editar',array('id'=>$r['Cliente']['id'])) ;?>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

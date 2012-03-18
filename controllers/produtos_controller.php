@@ -4,12 +4,6 @@ class ProdutosController extends AppController {
 	var $name = 'Produtos';
 	var $components = array('RequestHandler');
 	var $helpers = array('Ajax', 'Javascript');
-	var $paginate = array (
-		'limit' => 10,
-		'order' => array (
-			'Produto.id' => 'desc'
-		)
-	);
 	
 	/**
 	* @var $Produto
@@ -17,20 +11,27 @@ class ProdutosController extends AppController {
 	var $Produto;
 
 	/**
-	 * Obtem dados do banco e popula as variaveis globais
-	 * $opcoes_categoria_produto
+	 * Obtem dados necessarios ao decorrer deste controller.
+	 * Os dados sao setados em variaveis a serem utilizadas nas views 
 	 */
 	function _obter_opcoes() {
 		$this->loadModel('CategoriaProduto');
 		$this->CategoriaProduto->recursive = -1;
 		$consulta1 = $this->CategoriaProduto->find('list',array('fields'=>array('CategoriaProduto.id','CategoriaProduto.nome')));
-		$this->set('opcoes_categoria_produto',$consulta1);
+		$this->set('opcoes_categoria_produto',array_merge(array(0=>''),$consulta1));
 	}
 	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
+		$this->paginate['Produto'] = array (
+			'limit' => 10,
+			'order' => array (
+				'Produto.id' => 'desc'
+			),
+		    'contain' => array()
+		);
 		$dados = $this->paginate('Produto');
 		$this->set('consulta',$dados);
 	}
@@ -41,7 +42,7 @@ class ProdutosController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
-			
+			if ($this->data['Produto']['categoria_produto_id'] == 0) $this->data['Produto']['categoria_produto_id'] = null;
 			if ($this->Produto->save($this->data)) {
 				$this->Session->setFlash('Produto cadastrado com sucesso.','flash_sucesso');
 				$this->redirect(array('action'=>'index'));
@@ -58,6 +59,7 @@ class ProdutosController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
+			$this->Produto->recursive = -1;
 			$this->data = $this->Produto->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash("Produto $id não encontrado.",'flash_erro');
@@ -66,7 +68,7 @@ class ProdutosController extends AppController {
 		}
 		else {
 			$this->data['Produto']['id'] = $id;
-			
+			if ($this->data['Produto']['categoria_produto_id'] == 0) $this->data['Produto']['categoria_produto_id'] = null;
 			if ($this->Produto->save($this->data)) {
 				$this->Session->setFlash("Produto $id atualizado com sucesso.",'flash_sucesso');
 				$this->redirect(array('action'=>'index'));
@@ -116,6 +118,13 @@ class ProdutosController extends AppController {
 			if (! empty($dados['quantidade_estoque_fiscal'])) $condicoes[] = array('Produto.quantidade_estoque_fiscal'=>$dados['quantidade_estoque_fiscal']);
 			if (! empty($dados['situacao'])) $condicoes[] = array('Produto.situacao'=>$dados['situacao']);
 			if (! empty ($condicoes)) {
+				$this->paginate['Produto'] = array (
+					'limit' => 10,
+					'order' => array (
+						'Produto.id' => 'desc'
+					),
+				'contain' => array()
+				);
 				$resultados = $this->paginate('Produto',$condicoes);
 				if (! empty($resultados)) {
 					$num_encontrados = count($resultados);
@@ -150,6 +159,7 @@ class ProdutosController extends AppController {
 			else {
 				$condicoes = array("Produto.$campo LIKE" => '%'.$termo.'%');
 			}
+			$this->Produto->recursive = -1;
 			$resultados = $this->Produto->find('all',array('conditions'=>$condicoes));
 			if (!empty($resultados)) {
 				foreach ($resultados as $r) {

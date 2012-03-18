@@ -1,3 +1,16 @@
+<script type="text/javascript">
+	var raiz_site = "<?php print $this->Html->url('/',true); ?>/";
+
+	$(function(){
+		
+		$(".datepicker").datepicker({
+			showOn: "button",
+			buttonImage: raiz_site+"/img/calendario_icone.gif",
+			buttonImageOnly: true
+		});
+	});
+</script>
+
 <h2 class="descricao_cabecalho">Pesquisar conta a receber</h2>
 
 <?php
@@ -9,18 +22,25 @@ print $form->create(null,array('action'=>'pesquisar','autocomplete'=>'off'));
 ?>
 <div class="divs_grupo_2">
 	
-	<div class="div1_2">
+	<div class="div1_3">
 		<?php
 		
 		print '<div>'.$form->input('numero_documento',array('label'=>'Número do documento','div'=>false)).'</div>';
 		print '<div>'.$form->input('valor',array('label'=>'Valor','div'=>false)).'</div>';
-		print '<div>'.$form->input('eh_cliente_ou_fornecedor', array('label'=>'Cliente ou fornecedor?',
-		'div'=>false,'options'=>array(''=>'','C'=>'Cliente','F'=>'Fornecedor'))).'</div>';
 		print '<div>'.$form->input('cliente_fornecedor_id',array('label'=>'Código cliente/fornecedor','div'=>false,'type'=>'text')).'</div>';
 		?>
 	</div>
 	
-	<div class="div2_2">
+	<div class="div2_3">
+		<?php
+		print '<div>'.$form->input('data_inicio',array('label'=>'Data inicial','div'=>false,'class'=>'datepicker mascara_data')).'</div>';
+		print '<div>'.$form->input('data_fim',array('label'=>'Data final','div'=>false,'class'=>'datepicker mascara_data')).'</div>';
+		print '<div>'.$form->input('eh_cliente_ou_fornecedor', array('label'=>'Cliente ou fornecedor?',
+		'div'=>false,'options'=>array(''=>'','C'=>'Cliente','F'=>'Fornecedor'))).'</div>';
+		?>
+	</div>
+	
+	<div class="div3_3">
 		<?php
 		print '<div>'.$form->input('id', array('label'=>'Código','div'=>false)).'</div>';
 		print '<div>'.$form->input('tipo_documento_id',array('label'=>'Tipo do documento','div'=>false,'options'=>$opcoes_tipo_documento)).'</div>';
@@ -73,13 +93,11 @@ print $form->create(null,array('action'=>'pesquisar','autocomplete'=>'off'));
 					<td><?php print $r['ReceberConta']['conta_origem'].' '.$r['Conta']['nome'] ?></td>
 					<td><?php print $r['ReceberConta']['plano_conta_id'].' '.$r['PlanoConta']['nome'] ; ?></td>
 					<td>
-						<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-						href="'.$html->url(array('action'=>'excluir')).'/'.$r['ReceberConta']['id'].'">'.
-						$html->image('del24x24.png', array('alt'=>'Excluir'))
-						.'</a>';?>
+						<?php print $this->element('painel_editar',array('id'=>$r['ReceberConta']['id'])) ;?>
 					</td>
-					<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-					'alt'=>'Editar','url'=>array('action'=>'editar',$r['ReceberConta']['id']))) ?></td>
+					<td>
+						<?php print $this->element('painel_excluir',array('id'=>$r['ReceberConta']['id'])) ;?>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

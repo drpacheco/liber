@@ -52,13 +52,6 @@ $javascript->link('formatar_moeda.js',false);
  * Elimino as divs dos campos input para que nao apareça quais campos
  * sao marcados como obrigatorios no BD
  */
-$s = array(
-'O' => 'Orçamento',
-'E' => 'Em espera',
-'X' => 'Em execução',
-'F' => 'Finalizada',
-'E' => 'Entregue',
-'C' => 'Cancelada');
 if ($ajax->isAjax()) {
 	print $ajax->form('pesquisar','post',array('autocomplete'=>'off','model'=>'ServicoOrdem','update'=>'conteudo_ajax'));
 
@@ -110,7 +103,7 @@ else {
 			<label>Situação</label>
 			<select name="data[ServicoOrdem][situacao]">
 				<option value=""></option>
-				<?php foreach ($s as $chave => $valor)
+				<?php foreach ($opcoes_situacao as $chave => $valor)
 					print "<option value='$chave'>$valor</option>";
 				?>
 			</select>
@@ -148,17 +141,16 @@ else {
 					<td><?php print $r['ServicoOrdem']['id']; ?></td>
 					<td><?php print $html->link($formatacao->dataHora($r['ServicoOrdem']['data_hora_cadastrada']),'editar/' . $r['ServicoOrdem']['id']) ;?></td>
 					<td><?php print $r['ServicoOrdem']['cliente_id'].' '.$r['Cliente']['nome']; ?></td>
-					<td><?php print $s[$r['ServicoOrdem']['situacao']]; ?></td>
+					<td><?php print $opcoes_situacao[$r['ServicoOrdem']['situacao']]; ?></td>
 					<td><?php print $r['ServicoOrdem']['valor_liquido']; ?></td>
-					<td><?php print $html->image('detalhar24x24.png',array('title'=>'Detalhar',
-					'alt'=>'Detalhar','url'=>array('action'=>'detalhar',$r['ServicoOrdem']['id']))) ?></td>
-					<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-					'alt'=>'Editar','url'=>array('action'=>'editar',$r['ServicoOrdem']['id']))) ?></td>
 					<td>
-						<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-						href="'.$html->url(array('action'=>'excluir')).'/'.$r['ServicoOrdem']['id'].'">'.
-						$html->image('del24x24.png', array('alt'=>'Excluir'))
-						.'</a>';?>
+						<?php print $this->element('painel_detalhar',array('id'=>$r['ServicoOrdem']['id'])) ;?>
+					</td>
+					<td>
+						<?php print $this->element('painel_editar',array('id'=>$r['ServicoOrdem']['id'])) ;?>
+					</td>
+					<td>
+						<?php print $this->element('painel_excluir',array('id'=>$r['ServicoOrdem']['id'])) ;?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

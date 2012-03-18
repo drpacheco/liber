@@ -3,12 +3,6 @@
 class PlanoContasController extends AppController {
 	var $name = 'PlanoContas';
 	var $components = array('Sanitizacao');
-	var $paginate = array (
-		'limit' => 30,
-		'order' => array (
-			'PlanoConta.nome' => 'asc'
-		)
-	);
 	
 	/**
 	* @var $PlanoConta
@@ -19,6 +13,14 @@ class PlanoContasController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
+		$this->paginate['PlanoConta'] = array (
+			'limit' => 30,
+			'order' => array (
+				'PlanoConta.nome' => 'asc'
+			),
+		    'contain' => array()
+		    
+		);
 		$dados = $this->paginate('PlanoConta');
 		$this->set('consulta_plano_contas',$dados);
 	}
@@ -44,6 +46,7 @@ class PlanoContasController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (empty ($this->data)) {
+			$this->PlanoConta->recursive = -1;
 			$this->data = $this->PlanoConta->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Item do plano de contas não encontrado.','flash_erro');

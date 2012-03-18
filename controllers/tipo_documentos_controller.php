@@ -7,7 +7,8 @@ class TipoDocumentosController extends AppController {
 		'limit' => 10,
 		'order' => array (
 			'TipoDocumento.nome' => 'asc'
-		)
+		),
+	    'contain' => array()
 	);
 	
 	/**
@@ -44,6 +45,7 @@ class TipoDocumentosController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (empty ($this->data)) {
+			$this->TipoDocumento->recursive = -1;
 			$this->data = $this->TipoDocumento->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Tipo de documento não encontrado.','flash_erro');

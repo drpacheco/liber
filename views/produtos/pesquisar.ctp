@@ -34,7 +34,7 @@ print $form->create(null,array('controller'=>'produtos','action'=>'pesquisar','a
 </div>
 
 <?php if (isset($num_resultados) && $num_resultados > 0) : ?>
-	<table class="resultados">
+	<table class="padrao">
 		<thead>
 			<tr>
 				<th><?php print $paginator->sort('Cód','id'); ?></th>
@@ -60,10 +60,12 @@ print $form->create(null,array('controller'=>'produtos','action'=>'pesquisar','a
 					<td><?php print $r['Produto']['preco_venda']; ?></td>
 					<td><?php print $r['Produto']['quantidade_estoque_fiscal']; ?></td>
 					<td><?php print $r['Produto']['situacao']; ?></td>
-					<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-					'alt'=>'Editar','url'=>array('action'=>'editar',$r['Produto']['id']))) ?></td>
-					<td><?php print $html->image('detalhar24x24.png',array('title'=>'Detalhar',
-					'alt'=>'Detalhar','url'=>array('action'=>'detalhar',$r['Produto']['id']))) ?></td>
+					<td>
+						<?php print $this->element('painel_detalhar',array('id'=>$r['Produto']['id'])) ;?>
+					</td>
+					<td>
+						<?php print $this->element('painel_editar',array('id'=>$r['Produto']['id'])) ;?>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

@@ -16,11 +16,17 @@ class MotoristasController extends AppController {
 	*/
 	var $Motorista;
 
+	/**
+	 * Obtem dados necessarios ao decorrer deste controller.
+	 * Os dados sao setados em variaveis a serem utilizadas nas views 
+	 */
 	function _obter_opcoes() {
-		$this->loadModel('Veiculo');
-		$this->Veiculo->recursive = -1;
-		$consulta1 = $this->Veiculo->find('list',array('fields'=>array('Veiculo.id','Veiculo.placa')));
-		$this->set('opcoes_veiculo',$consulta1);
+		$this->Motorista->Veiculo->recursive = -1;
+		$consulta = $this->Motorista->Veiculo->find('list',array('fields'=>array('Veiculo.id','Veiculo.placa')));
+		// o indice para o valor '' é definido como sendo 0 pois no minimo
+		// o registro legítimo terá o indice 1
+		$consulta = array_merge(array(0=>''),$consulta);
+		$this->set('opcoes_veiculo',$consulta);
 	}
 	
 	function index() {
@@ -44,6 +50,11 @@ class MotoristasController extends AppController {
 					return false;
 				}
 			}
+			// caso motorista seja um campo vazio, que na view esta com o
+			// indice 0, definido no metodo $this->_obter_opcoes()
+			if ($this->data['Motorista']['veiculo_padrao'] == 0) {
+				$this->data['Motorista']['veiculo_padrao'] = null;
+			}
 			if ($this->Motorista->save($this->data)) {
 				$this->Session->setFlash('Motorista cadastrado com sucesso.','flash_sucesso');
 				$this->redirect(array('action'=>'index'));
@@ -60,6 +71,7 @@ class MotoristasController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
+			$this->Motorista->recursive = -1;
 			$this->data = $this->Motorista->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Motorista não encontrado.','flash_erro');
@@ -78,6 +90,11 @@ class MotoristasController extends AppController {
 					$this->Session->setFlash('Data de validade da C.N.H. não pode ser menor ou igual a data atual.','flash_erro');
 					return false;
 				}
+			}
+			// caso motorista seja um campo vazio, que na view esta com o
+			// indice 0, definido no metodo $this->_obter_opcoes()
+			if ($this->data['Motorista']['veiculo_padrao'] == 0) {
+				$this->data['Motorista']['veiculo_padrao'] = null;
 			}
 			if ($this->Motorista->save($this->data)) {
 				$this->Session->setFlash('Motorista atualizado com sucesso.','flash_sucesso');

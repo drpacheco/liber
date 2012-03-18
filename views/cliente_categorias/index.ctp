@@ -20,16 +20,10 @@
 			<td><?php print $c['ClienteCategoria']['id'];?></td>
 			<td><?php print $ajax->link($c['ClienteCategoria']['descricao'],'editar/' . $c['ClienteCategoria']['id'],array('update' => 'conteudo_ajax','indicator'=>'carregando')) ;?></td>
 			<td>
-				<?php
-				print $ajax->link($html->image('del24x24.png',array('title'=>'Excluir','alt'=>'Excluir')), array('action' => 'excluir', $c['ClienteCategoria']['id']),
-				array('update' => 'conteudo_ajax','indicator'=>'carregando','escape'=>false), 'Deseja realmente excluir este registro?',false);
-				?>
+				<?php print $this->element('painel_editar',array('id'=>$c['ClienteCategoria']['id'])) ;?>
 			</td>
 			<td>
-				<?php
-				print $ajax->link($html->image('edit24x24.png',array('title'=>'Editar','alt'=>'Editar')), array('action' => 'editar', $c['ClienteCategoria']['id']),
-				array('update' => 'conteudo_ajax','indicator'=>'carregando','escape'=>false),null,false);
-				?>
+				<?php print $this->element('painel_excluir',array('id'=>$c['ClienteCategoria']['id'])) ;?>
 			</td>
 		</tr>
 

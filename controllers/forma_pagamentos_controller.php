@@ -15,7 +15,11 @@ class FormaPagamentosController extends AppController {
 	* @var $FormaPagamento
 	*/
 	var $FormaPagamento;
-
+	
+	/**
+	 * Obtem dados necessarios ao decorrer deste controller.
+	 * Os dados sao setados em variaveis a serem utilizadas nas views 
+	 */
 	function _obter_opcoes() {
 		$this->FormaPagamento->Conta->recursive = -1;
 		$opcoes_contas = $this->FormaPagamento->Conta->find('list',array('fields'=>array('Conta.id','Conta.nome')));
@@ -83,6 +87,7 @@ class FormaPagamentosController extends AppController {
 		
 		if (empty ($this->data)) {
 			$this->FormaPagamento->id = $id;
+			$this->FormaPagamento->recursive = -1;
 			$this->data = $this->FormaPagamento->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Forma de pagamento não encontrada.','flash_erro');

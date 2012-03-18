@@ -1,9 +1,6 @@
 <?php
 
 /**
- * Carregamento tem as situacoes:
- * L => Livre
- * E => Enviado
  * 
  * #TODO No nomento o usuario marca o carregamento como enviado, quando houver
  * a rotina de faturamento, ao faturar será marcado como enviado
@@ -25,6 +22,10 @@ class CarregamentosController extends AppController {
 	*/
 	var $Carregamento;
 	
+        /**
+         * Obtem dados necessarios ao decorrer deste controller.
+         * Os dados sao setados em variaveis a serem utilizadas nas views
+         */
 	function _obter_opcoes() {
 		$this->Carregamento->Motorista->recursive = -1;
 		$motoristas = $this->Carregamento->Motorista->find('list',array('fields'=>array('Motorista.id','Motorista.nome')));
@@ -99,6 +100,7 @@ class CarregamentosController extends AppController {
 		if (! empty($id)) {
 			$this->Carregamento->id = $id;
 			
+			$this->Carregamento->recursive = -1;
 			$carregamento = $this->Carregamento->read();
 			if (! $carregamento) {
 				$this->Session->setFlash('Carregamento não encontrado','flash_erro');

@@ -21,7 +21,7 @@
 <fieldset>
 	<legend>Produtos incluídos</legend>
 
-	<table>
+	<table class="padrao">
 		<thead>
 			<tr>
 				<th>Cód.</th>

@@ -44,6 +44,7 @@ class ContasController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (empty ($this->data)) {
+			$this->Conta->recursive = -1;
 			$this->data = $this->Conta->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Conta não encontrada.','flash_erro');

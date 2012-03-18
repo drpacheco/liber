@@ -15,7 +15,11 @@ class ClientesController extends AppController {
 	* @var $Cliente
 	*/
 	var $Cliente;
-
+           
+	/**
+	 * Obtem dados necessarios ao decorrer deste controller.
+	 * Os dados sao setados em variaveis a serem utilizadas nas views 
+	 */
 	function _obter_opcoes() {
 		$this->loadModel('ClienteCategoria');
 		$this->ClienteCategoria->recursive = -1;
@@ -67,6 +71,7 @@ class ClientesController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
+			$this->Cliente->recursive = -1;
 			$this->data = $this->Cliente->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Cliente não encontrado.','flash_erro');
@@ -140,6 +145,7 @@ class ClientesController extends AppController {
 		}
 		if ($id) {
 			$this->Cliente->id = $id;
+			$this->Cliente->contain('Usuario','Usuario2');
 			$r = $this->Cliente->read();
 			if (empty($r)) {
 				$this->Session->setFlash("Cliente $id não encontrado");

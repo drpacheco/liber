@@ -43,13 +43,11 @@
 			<td><?php print $c['PagarConta']['plano_conta_id'].' '.$c['PlanoConta']['nome']; ?></td>
 			<td><?php print $formatacao->data($c['PagarConta']['data_vencimento']); ?></td>
 			<td>
-				<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-				href="'.$html->url(array('action'=>'excluir')).'/'.$c['PagarConta']['id'].'">'.
-				$html->image('del24x24.png', array('alt'=>'Excluir'))
-				.'</a>';?>
+				<?php print $this->element('painel_editar',array('id'=>$c['PagarConta']['id'])) ;?>
 			</td>
-			<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-			'alt'=>'Editar','url'=>array('action'=>'editar',$c['PagarConta']['id']))) ?></td>
+			<td>
+				<?php print $this->element('painel_excluir',array('id'=>$c['PagarConta']['id'])) ;?>
+			</td>
 		</tr>
 
 <?php endforeach ?>

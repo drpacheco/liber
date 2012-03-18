@@ -1,11 +1,13 @@
 <?php
 
+/**
+ * Este é um model que pode vir a consumir muitos recursos, pois em diversos
+ * outros model's ha um usuario associado.
+ */
+
 class Usuario extends AppModel {
 	var $name = "usuario";
-	/**
-	 * Usuários sãos associados a diversas tabelas para
-	 * fins de log
-	 */
+	var $actsAs = array('Containable');
 	var $hasMany = array(
 		'Cliente_usuario_cadastrou' => array(
 			'className' => 'Cliente',

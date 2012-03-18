@@ -24,14 +24,10 @@
 			<td><?php print $carregamento['Carregamento']['descricao']; ?></td>
 			<td><?php print $opcoes_situacoes[$carregamento['Carregamento']['situacao']]; ?></td>
 			<td>
-				<?php print '<a title="Excluir" onclick="javascript: return confirm(\'Deseja realmente excluir este registro?\')"
-				href="'.$html->url(array('action'=>'excluir')).'/'.$carregamento['Carregamento']['id'].'">'.
-				$html->image('del24x24.png', array('alt'=>'Excluir'))
-				.'</a>';?>
+				<?php print $this->element('painel_detalhar',array('id'=>$carregamento['Carregamento']['id'])) ;?>
 			</td>
 			<td>
-				<?php print $html->image('detalhar24x24.png',array('title'=>'Detalhar',
-				'alt'=>'Detalhar','url'=>array('action'=>'detalhar',$carregamento['Carregamento']['id']))) ?>
+				<?php print $this->element('painel_excluir',array('id'=>$carregamento['Carregamento']['id'])) ;?>
 			</td>
 		</tr>
 

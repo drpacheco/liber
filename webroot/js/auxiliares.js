@@ -19,6 +19,7 @@ function submissaoFormulario(objeto) {
 				}
 			});
 	});
+	// previne que o browser siga o link
 	return false;
 }
 
@@ -44,6 +45,8 @@ function dialogoDeletar(objeto) {
 				}
 			});
 	});
+	// previne que o browser siga o link
+	return false;
 }
 
 /**
@@ -164,10 +167,38 @@ function eh_float (mixed_var) {
 }
 
 function popup(destino,largura,altura,titulo) {
-	if (titulo == "") {
+	if (titulo == undefined || titulo == '') {
 		titulo = "Liber";
 	}
 	window.open(destino,titulo,"width="+largura+",height="+altura);
+}
+
+// substitui o alert padrao do javascript, por este que utiliza
+// jqueryui dialog
+function alert (mensagem, titulo) {
+	$(function() {
+		if (titulo == undefined || titulo == '') titulo = 'Liber';
+		
+		// previne que tenha mais de uma janela
+		$( "#janela_alerta_unica:ui-dialog" ).dialog("destroy");
+		
+		var dialogo = $('<div id="janela_alerta_unica" title="'+titulo+'">\n\
+						<p>'+mensagem+'</p>\n\
+					</div>');
+		
+		dialogo.dialog({
+				resizable: false,
+				autoOpen: true,
+				modal: true,
+				buttons: {
+				Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+	});
+	// previne que o browser siga o link
+	return false;
 }
 
 function abrir_dialogo_ajax (url, largura, altura, titulo) {

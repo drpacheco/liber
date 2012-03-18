@@ -31,8 +31,9 @@
 			<td><?php print $c['Produto']['margem_lucro']; ?></td>
 			<td><?php print $c['Produto']['quantidade_estoque_fiscal']; ?></td>
 			<td><?php print $c['Produto']['quantidade_estoque_nao_fiscal']; ?></td>
-			<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-			'alt'=>'Editar','url'=>array('action'=>'editar',$c['Produto']['id']))) ?></td>
+			<td>
+				<?php print $this->element('painel_editar',array('id'=>$c['Produto']['id'])) ;?>
+			</td>
 		</tr>
 
 <?php endforeach ?>

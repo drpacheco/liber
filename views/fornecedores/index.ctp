@@ -51,10 +51,12 @@
 			<td><?php print $c['Fornecedor']['bairro'];?></td>
 			<td><?php print $c['Fornecedor']['cidade'];?></td>
 			<td><?php print $c['Fornecedor']['numero_telefone'];?></td>
-			<td><?php print $html->image('edit24x24.png',array('title'=>'Editar',
-			'alt'=>'Editar','url'=>array('action'=>'editar',$c['Fornecedor']['id']))) ?></td>
-			<td><?php print $html->image('detalhar24x24.png',array('title'=>'Detalhar',
-			'alt'=>'Detalhar','url'=>array('action'=>'detalhar',$c['Fornecedor']['id']))) ?></td>
+			<td>
+				<?php print $this->element('painel_editar',array('id'=>$c['Fornecedor']['id'])) ;?>
+			</td>
+			<td>
+				<?php print $this->element('painel_detalhar',array('id'=>$c['Fornecedor']['id'])) ;?>
+			</td>
 		</tr>
 
 <?php endforeach ?>

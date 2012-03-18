@@ -2,36 +2,33 @@
 
 class PagarContasController extends AppController {
 	var $name = 'PagarContas';
-	var $components = array('Sanitizacao');
-	var $helpers = array('CakePtbr.Formatacao','Javascript');
-	var $paginate = array (
-		'limit' => 10,
-		'order' => array (
-			'PagarConta.id' => 'desc'
-		)
-	);
+	var $components = array('Sanitizacao','Geral');
+	var $helpers = array('CakePtbr.Formatacao','Javascript','Jqplot');
 
 	/**
 	* @var $PagarConta
 	*/
 	var $PagarConta;
 	
+	/**
+	 * Obtem dados necessarios ao decorrer deste controller.
+	 * Os dados sao setados em variaveis a serem utilizadas nas views 
+	 */
 	function _obter_opcoes() {
-		$this->loadModel('TipoDocumento');
-		$this->TipoDocumento->recursive = -1;
-		$consulta1 = $this->TipoDocumento->find('list',array('fields'=>array('TipoDocumento.id','TipoDocumento.nome')));
-		$this->set('opcoes_tipo_documento',$consulta1);
 		
-		$this->loadModel('Conta');
-		$this->Conta->recursive = -1;
-		$consulta2 = $this->Conta->find('list',array('fields'=>array('Conta.id','Conta.apelido')));
-		$this->set('opcoes_conta_origem',$consulta2);
+		$this->PagarConta->TipoDocumento->recursive = -1;
+		$consulta1 = $this->PagarConta->TipoDocumento->find('list',array('fields'=>array('TipoDocumento.id','TipoDocumento.nome')));
+		$this->set('opcoes_tipo_documento',array_merge(array(0=>''),$consulta1));
 		
-		$this->loadModel('PlanoConta');
-		$this->PlanoConta->recursive = -1;
-		$consulta3 = $this->PlanoConta->find('list',array('fields'=>array('PlanoConta.id','PlanoConta.nome')));
-		$this->set('opcoes_plano_contas',$consulta3);
+		$this->PagarConta->Conta->recursive = -1;
+		$consulta2 = $this->PagarConta->Conta->find('list',array('fields'=>array('Conta.id','Conta.apelido')));
+		$this->set('opcoes_conta_origem',array_merge(array(0=>''),$consulta2));
 		
+		$this->PagarConta->PlanoConta->recursive = -1;
+		$consulta3 = $this->PagarConta->PlanoConta->find('list',array('fields'=>array('PlanoConta.id','PlanoConta.nome')));
+		$this->set('opcoes_plano_contas',array_merge(array(0=>''),$consulta3));
+		
+		$this->PagarConta->Empresa->recursive = -1;
 		$consulta4 = $this->PagarConta->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
 		$this->set('opcoes_empresas',$consulta4);
 		
@@ -48,6 +45,13 @@ class PagarContasController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
+		$this->paginate['PagarConta'] = array (
+		    'limit' => 10,
+			'order' => array (
+				'PagarConta.id' => 'desc'
+			),
+		    'contain' => array('TipoDocumento.nome','Conta.nome','PlanoConta.nome','Empresa.nome','Cliente.nome','Fornecedor.nome'),
+		);
 		$dados = $this->paginate('PagarConta');
 		$this->set('consulta_conta_pagar',$dados);
 		$this->_obter_opcoes();
@@ -60,16 +64,16 @@ class PagarContasController extends AppController {
 		$this->_obter_opcoes();
 		if (! empty($this->data)) {
 			if (strtoupper($this->data['PagarConta']['eh_cliente_ou_fornecedor']) == 'C') {
-				$this->loadModel('Cliente');
-				$r = $this->Cliente->find('first',
+				$this->PagarConta->Cliente->recursive = -1;
+				$r = $this->PagarConta->Cliente->find('first',
 					array('conditions'=>array(
 						'Cliente.id' => $this->data['PagarConta']['cliente_fornecedor_id'],
 						'Cliente.situacao' => 'A')));
 				if (! empty($r)) $cliente_fornecedor_encontrado = true;
 			}
 			else if (strtoupper($this->data['PagarConta']['eh_cliente_ou_fornecedor']) == 'F') {
-				$this->loadModel('Fornecedor');
-				$r = $this->Fornecedor->find('first',
+				$this->PagarConta->Fornecedor->recursive = -1;
+				$r = $this->PagarConta->Fornecedor->find('first',
 					array('conditions'=>array(
 						'Fornecedor.id' => $this->data['PagarConta']['cliente_fornecedor_id'],
 						'Fornecedor.situacao' => 'A')));
@@ -99,6 +103,7 @@ class PagarContasController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->data)) {
+			$this->PagarConta->contain('TipoDocumento.nome','Conta.nome','PlanoConta.nome','Empresa.nome','Cliente.nome','Fornecedor.nome');
 			$this->data = $this->PagarConta->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Conta a receber não encontrada.','flash_erro');
@@ -111,16 +116,16 @@ class PagarContasController extends AppController {
 		else {
 			$this->data['PagarConta']['id'] = $id;
 			if (strtoupper($this->data['PagarConta']['eh_cliente_ou_fornecedor']) == 'C') {
-				$this->loadModel('Cliente');
-				$r = $this->Cliente->find('first',
+				$this->PagarConta->Cliente->recursive = -1;
+				$r = $this->PagarConta->Cliente->find('first',
 					array('conditions'=>array(
 						'Cliente.id' => $this->data['PagarConta']['cliente_fornecedor_id'],
 						'Cliente.situacao' => 'A')));
 				if (! empty($r)) $cliente_fornecedor_encontrado = true;
 			}
 			else if (strtoupper($this->data['PagarConta']['eh_cliente_ou_fornecedor']) == 'F') {
-				$this->loadModel('Fornecedor');
-				$r = $this->Fornecedor->find('first',
+				$this->PagarConta->Fornecedor->recursive = -1;
+				$r = $this->PagarConta->Fornecedor->find('first',
 					array('conditions'=>array(
 						'Fornecedor.id' => $this->data['PagarConta']['cliente_fornecedor_id'],
 						'Fornecedor.situacao' => 'A')));
@@ -165,6 +170,9 @@ class PagarContasController extends AppController {
 		if (! empty($this->data)) {
 			//usuario enviou os dados da pesquisa
 			$url = array('controller'=>'pagarContas','action'=>'pesquisar');
+			// as / das datas sao trocas por - para nao interferir no padrao de url do CAKE
+			if ( ! empty($this->data['PagarConta']['data_inicio']) ) $this->data['PagarConta']['data_inicio'] = preg_replace ('/\//', '-', $this->data['PagarConta']['data_inicio']);
+			if ( ! empty($this->data['PagarConta']['data_fim']) ) $this->data['PagarConta']['data_fim'] = preg_replace ('/\//', '-', $this->data['PagarConta']['data_fim']);
 			$params = array_merge($url,$this->data['PagarConta']);
 			$this->redirect($params);
 		}
@@ -180,9 +188,26 @@ class PagarContasController extends AppController {
 			if (! empty($dados['id'])) $condicoes[] = array('PagarConta.id'=>$dados['id']);
 			if (! empty($dados['tipo_documento'])) $condicoes[] = array('PagarConta.tipo_documento'=>$dados['tipo_documento']);
 			if (! empty($dados['conta_origem'])) $condicoes[] = array('PagarConta.conta_origem'=>$dados['conta_origem']);
-			if (! empty($dados['plano_conta_id'])) $condicoes[] = array('PagarConta.rg'=>$dados['plano_conta_id']);
+			if (! empty($dados['plano_conta_id'])) $condicoes[] = array('PagarConta.id'=>$dados['plano_conta_id']);
 			if (! empty($dados['situacao'])) $condicoes[] = array('PagarConta.situacao'=>$dados['situacao']);
+			if (! empty($dados['data_inicio'])) {
+				$data = explode('-',$dados['data_inicio']);
+				$data = "${data[2]}-${data[1]}-${data[0]}";
+				$condicoes[] = array('PagarConta.data_hora_cadastrada <='=> $data);
+			}
+			if (! empty($dados['data_fim'])) {
+				$data = explode('-',$dados['data_fim']);
+				$data = "${data[2]}-${data[1]}-${data[0]}";
+				$condicoes[] = array('PagarConta.data_hora_cadastrada >='=> $data);
+			}
 			if (! empty ($condicoes)) {
+				$this->paginate['PagarConta'] = array (
+				'limit' => 10,
+					'order' => array (
+						'PagarConta.id' => 'desc'
+					),
+				'contain' => array('TipoDocumento.nome','Conta.nome','PlanoConta.nome','Cliente.nome','Fornecedor.nome'),
+				);
 				$resultados = $this->paginate('PagarConta',$condicoes);
 				if (! empty($resultados)) {
 					$num_encontrados = count($resultados);
