@@ -53,7 +53,7 @@ class Cliente extends AppModel {
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
 			),
-		   /* 'caracteres' => array (
+		    /* 'caracteres' => array (
 			   // se a expressao regular nao for verdadeira
 			   'rule' => array('custom', '/[^0-9]/i'), 
 			   'message' => 'Há caracteres inválidos.'

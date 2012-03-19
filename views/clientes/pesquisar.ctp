@@ -97,7 +97,7 @@ else {
 				<tr>
 					<td><?php print $r['Cliente']['id']; ?></td>
 					<td><?php print $r['Cliente']['tipo_pessoa']; ?></td>
-					<td><?php print $html->link($r['Cliente']['nome'],'editar/' . $r['Cliente']['id'],array('class' => 'ajax_link_dialog')) ;?></td>
+					<td><?php print $html->link($r['Cliente']['nome'],'editar/' . $r['Cliente']['id']) ;?></td>
 					<td><?php print $r['Cliente']['nome_fantasia']; ?></td>
 					<td><?php print $r['Cliente']['cidade']; ?></td>
 					<td><?php print $r['Cliente']['cpf'].$r['Cliente']['cnpj']; ?></td>

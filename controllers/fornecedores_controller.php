@@ -4,12 +4,6 @@ class FornecedoresController extends AppController {
 	var $name = 'Fornecedores'; // PHP 4
 	var $helpers = array('CakePtbr.Estados','Javascript','Ajax');
 	var $components = array('RequestHandler');
-	var $paginate = array (
-		'limit' => 10,
-		'order' => array (
-			'Fornecedor.id' => 'desc'
-		)
-	);
 
 	/**
 	* @var $Fornecedor
@@ -41,6 +35,13 @@ class FornecedoresController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
+		$this->paginate['Fornecedor'] = array (
+			'limit' => 10,
+			'order' => array (
+				'Fornecedor.id' => 'desc'
+			),
+		    'contain' => array(),
+		);
 		$dados = $this->paginate('Fornecedor');
 		$this->set('consulta_fornecedor',$dados);
 	}
@@ -123,6 +124,13 @@ class FornecedoresController extends AppController {
 			if (! empty($dados['cpf'])) $condicoes[] = array('Fornecedor.cpf'=>$dados['cpf']);
 			if (! empty($dados['rg'])) $condicoes[] = array('Fornecedor.rg'=>$dados['rg']);
 			if (! empty ($condicoes)) {
+				$this->paginate['Fornecedor'] = array (
+					'limit' => 10,
+					'order' => array (
+						'Fornecedor.id' => 'desc'
+					),
+					'contain' => array('Usuario'),
+				);
 				$resultados = $this->paginate('Fornecedor',$condicoes);
 				if (! empty($resultados)) {
 					$num_encontrados = count($resultados);
@@ -176,6 +184,7 @@ class FornecedoresController extends AppController {
 			else {
 				$condicoes = array("Fornecedor.$campo LIKE" => '%'.$termo.'%');
 			}
+			$this->Fornecedor->recursive = -1;
 			$resultados = $this->Fornecedor->find('all',array('fields' => array('id','nome','situacao'),'conditions'=>$condicoes));
 			if (!empty($resultados)) {
 				foreach ($resultados as $r) {
