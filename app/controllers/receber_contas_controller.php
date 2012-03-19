@@ -254,7 +254,8 @@ class ReceberContasController extends AppController {
 		$retorno = json_encode($retorno,JSON_NUMERIC_CHECK);
 		$this->set('data2',$retorno);
 		
-		// grafico de clientes com mais contas a receber
+		// grafico de clientes/fornecedores com mais contas a receber
+		// #FIXME está exibindo apenas clientes
 		$consulta = $this->ReceberConta->query("SELECT receber_contas.cliente_fornecedor_id, count(receber_contas.cliente_fornecedor_id) AS contador, receber_contas.eh_cliente_ou_fornecedor,
 		case receber_contas.eh_cliente_ou_fornecedor
 			when 'C' then clientes.nome
@@ -270,6 +271,26 @@ class ReceberContasController extends AppController {
 		}
 		$retorno = json_encode($retorno,JSON_NUMERIC_CHECK);
 		$this->set('data3',$retorno);
+		
+		// grafico de clientes/fornecedores com mais contas a receber vencidas
+		// #FIXME está exibindo apenas clientes
+		$consulta = $this->ReceberConta->query("SELECT receber_contas.cliente_fornecedor_id, count(receber_contas.cliente_fornecedor_id) AS contador, receber_contas.eh_cliente_ou_fornecedor,
+		case receber_contas.eh_cliente_ou_fornecedor
+			when 'C' then clientes.nome
+			when 'F' then fornecedores.nome
+		end AS nome
+		FROM receber_contas, clientes,fornecedores
+		WHERE receber_contas.cliente_fornecedor_id = clientes.id
+		AND receber_contas.data_vencimento > '".date('m-d-Y')."'
+		AND receber_contas.situacao = 'N'
+		GROUP BY receber_contas.eh_cliente_ou_fornecedor
+		ORDER BY contador DESC");
+		$retorno = array();
+		foreach ($consulta as $r) {
+			$retorno[] = array($r[0]['nome'],$r[0]['contador']) ; 
+		}
+		$retorno = json_encode($retorno,JSON_NUMERIC_CHECK);
+		$this->set('data4',$retorno);
 	}
 	
 }

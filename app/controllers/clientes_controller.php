@@ -4,12 +4,6 @@ class ClientesController extends AppController {
 	var $name = 'Clientes'; // PHP 4
 	var $components = array('RequestHandler');
 	var $helpers = array('CakePtbr.Estados','Ajax', 'Javascript');
-	var $paginate = array (
-		'limit' => 10,
-		'order' => array (
-			'Cliente.id' => 'desc'
-		)
-	);
 
 	/**
 	* @var $Cliente
@@ -42,6 +36,13 @@ class ClientesController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
+		$this->paginate['Cliente'] = array (
+			'limit' => 10,
+			'order' => array (
+				'Cliente.id' => 'desc'
+			),
+			'contain' => array(),
+		);
 		$dados = $this->paginate('Cliente');
 		$this->set('consulta_cliente',$dados);
 	}
@@ -55,7 +56,15 @@ class ClientesController extends AppController {
 			$this->data['Cliente'] += array ('data_cadastrado' => date('Y-m-d H:i:s'));
 			$this->data['Cliente'] += array ('usuario_cadastrou' => $this->Auth->user('id'));
 			
-			if ($this->Cliente->save($this->data)) {
+			/**
+			 * letras e numero, espaço, ponto, &
+			 */
+			/*if ( preg_match('/[^[:alnum:].& ]/i',$this->data['Cliente']['nome']) ) {
+				$this->Cliente->invalidate('nome','Há caracteres inválidos');
+			}*/
+			
+			
+			if ($this->Cliente->validates() && $this->Cliente->save($this->data)) {
 				$this->Session->setFlash('Cliente cadastrado com sucesso.','flash_sucesso');
 				$this->redirect(array('controller'=>'Clientes'));
 			}
@@ -123,6 +132,13 @@ class ClientesController extends AppController {
 			if (! empty($dados['cpf'])) $condicoes[] = array('Cliente.cpf'=>$dados['cpf']);
 			if (! empty($dados['rg'])) $condicoes[] = array('Cliente.rg'=>$dados['rg']);
 			if (! empty ($condicoes)) {
+				$this->paginate['Cliente'] = array (
+					'limit' => 10,
+					'order' => array (
+						'Cliente.id' => 'desc'
+					),
+					'contain' => array('Usuario'),
+				);
 				$resultados = $this->paginate('Cliente',$condicoes);
 				if (! empty($resultados)) {
 					$num_encontrados = count($resultados);
@@ -176,6 +192,7 @@ class ClientesController extends AppController {
 			else {
 				$condicoes = array("Cliente.$campo LIKE" => '%'.$termo.'%');
 			}
+			$this->Cliente->recursive = -1;
 			$resultados = $this->Cliente->find('all',array('fields' => array('id','nome','situacao'),'conditions'=>$condicoes));
 			if (!empty($resultados)) {
 				foreach ($resultados as $r) {

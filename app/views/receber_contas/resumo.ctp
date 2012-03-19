@@ -58,6 +58,22 @@ print $html->css('jquery.jqplot.css');
 			legend: { show:true, location: 'e' }
 			}
 		);
+			
+		var data4 = <?php print $data4 ?>;
+		var grafico3 = jQuery.jqplot ('grafico4', [data4], {
+			title: 'Clientes/fornecedores com mais contas a receber vencidas e não pagas',
+			seriesDefaults: {
+				// Cria um grafico de pizza
+				renderer: jQuery.jqplot.PieRenderer,
+				rendererOptions: {
+					// Coloque rótulos de dados sobre as fatias de pizza.
+					 // Por padrão rótulos mostram a porcentagem da fatia.
+					showDataLabels: true,
+				},
+			},
+			legend: { show:true, location: 'e' }
+			}
+		);
 		
 	});
 </script>
@@ -73,6 +89,12 @@ print $html->css('jquery.jqplot.css');
 </div>
 
 <div id="grafico3" class="grafico grupo_horizontal" style="height:300px;width:30%; margin-left: 2%;">
+	
+</div>
+
+<div class="limpar">&nbsp;</div>
+
+<div id="grafico4" class="grafico grupo_horizontal" style="height:300px;width:30%; margin-left: 2%;">
 	
 </div>
 

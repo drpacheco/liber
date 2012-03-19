@@ -32,7 +32,7 @@
 		<tr>
 			<td><?php print $cliente['Cliente']['id'];?></td>
 			<td><?php print $tipo; ?></td>
-			<td><?php print $html->link($cliente['Cliente']['nome'],'editar/' . $cliente['Cliente']['id'],array('class' => 'ajax_link_dialog')) ;?></td>
+			<td><?php print $html->link($cliente['Cliente']['nome'],'editar/' . $cliente['Cliente']['id']) ;?></td>
 			<td>
 				<?php
 				if ($tipo == 'JURIDICA') print $cliente['Cliente']['cnpj'];
