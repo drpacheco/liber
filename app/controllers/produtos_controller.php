@@ -15,9 +15,9 @@ class ProdutosController extends AppController {
 	 * Os dados sao setados em variaveis a serem utilizadas nas views 
 	 */
 	function _obter_opcoes() {
-		$this->loadModel('CategoriaProduto');
-		$this->CategoriaProduto->recursive = -1;
-		$consulta1 = $this->CategoriaProduto->find('list',array('fields'=>array('CategoriaProduto.id','CategoriaProduto.nome')));
+		$this->loadModel('ProdutoCategoria');
+		$this->ProdutoCategoria->recursive = -1;
+		$consulta1 = $this->ProdutoCategoria->find('list',array('fields'=>array('ProdutoCategoria.id','ProdutoCategoria.nome')));
 		$this->set('opcoes_categoria_produto',array_merge(array(0=>''),$consulta1));
 	}
 	

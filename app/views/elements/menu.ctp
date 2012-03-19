@@ -34,16 +34,16 @@
 					<li><?php print $html -> link('Pesquisar', "/produtos/pesquisar");?></li>
 					<li><?php print $html -> link('Listar', "/produtos/");?></li>
 					<li>
-						<?php print $html -> link('Categorias', "/categoriaProdutos");?>
+						<?php print $html -> link('Categorias', "/produtoCategorias");?>
 						<ul>
 							<li>
-								<?php print $html -> link('Cadastrar', "/categoriaProdutos/cadastrar",
+								<?php print $html -> link('Cadastrar', "/produtoCategorias/cadastrar",
 									    array('class' => 'ajax_link_dialog',
 										'data-ajax_link_dialog_altura'=>'300',
 										'data-ajax_link_dialog_largura'=>'500',
 										'data-ajax_link_dialog_titulo'=>'Categoria de produtos'));?>
 							</li>
-							<li><?php print $html -> link('Listar', "/categoriaProdutos");?></li>
+							<li><?php print $html -> link('Listar', "/produtoCategorias");?></li>
 						</ul>
 					</li>
 				</ul>

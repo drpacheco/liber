@@ -54,7 +54,7 @@ print $form->create(null,array('controller'=>'produtos','action'=>'pesquisar','a
 				<tr>
 					<td><?php print $r['Produto']['id']; ?></td>
 					<td><?php print $html->link($r['Produto']['nome'],'editar/' . $r['Produto']['id']) ;?></td>
-					<td><?php print $r['Produto']['categoria_produto_id'].' '.$r['CategoriaProduto']['nome']; ?></td>
+					<td><?php print $r['Produto']['categoria_produto_id'].' '.$r['ProdutoCategoria']['nome']; ?></td>
 					<td><?php print $r['Produto']['tipo_produto']; ?></td>
 					<td><?php print $r['Produto']['preco_custo']; ?></td>
 					<td><?php print $r['Produto']['preco_venda']; ?></td>

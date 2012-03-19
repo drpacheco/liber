@@ -52,15 +52,9 @@ else {
 			</div>
 			<div class="div2_2">
 				<?php
-				print $form->input('data_hora_cadastrada',array('label'=>'Data e hora do início'));
-				print $form->input('situacao',array('label'=>'Situação','options'=>array(
-				'O' => 'Orçamento',
-				'S' => 'Em espera',
-				'X' => 'Em execução',
-				'F' => 'Finalizada',
-				'E' => 'Entregue',
-				//'C' => 'Cancelada',
-				)));
+				print $form->input('data_hora_inicio',array('label'=>'Data e hora do início','dateFormat' => 'DMY','timeFormat'=>24));
+				unset($opcoes_situacao['C']);
+				print $form->input('situacao',array('label'=>'Situação','options'=>$opcoes_situacao));
 				print $form->input('usuario_id',array('label'=>'Técnico','options'=>$opcoes_tecnico));
 				?>
 			</div>

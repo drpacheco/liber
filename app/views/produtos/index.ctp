@@ -25,7 +25,7 @@
 		<tr>
 			<td><?php print $c['Produto']['id'];?></td>
 			<td><?php print $html->link($c['Produto']['nome'],'editar/' . $c['Produto']['id']) ;?></td>
-			<td><?php print $c['CategoriaProduto']['nome']; ?></td>
+			<td><?php print $c['ProdutoCategoria']['nome']; ?></td>
 			<td><?php print $c['Produto']['preco_custo']; ?></td>
 			<td><?php print $c['Produto']['preco_venda']; ?></td>
 			<td><?php print $c['Produto']['margem_lucro']; ?></td>
