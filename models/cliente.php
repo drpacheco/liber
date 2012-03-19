@@ -3,7 +3,6 @@
 App::import('Lib', 'Localized.BrValidation');
 
 class Cliente extends AppModel {
-	#FIXME corrigir o tipo de validação dos campos somente letras e numeros
 	var $name = 'Cliente';
 	var $actsAs = array('Containable');
 	var $belongsTo = array(
@@ -54,11 +53,11 @@ class Cliente extends AppModel {
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
 			),
-		    'caracteres' => array (
+		   /* 'caracteres' => array (
 			   // se a expressao regular nao for verdadeira
-			   'rule' => array('custom', '/.*[^0-9].*/i'), 
+			   'rule' => array('custom', '/[^0-9]/i'), 
 			   'message' => 'Há caracteres inválidos.'
-		    ),
+		    ),*/
 		),
 		
 		'nome_fantasia' => array(
@@ -127,6 +126,10 @@ class Cliente extends AppModel {
 			   'rule' => array('minLength', '14'),
 			   'message' => 'São necessários 14 dígitios'
 		    ),
+		    'valido' => array(
+			   'rule' => array('ssn', null,'br'),
+			   'message' => 'CNPJ inválido.',
+		    ),
 		),
 		
 		'inscricao_estadual' => array(
@@ -160,6 +163,10 @@ class Cliente extends AppModel {
 		    'tamanho' => array(
 			   'rule' => array('minLength', '11'),
 			   'message' => 'São necessários 11 dígitios'
+		    ),
+		    'valido' => array(
+			   'rule' => array('ssn', null,'br'),
+			   'message' => 'CPF inválido.',
 		    ),
 		),
 		

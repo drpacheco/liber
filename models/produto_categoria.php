@@ -1,7 +1,7 @@
 <?php
 
-class CategoriaProduto extends AppModel {
-	var $name = 'CategoriaProduto';
+class ProdutoCategoria extends AppModel {
+	var $name = 'ProdutoCategoria';
 	var $hasMany = array('Produto');
 	var $validate = array(
 		'nome' => array(

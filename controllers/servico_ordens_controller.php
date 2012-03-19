@@ -244,7 +244,7 @@ class ServicoOrdensController extends AppController {
 			if (empty($this->data['ServicoOrdem']['data_hora_fim'])) $this->data['ServicoOrdem']['data_hora_fim'] = null;
 			
 			//Inicia uma transaction
-			$this->PedidoVenda->begin();
+			$this->ServicoOrdem->begin();
 			
 			// #TODO seria bom nao deletar e reinserir todos os registros
 			// deleto os itens que pertenciam a ordem de serviço

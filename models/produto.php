@@ -2,7 +2,7 @@
 
 class Produto extends AppModel {
 	var $name = 'Produto';
-	var $belongsTo = array('CategoriaProduto');
+	var $belongsTo = array('ProdutoCategoria');
 	var $actsAs = array('CakePtbr.AjusteFloat');
 	var $validate = array(
 		'nome' => array(

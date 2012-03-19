@@ -17,13 +17,13 @@
 <?php foreach ($consulta as $c): ?>
 		
 		<tr>
-			<td><?php print $c['CategoriaProduto']['id'];?></td>
-			<td><?php print $html->link($c['CategoriaProduto']['nome'],'editar/' . $c['CategoriaProduto']['id']) ;?></td>
+			<td><?php print $c['ProdutoCategoria']['id'];?></td>
+			<td><?php print $html->link($c['ProdutoCategoria']['nome'],'editar/' . $c['ProdutoCategoria']['id']) ;?></td>
 			<td>
-				<?php print $this->element('painel_editar',array('id'=>$c['CategoriaProduto']['id'])) ;?>
+				<?php print $this->element('painel_editar',array('id'=>$c['ProdutoCategoria']['id'])) ;?>
 			</td>
 			<td>
-				<?php print $this->element('painel_excluir',array('id'=>$c['CategoriaProduto']['id'])) ;?>
+				<?php print $this->element('painel_excluir',array('id'=>$c['ProdutoCategoria']['id'])) ;?>
 			</td>
 		</tr>
 

@@ -32,11 +32,11 @@ class Conta extends AppModel {
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),
-		'titular' => array(
+		/*'titular' => array(
 			'allowEmpty' => true,
 			'rule' => 'alphanumeric',
 			'message' => 'Somente letras e números.'
-		)
+		)*/
 	);
 }
 

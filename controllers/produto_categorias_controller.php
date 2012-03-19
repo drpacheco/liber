@@ -1,26 +1,26 @@
 <?php
 
-class CategoriaProdutosController extends AppController {
-	var $name = 'CategoriaProdutos';
+class ProdutoCategoriasController extends AppController {
+	var $name = 'ProdutoCategorias';
 	var $components = array('Sanitizacao','RequestHandler');
 	var $helpers = array('Javascript','Ajax');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (
-			'CategoriaProduto.id' => 'desc'
+			'ProdutoCategoria.id' => 'desc'
 		)
 	);
 	
 	/**
-	* @var $CategoriaProduto
+	* @var $ProdutoCategoria
 	*/
-	var $CategoriaProduto;
+	var $ProdutoCategoria;
 
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
-		$dados = $this->paginate('CategoriaProduto');
+		$dados = $this->paginate('ProdutoCategoria');
 		$this->set('consulta',$dados);
 	}
 	
@@ -30,7 +30,7 @@ class CategoriaProdutosController extends AppController {
 		}
 		if (! empty($this->data)) {
 			
-			if ($this->CategoriaProduto->save($this->data)) {
+			if ($this->ProdutoCategoria->save($this->data)) {
 				$this->Session->setFlash('Categoria de produto cadastrada com sucesso.','flash_sucesso');
 				if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect(array('action'=>'index'));
@@ -47,9 +47,9 @@ class CategoriaProdutosController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (empty ($this->data)) {
-			$this->CategoriaProduto->id = $id;
-			$this->CategoriaProduto->recursive = -1;
-			$this->data = $this->CategoriaProduto->read();
+			$this->ProdutoCategoria->id = $id;
+			$this->ProdutoCategoria->recursive = -1;
+			$this->data = $this->ProdutoCategoria->read();
 			if ( ! $this->data) {
 				$this->Session->setFlash('Categoria de produto não encontrada.','flash_erro');
 				if ( ! $this->RequestHandler->isAjax() ) {
@@ -58,9 +58,9 @@ class CategoriaProdutosController extends AppController {
 			}
 		}
 		else {
-			$this->data['CategoriaProduto']['id'] = $id;
+			$this->data['ProdutoCategoria']['id'] = $id;
 			
-			if ($this->CategoriaProduto->save($this->data)) {
+			if ($this->ProdutoCategoria->save($this->data)) {
 				$this->Session->setFlash('Categoria de produto atualizada com sucesso.','flash_sucesso');
 				if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect(array('action'=>'index'));
@@ -77,7 +77,7 @@ class CategoriaProdutosController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (! empty($id)) {
-			if ($this->CategoriaProduto->delete($id)) $this->Session->setFlash("Categoria de produto $id excluída com sucesso.",'flash_sucesso');
+			if ($this->ProdutoCategoria->delete($id)) $this->Session->setFlash("Categoria de produto $id excluída com sucesso.",'flash_sucesso');
 			else $this->Session->setFlash("Categoria de produto $id não pode ser excluída.",'flash_erro');
 			$this->redirect(array('action'=>'index'));
 		}

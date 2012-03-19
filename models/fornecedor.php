@@ -114,6 +114,10 @@ class Fornecedor extends AppModel {
 			   'rule' => array('minLength', '14'),
 			   'message' => 'São necessários 14 dígitios',
 		    ),
+		    'valido' => array(
+			   'rule' => array('ssn', null,'br'),
+			   'message' => 'CNPJ inválido.',
+		    ),
 		),
 		
 		'inscricao_estadual' => array(
@@ -147,6 +151,10 @@ class Fornecedor extends AppModel {
 		    'tamanho' => array(
 			   'rule' => array('minLength', '11'),
 			   'message' => 'São necessários 11 dígitios',
+		    ),
+		    'valido' => array(
+			   'rule' => array('ssn', null,'br'),
+			   'message' => 'CPF inválido.',
 		    ),
 		),
 		
