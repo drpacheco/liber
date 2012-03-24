@@ -2,16 +2,17 @@
 <html>
 	<head>
 		<?php print $this->Html->charset()."\n"; ?>
+		<?php print $this->fetch('meta'); ?>
 		<title>
-			<?php echo __('Liber - ');
-			print $title_for_layout."\n";
-			?>
+			<?php print 'Liber - '.$title_for_layout."\n"; ?>
 		</title>
 		<?php
 			print $this->Html->meta('icon');
+			print $this->Html->css('estilo_limpo.css');
+			print $this->fetch('css');
 			print $this->Html->script('jquery');
 			print $this->Html->script('auxiliares');
-			print $this->Html->css('estilo_limpo.css');
+			print $this->fetch('script');
 		?>
 	</head>
 	
@@ -26,7 +27,7 @@
 				?>
 			</div>
 			
-			<?php print $content_for_layout ?>
+			<?php print $this->fetch('content') ?>
 			
 		</div>
 

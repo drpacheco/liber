@@ -1,6 +1,10 @@
 <div id="conteudo_ajax">
 	
-	<?php print $scripts_for_layout; ?>	
+	<?php
+	print $this->fetch('meta');
+	print $this->fetch('css');
+	print $this->fetch('script');
+	?>	
 	
 	<div id="flash_ajax">
 		<?php
@@ -9,6 +13,6 @@
 		?>
 	</div>
 	
-	<?php print $content_for_layout ?>
+	<?php print $this->fetch('content') ?>
 	
 </div>

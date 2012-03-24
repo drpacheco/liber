@@ -4,18 +4,18 @@
 		<?php print $this->Html->charset()."\n"; ?>
 		<noscript>
 			<meta http-equiv="refresh" content="0; URL=<?php print $this->Html->url('/',true); ?>sistema/noscript" />
+			<?php print $this->fetch('meta'); ?>
 		</noscript>
 		<title>
-			<?php print 'Liber - ';
-			print $title_for_layout."\n";
-			?>
+			<?php print 'Liber - '.$title_for_layout."\n"; ?>
 		</title>
 		<?php
-			print $this->Html->meta('icon');
-			print $this->Html->css('estilo.css');
-			print $this->Html->css('jquery-ui/jquery-ui.css');
-			print $this->Html->script('jquery');
-			print $this->Html->script('auxiliares.js');
+		print $this->Html->meta('icon');
+		print $this->Html->css('estilo.css');
+		print $this->fetch('css');
+		print $this->Html->css('jquery-ui/jquery-ui.css');
+		print $this->Html->script('jquery');
+		print $this->Html->script('auxiliares.js');
 		?>
 	</head>
 	
@@ -40,7 +40,7 @@
 				?>
 			</div>
 			
-			<?php print $content_for_layout ?>
+			<?php print $this->fetch('content') ?>
 		
 			<div id="rodape">
 				
@@ -52,7 +52,7 @@
 		print $this->Html->script('menu.superfish.js');
 		print $this->Html->script('jquery-ui.js');
 		print $this->Html->script('mascaras.js');
-		print $scripts_for_layout;
+		print $this->fetch('script');
 		?>
 		
 		<?php print $this->element('sql_dump'); ?>
