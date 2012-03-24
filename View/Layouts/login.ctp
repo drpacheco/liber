@@ -3,6 +3,7 @@
 	<head>
 		<?php
 		print $this->Html->charset()."\n";
+		print $this->fetch('meta');
 		print $this->Html->meta(array('name' => 'robots', 'content' => 'noindex'));
 		?>
 		<title>
@@ -11,7 +12,8 @@
 		<?php
 			print $this->Html->meta('icon');
 			print $this->Html->css('login.css');
-			print $scripts_for_layout;
+			print $this->fetch('css');
+			print $this->fetch('script');;
 			print $this->Html->script('jquery');
 		?>
 		
@@ -48,7 +50,7 @@
 				
 			</div>
 			
-			<?php print $content_for_layout ?>
+			<?php print $this->fetch('content') ?>
 		
 			<div id="rodape">
 				

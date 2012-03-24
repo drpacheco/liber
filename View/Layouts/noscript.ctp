@@ -2,15 +2,15 @@
 <html>
 	<head>
 		<?php print $this->Html->charset()."\n";?>
+		<?php print $this->fetch('meta'); ?>
 		<title>
-			<?php echo __('Liber - ');
-			print $title_for_layout."\n";
-			?>
+			<?php print 'Liber - '.$title_for_layout."\n"; ?>
 		</title>
 		<?php
 			print $this->Html->meta('icon');
 			print $this->Html->css('estilo.css');
 			print $this->Html->css('jquery-ui/jquery-ui.css');
+			print $this->fetch('css');
 		?>
 	</head>
 	
@@ -40,7 +40,7 @@
 				?>
 			</div>
 			
-			<?php print $content_for_layout ?>
+			<?php print $this->fetch('content') ?>
 		
 			<div id="rodape">
 				
