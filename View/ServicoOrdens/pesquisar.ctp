@@ -126,11 +126,11 @@ else {
 	<table class="resultados padrao">
 		<thead>
 			<tr>
-				<th><?php print $this->Paginator->sort('Cód','id'); ?></th>
-				<th><?php print $this->Paginator->sort('Cadastrada em','data_hora_cadastrada'); ?></th>
-				<th><?php print $this->Paginator->sort('Cliente','cliente_id'); ?></th>
-				<th><?php print $this->Paginator->sort('Situação','situacao'); ?></th>
-				<th><?php print $this->Paginator->sort('Valor total','valor_liquido'); ?></th>
+				<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
+				<th><?php print $this->Paginator->sort('data_hora_cadastrada','Cadastrada em'); ?></th>
+				<th><?php print $this->Paginator->sort('cliente_id','Cliente'); ?></th>
+				<th><?php print $this->Paginator->sort('situacao','Situação'); ?></th>
+				<th><?php print $this->Paginator->sort('valor_liquido','Valor total'); ?></th>
 				<th colspan="3">Ações</th>
 			</tr>
 		</thead>

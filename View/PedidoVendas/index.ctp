@@ -6,13 +6,13 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Código','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Cliente','cliente_id'); ?></th>
-			<th><?php print $this->Paginator->sort('Forma de pagamento','forma_pagamento_id'); ?></th>
-			<th><?php print $this->Paginator->sort('Data venda','data_venda'); ?></th>
-			<th><?php print $this->Paginator->sort('Valor bruto','valor_bruto'); ?></th>
-			<th><?php print $this->Paginator->sort('Valor líquido','valor_liquido'); ?></th>
-			<th><?php print $this->Paginator->sort('Situação','situacao'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+			<th><?php print $this->Paginator->sort('cliente_id','Cliente'); ?></th>
+			<th><?php print $this->Paginator->sort('forma_pagamento_id','Forma de pagamento'); ?></th>
+			<th><?php print $this->Paginator->sort('data_venda','Data venda'); ?></th>
+			<th><?php print $this->Paginator->sort('valor_bruto','Valor bruto'); ?></th>
+			<th><?php print $this->Paginator->sort('valor_liquido','Valor líquido'); ?></th>
+			<th><?php print $this->Paginator->sort('situacao','Situação'); ?></th>
 			<th colspan="3">Ações</th>
 		</tr>
 	</thead>

@@ -55,6 +55,7 @@ class ProdutosController extends AppController {
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
 			$this->Produto->recursive = -1;
+			$this->Produto->id = $id;
 			$this->request->data = $this->Produto->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash("Produto $id não encontrado.",'flash_erro');
@@ -140,7 +141,7 @@ class ProdutosController extends AppController {
 		if (strtoupper($campo_a_pesquisar) == "NOME") $campo = 'nome';
 		else if (strtoupper($campo_a_pesquisar) == "CODIGO") $campo = 'id';
 		else return null;
-		if (! isset($termo)) $termo = $this->request->params['url']['term'];
+		if (! isset($termo)) $termo = $this->request['url']['term'];
 		if ( $this->RequestHandler->isAjax() ) {
 			$i=0;
 			$resultados=array();

@@ -6,8 +6,8 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Código','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Nome','nome'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+			<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
 			<th colspan="2">Ações</th>
 		</tr>
 	</thead>

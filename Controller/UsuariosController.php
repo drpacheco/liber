@@ -17,21 +17,32 @@ class UsuariosController extends AppController {
 			parent::beforeFilter();
 		}
 	
-	public function login() {	
+	public function login() {
 		$this->layout = 'login';
 		if ($this->request->is('post')) {
-			if ($this->Auth->login($this->request->data)) {
-				$dados = $this->Usuario->find('first',array('conditions'=>array(
-					'login'=>$this->request->data['Usuario']['login'],
-				),'recursive' => '-1' ) );
-				$this->Auth->user = $dados['Usuario'];
-				$this->Usuario->id = $this->Auth->user('id');
-				$h = array('ultimo_login'=>date('Y-m-d H:i:s'));
-				$this->Usuario->save($h);
-				$this->Session->write('Usuario.tipo',$this->Auth->user('tipo'));
-				return $this->redirect($this->Auth->redirect());
+			// consulta se usuario/senha existem na base
+			$dadosUsuario = $this->Usuario->find('first',
+					array('conditions'=>array(
+						'Usuario.login' => $this->request->data['Usuario']['login'],
+						'Usuario.senha' => $this->Auth->password($this->request->data['Usuario']['senha']),
+						),'recursive'=>'-1'));
+			// se houver encontrado dados
+			if ( ! empty($dadosUsuario) ) {
+				// registra uma sessao que contera todos os dados do usuario,
+				// exceto o hash da senha
+				unset($dadosUsuario['Usuario']['senha']);
+				if ($this->Auth->login($dadosUsuario['Usuario'])) {
+					$this->Usuario->id = $this->Auth->user('id');
+					$h = array('ultimo_login'=>date('Y-m-d H:i:s'));
+					$this->Usuario->save($h);
+					return $this->redirect($this->Auth->redirect());
+				}
+				else {
+					$this->Session->setFlash(__('Erro ao criar sessão'));
+				}
 			} else {
-				$this->Session->setFlash(__('Username or password is incorrect'), 'default', array(), 'auth');
+				$this->Session->setFlash(__('Usuário e/ou senha incorreto(s)'));
+				unset ($this->request->data['Usuario']['senha']);
 			}
 		}
 	}
@@ -39,9 +50,9 @@ class UsuariosController extends AppController {
 	function logout() {
 		$this->layout = 'login';
 		if ($this->Auth->user()) {
-			/*$this->Usuario->id = $this->Auth->user('id');
+			$this->Usuario->id = $this->Auth->user('id');
 			$h = array('ultimo_logout'=>date('Y-m-d H:i:s'));
-			$this->Usuario->save($h);*/
+			$this->Usuario->save($h);
 			$this->redirect($this->Auth->logout());
 		}
 		// Redireciona o usuário para o action do logoutRedirect

@@ -237,9 +237,9 @@ function abrir_dialogo_ajax (url, largura, altura, titulo) {
 }
 
 $(function() {
-	
+	// #TODO submissao nao está funcionando
 	// abre links com a classe "ajax_link_dialog" via ajax e jquery ui
-	$('a.ajax_link_dialog').click(function() {
+	/*$('a.ajax_link_dialog').click(function() {
 		url = this.href;
 		largura = $(this).attr('data-ajax_link_dialog_largura');
 		altura = $(this).attr('data-ajax_link_dialog_altura');
@@ -260,7 +260,7 @@ $(function() {
 		
 		abrir_dialogo_ajax(url,largura,altura,titulo);
 		return false;
-	});
+	});*/
 	
 	/*
 	$('a[title="Excluir"]').click(function(evento) {

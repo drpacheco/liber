@@ -6,10 +6,10 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Código','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Nome','nome'); ?></th>
-			<th><?php print $this->Paginator->sort('CNH - categoria','cnh_categoria'); ?></th>
-			<th><?php print $this->Paginator->sort('Veículo padrão','veiculo_padrao'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+			<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
+			<th><?php print $this->Paginator->sort('cnh_categoria','CNH - categoria'); ?></th>
+			<th><?php print $this->Paginator->sort('veiculo_padrao','Veículo padrão'); ?></th>
 			<th colspan="2">Ações</th>
 		</tr>
 	</thead>

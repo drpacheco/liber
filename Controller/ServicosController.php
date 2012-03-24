@@ -56,6 +56,7 @@ class ServicosController extends AppController {
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
 			$this->Servico->contain('ServicoCategoria');
+			$this->Servico->id = $id;
 			$this->request->data = $this->Servico->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Serviço não encontrado.','flash_erro');
@@ -93,7 +94,7 @@ class ServicosController extends AppController {
 		if (strtoupper($campo_a_pesquisar) == "NOME") $campo = 'nome';
 		else if (strtoupper($campo_a_pesquisar) == "CODIGO") $campo = 'id';
 		else return null;
-		if (! isset($termo)) $termo = $this->request->params['url']['term'];
+		if (! isset($termo)) $termo = $this->request['url']['term'];
 		if ( $this->RequestHandler->isAjax() ) {
 			$i=0;
 			$resultados=array();

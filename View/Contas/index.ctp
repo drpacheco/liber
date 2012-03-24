@@ -6,13 +6,13 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Código','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Nome','nome'); ?></th>
-			<th><?php print $this->Paginator->sort('Apelido','apelido'); ?></th>
-			<th><?php print $this->Paginator->sort('Banco','banco'); ?></th>
-			<th><?php print $this->Paginator->sort('Agência','agencia'); ?></th>
-			<th><?php print $this->Paginator->sort('Conta','conta'); ?></th>
-			<th><?php print $this->Paginator->sort('Titular','titular'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+			<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
+			<th><?php print $this->Paginator->sort('apelido','Apelido'); ?></th>
+			<th><?php print $this->Paginator->sort('banco','Banco'); ?></th>
+			<th><?php print $this->Paginator->sort('agencia','Agência'); ?></th>
+			<th><?php print $this->Paginator->sort('conta','Conta'); ?></th>
+			<th><?php print $this->Paginator->sort('titular','Titular'); ?></th>
 			<th colspan="2">Ações</th>
 		</tr>
 	</thead>

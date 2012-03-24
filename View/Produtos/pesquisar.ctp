@@ -37,14 +37,14 @@ print $this->Form->create(null,array('controller'=>'produtos','action'=>'pesquis
 	<table class="padrao">
 		<thead>
 			<tr>
-				<th><?php print $this->Paginator->sort('Cód','id'); ?></th>
-				<th><?php print $this->Paginator->sort('Nome','nome'); ?></th>
-				<th><?php print $this->Paginator->sort('Categoria','categoria_produto_id'); ?></th>
-				<th><?php print $this->Paginator->sort('Tipo produto','tipo_produto'); ?></th>
-				<th><?php print $this->Paginator->sort('Preço de custo','preco_custo'); ?></th>
-				<th><?php print $this->Paginator->sort('Preço de venda','preco_venda'); ?></th>
-				<th><?php print $this->Paginator->sort('Unidade','quantidade_estoque_fiscal'); ?></th>
-				<th><?php print $this->Paginator->sort('Situação','situacao'); ?></th>
+				<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
+				<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
+				<th><?php print $this->Paginator->sort('categoria_produto_id','Categoria'); ?></th>
+				<th><?php print $this->Paginator->sort('tipo_produto','Tipo produto'); ?></th>
+				<th><?php print $this->Paginator->sort('preco_custo','Preço de custo'); ?></th>
+				<th><?php print $this->Paginator->sort('preco_venda','Preço de venda'); ?></th>
+				<th><?php print $this->Paginator->sort('quantidade_estoque_fiscal','Quantidade'); ?></th>
+				<th><?php print $this->Paginator->sort('situacao','Situação'); ?></th>
 				<th colspan="2">Ações</th>
 			</tr>
 		</thead>

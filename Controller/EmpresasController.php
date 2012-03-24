@@ -41,6 +41,7 @@ class EmpresasController extends AppController {
 		}
 		if (empty ($this->request->data)) {
 			$this->Empresa->recursive = -1;
+			$this->Empresa->id = $id;
 			$this->request->data = $this->Empresa->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Empresa não encontrada.','flash_erro');

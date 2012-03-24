@@ -41,6 +41,7 @@ class ContasController extends AppController {
 		}
 		if (empty ($this->request->data)) {
 			$this->Conta->recursive = -1;
+			$this->Conta->id = $id;
 			$this->request->data = $this->Conta->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Conta não encontrada.','flash_erro');

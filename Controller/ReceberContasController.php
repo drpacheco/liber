@@ -99,6 +99,7 @@ class ReceberContasController extends AppController {
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
 			$this->ReceberConta->contain('TipoDocumento.nome','Conta.nome','PlanoConta.nome','Empresa.nome','Cliente.nome','Fornecedor.nome');
+			$this->ReceberConta->id = $id;
 			$this->request->data = $this->ReceberConta->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Conta a receber não encontrada.','flash_erro');

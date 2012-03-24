@@ -6,9 +6,9 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Código','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Nome','nome'); ?></th>
-			<th><?php print $this->Paginator->sort('Tipo','tipo'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+			<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
+			<th><?php print $this->Paginator->sort('tipo','Tipo'); ?></th>
 			<th colspan="2">Ações</th>
 		</tr>
 	</thead>
@@ -20,24 +20,7 @@
 		<tr>
 			<td><?php print $consulta['PlanoConta']['id'];?></td>
 			<td><?php print $this->Html->link($consulta['PlanoConta']['nome'],'editar/' . $consulta['PlanoConta']['id']) ;?></td>
-			<td>
-				<?php
-				switch ($consulta['PlanoConta']['tipo']) {
-					case 'R':
-						print 'Receitas';
-						break;
-					case 'D':
-						print 'Despesas';
-						break;
-					case 'E':
-						print 'Especiais';
-						break;
-					default:
-						print 'Não informado';
-						break;
-				}
-				?>
-			</td>
+			<td>	<?php print $opcoes[$consulta['PlanoConta']['tipo']]; ?> </td>
 			<td>
 				<?php print $this->element('painel_editar',array('id'=>$consulta['PlanoConta']['id'])) ;?>
 			</td>

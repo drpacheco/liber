@@ -6,14 +6,14 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Cód','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Nome','nome'); ?></th>
-			<th><?php print $this->Paginator->sort('Login','login'); ?></th>
-			<th><?php print $this->Paginator->sort('Tipo','tipo'); ?></th>
-			<th><?php print $this->Paginator->sort('Ativo','ativo'); ?></th>
-			<th><?php print $this->Paginator->sort('E-mail','email'); ?></th>
-			<th><?php print $this->Paginator->sort('Último login','ultimo_login'); ?></th>
-			<th><?php print $this->Paginator->sort('Último logout','ultimo_logout'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
+			<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
+			<th><?php print $this->Paginator->sort('login','Login'); ?></th>
+			<th><?php print $this->Paginator->sort('tipo','Tipo'); ?></th>
+			<th><?php print $this->Paginator->sort('ativo','Ativo'); ?></th>
+			<th><?php print $this->Paginator->sort('email','E-mail'); ?></th>
+			<th><?php print $this->Paginator->sort('ultimo_login','Último login'); ?></th>
+			<th><?php print $this->Paginator->sort('ultimo_logout','Último logout'); ?></th>
 			<th colspan="2">Ações</th>
 		</tr>
 	</thead>

@@ -6,15 +6,15 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Código','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Nome','nome'); ?></th>
-			<th><?php print $this->Paginator->sort('CNPJ','cnpj'); ?></th>
-			<th><?php print $this->Paginator->sort('Logroudouro','logradouro'); ?></th>
-			<th><?php print $this->Paginator->sort('Número','numero'); ?></th>
-			<th><?php print $this->Paginator->sort('Bairro','bairro'); ?></th>
-			<th><?php print $this->Paginator->sort('Complemento','complemento'); ?></th>
-			<th><?php print $this->Paginator->sort('Cidade','cidade'); ?></th>
-			<th><?php print $this->Paginator->sort('Estado','estado'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+			<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
+			<th><?php print $this->Paginator->sort('cnpj','CNPJ'); ?></th>
+			<th><?php print $this->Paginator->sort('logradouro','Logroudouro'); ?></th>
+			<th><?php print $this->Paginator->sort('numero','Número'); ?></th>
+			<th><?php print $this->Paginator->sort('bairro','Bairro'); ?></th>
+			<th><?php print $this->Paginator->sort('complemento','Complemento'); ?></th>
+			<th><?php print $this->Paginator->sort('cidade','Cidade'); ?></th>
+			<th><?php print $this->Paginator->sort('estado','Estado'); ?></th>
 			<th colspan="2">Ações</th>
 		</tr>
 	</thead>

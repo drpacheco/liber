@@ -50,12 +50,12 @@ print $this->Form->create(null,array('controller'=>'carregamentos','action'=>'pe
 	<table class="padrao">
 		<thead>
 			<tr>
-				<th><?php print $this->Paginator->sort('Cód','id'); ?></th>
-				<th><?php print $this->Paginator->sort('Criado em','data_hora_criado'); ?></th>
-				<th><?php print $this->Paginator->sort('Situação','situacao'); ?></th>
-				<th><?php print $this->Paginator->sort('Descrição','descricao'); ?></th>
-				<th><?php print $this->Paginator->sort('Motorista','motorista'); ?></th>
-				<th><?php print $this->Paginator->sort('Veículo','veiculo'); ?></th>
+				<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
+				<th><?php print $this->Paginator->sort('data_hora_criado','Criado em'); ?></th>
+				<th><?php print $this->Paginator->sort('situacao','Situação'); ?></th>
+				<th><?php print $this->Paginator->sort('descricao','Descrição'); ?></th>
+				<th><?php print $this->Paginator->sort('motorista','Motorista'); ?></th>
+				<th><?php print $this->Paginator->sort('veiculo','Veículo'); ?></th>
 				<th colspan="2">Ações</th>
 			</tr>
 		</thead>

@@ -66,6 +66,7 @@ class FornecedoresController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
+			$this->Fornecedor->id = $id;
 			$this->Fornecedor->recursive = -1;
 			$this->request->data = $this->Fornecedor->read();
 			if ( ! $this->request->data) {
@@ -80,7 +81,7 @@ class FornecedoresController extends AppController {
 			
 			if ($this->Fornecedor->save($this->request->data)) {
 				$this->Session->setFlash('Fornecedor atualizado com sucesso.','flash_sucesso');
-				$this->redirect($this->referer(array('action' => 'index')));
+				$this->redirect(array('action' => 'index'));
 			}
 			else {
 				$this->Session->setFlash('Erro ao atualizar o Fornecedor.','flash_erro');
@@ -165,7 +166,7 @@ class FornecedoresController extends AppController {
 		if (strtoupper($campo_a_pesquisar) == "NOME") $campo = 'nome';
 		else if (strtoupper($campo_a_pesquisar) == "CODIGO") $campo = 'id';
 		else return null;
-		if (! isset($termo)) $termo = $this->request->params['url']['term'];
+		if (! isset($termo)) $termo = $this->request['url']['term'];
 		if ( $this->RequestHandler->isAjax() ) {
 			$i=0;
 			$resultados=array();

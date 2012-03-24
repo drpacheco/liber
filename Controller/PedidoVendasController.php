@@ -245,7 +245,7 @@ class PedidoVendasController extends AppController {
 				else {
 					$this->PedidoVenda->commit();
 					$this->Session->setFlash("Pedido de venda, código {$this->PedidoVenda->id}, cadastrado com sucesso.<br/>"
-					."<a href='#' onclick=popup('pedido_vendas/cupomNaoFiscal/{$this->PedidoVenda->id}','300','300') > Imprimir cupom não fiscal</a>"."
+					."<a href='#' onclick=popup('cupomNaoFiscal/{$this->PedidoVenda->id}','300','300') > Imprimir cupom não fiscal</a>"."
 					",'flash_sucesso');
 					$this->redirect($this->referer(array('action' => 'index')));
 				}
@@ -343,7 +343,7 @@ class PedidoVendasController extends AppController {
 				else {
 					$this->PedidoVenda->commit();
 					$this->Session->setFlash("Pedido de venda alterado com sucesso.<br/>"
-					."<a href='#' onclick=popup('pedido_vendas/cupomNaoFiscal/{$this->PedidoVenda->id}','300','300') > Imprimir cupom não fiscal</a>"."
+					."<a href='#' onclick=popup('cupomNaoFiscal/{$this->PedidoVenda->id}','300','300') > Imprimir cupom não fiscal</a>"."
 					",'flash_sucesso');
 					$this->redirect(array('action'=>'index'));
 				}

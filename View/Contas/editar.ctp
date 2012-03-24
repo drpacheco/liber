@@ -1,6 +1,13 @@
 <h2 class="descricao_cabecalho">Editar conta</h2>
 
-<?php print $this->Form->create('Conta',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;')); ?>
+<?php
+if ($this->Ajax->isAjax()) {
+	print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'TipoDocumento','update'=>'conteudo_ajax'));
+}
+else {
+	print $this->Form->create('Conta',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
+?>
 <div class="divs_grupo_2">
 	<div class="div1_2">
 		<?php

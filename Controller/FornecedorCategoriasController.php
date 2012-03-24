@@ -43,6 +43,7 @@ class FornecedorCategoriasController extends AppController {
 		}
 		if (empty ($this->request->data)) {
 			$this->FornecedorCategoria->recursive = -1;
+			$this->FornecedorCategoria->id = $id;
 			$this->request->data = $this->FornecedorCategoria->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Categoria de fornecedor não encontrada.','flash_erro');

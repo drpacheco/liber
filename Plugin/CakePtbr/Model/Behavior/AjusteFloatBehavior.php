@@ -119,5 +119,30 @@ class AjusteFloatBehavior extends ModelBehavior {
 
 		return true;
 	}
+	
+	/**
+	* After Find
+	*
+	* @param object $model
+	* @param array $results
+	* @param boolean $primary
+	* @return void
+	* @access public
+	* @deprecated Isto deve ser feito na view
+	* Metodo reinserido por questões de compatiblidade com o código existente
+	* #XXX Isto deve ser feito na view
+	*/
+	function afterFind(&$model, $results, $primary) {
+		foreach ($results as $key => $r) {
+			if (isset($r[$model->alias]) && is_array($r[$model->alias])) {
+				foreach (array_keys($r[$model->alias]) as $arrayKey) {
+					if (in_array($arrayKey, $this->floatFields[$model->alias]) && $r[$model->alias][$arrayKey] !== null) {
+						$results[$key][$model->alias][$arrayKey] = number_format($r[$model->alias][$arrayKey], 2, ',', '.');
+					}
+				}
+			}
+		}
+		return $results;
+	}
 
 }

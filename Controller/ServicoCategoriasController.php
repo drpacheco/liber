@@ -43,6 +43,7 @@ class ServicoCategoriasController extends AppController {
 		}
 		if (empty ($this->request->data)) {
 			$this->ServicoCategoria->recursive = -1;
+			$this->ServicoCategoria->id = $id;
 			$this->request->data = $this->ServicoCategoria->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Categoria de serviço não encontrada.','flash_erro');

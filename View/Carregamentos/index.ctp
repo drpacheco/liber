@@ -6,10 +6,10 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Código','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Criado em','data_hora_criado'); ?></th>
-			<th><?php print $this->Paginator->sort('Descrição','descricao'); ?></th>
-			<th><?php print $this->Paginator->sort('Situação','situacao'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+			<th><?php print $this->Paginator->sort('data_hora_criado','Criado em'); ?></th>
+			<th><?php print $this->Paginator->sort('descricao','Descrição'); ?></th>
+			<th><?php print $this->Paginator->sort('situacao','Situação'); ?></th>
 			<th colspan="2">Ações</th>
 		</tr>
 	</thead>
