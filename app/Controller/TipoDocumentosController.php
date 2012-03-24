@@ -41,6 +41,7 @@ class TipoDocumentosController extends AppController {
 		}
 		if (empty ($this->request->data)) {
 			$this->TipoDocumento->recursive = -1;
+			$this->TipoDocumento->id = $id;
 			$this->request->data = $this->TipoDocumento->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Tipo de documento não encontrado.','flash_erro');

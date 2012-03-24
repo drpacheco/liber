@@ -7,8 +7,14 @@
 
 <h2 class="descricao_cabecalho">Cadastrar forma de pagamento</h2>
 
-<?php print $this->Form->create('FormaPagamento',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;')); ?>
-
+<?php
+if ($this->Ajax->isAjax()) {
+	print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'FormaPagamento','update'=>'conteudo_ajax'));
+}
+else {
+	print $this->Form->create('FormaPagamento',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
+?>
 <div class="grupo_horizontal">
 	<?php print $this->Form->input('nome',array('label'=>'Nome')); ?>
 </div>

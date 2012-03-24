@@ -199,6 +199,7 @@ class ServicoOrdensController extends AppController {
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
 			$this->ServicoOrdem->contain('Cliente.nome','ServicoOrdemItem');
+			$this->ServicoOrdem->id = $id;
 			$this->request->data = $this->ServicoOrdem->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Ordem de serviço não encontrada.','flash_erro');

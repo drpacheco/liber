@@ -70,11 +70,13 @@ class ClientesController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
+			$this->Cliente->id = $id;
 			$this->Cliente->recursive = -1;
 			$this->request->data = $this->Cliente->read();
 			if ( ! $this->request->data) {
@@ -118,6 +120,7 @@ class ClientesController extends AppController {
 			//a instrucao acima redirecionou para cá
 			$dados = $this->request->params['named'];
 			$condicoes=array();
+			if (! empty($dados['id'])) $condicoes[] = array('Cliente.id'=>$dados['id']);
 			if (! empty($dados['nome'])) $condicoes[] = array('Cliente.nome LIKE'=>'%'.$dados['nome'].'%');
 			if (! empty($dados['nome_fantasia'])) $condicoes[] = array('Cliente.nome_fantasia LIKE'=>'%'.$dados['nome_fantasia'].'%');
 			if (! empty($dados['bairro'])) $condicoes[] = array('Cliente.bairro'=>$dados['bairro']);
@@ -173,7 +176,7 @@ class ClientesController extends AppController {
 		if (strtoupper($campo_a_pesquisar) == "NOME") $campo = 'nome';
 		else if (strtoupper($campo_a_pesquisar) == "CODIGO") $campo = 'id';
 		else return null;
-		if (! isset($termo)) $termo = $this->request->params['url']['term'];
+		if (! isset($termo)) $termo = $this->request['url']['term'];
 		if ( $this->RequestHandler->isAjax() ) {
 			$i=0;
 			$resultados=array();

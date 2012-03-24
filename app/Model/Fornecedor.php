@@ -1,6 +1,6 @@
 <?php
 
-App::import('Lib', 'Localized.BrValidation');
+App::uses('BrValidation', 'Localized.Lib');
 
 class Fornecedor extends AppModel {
 	

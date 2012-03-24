@@ -61,14 +61,14 @@ print $this->Form->create(null,array('action'=>'pesquisar','autocomplete'=>'off'
 	<table class="resultados padrao">
 		<thead>
 			<tr>
-				<th><?php print $this->Paginator->sort('Cód','id'); ?></th>
-				<th><?php print $this->Paginator->sort('Cliente ou fornecedor?','eh_cliente_ou_fornecedor'); ?></th>
-				<th><?php print $this->Paginator->sort('Cliente/fornecedor','cliente_fornecedor_id'); ?></th>
-				<th><?php print $this->Paginator->sort('Tipo documento','tipo_documento_id'); ?></th>
-				<th><?php print $this->Paginator->sort('Número documento','numero_documento'); ?></th>
-				<th><?php print $this->Paginator->sort('Valor','valor'); ?></th>
-				<th><?php print $this->Paginator->sort('Conta origem','conta_origem'); ?></th>
-				<th><?php print $this->Paginator->sort('Plano de contas','plano_conta_id'); ?></th>
+				<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
+				<th><?php print $this->Paginator->sort('eh_cliente_ou_fornecedor','Cliente ou fornecedor?'); ?></th>
+				<th><?php print $this->Paginator->sort('cliente_fornecedor_id','Cliente/fornecedor'); ?></th>
+				<th><?php print $this->Paginator->sort('tipo_documento_id','Tipo documento'); ?></th>
+				<th><?php print $this->Paginator->sort('numero_documento','Número documento'); ?></th>
+				<th><?php print $this->Paginator->sort('valor','Valor'); ?></th>
+				<th><?php print $this->Paginator->sort('conta_origem','Conta origem'); ?></th>
+				<th><?php print $this->Paginator->sort('plano_conta_id','Plano de contas'); ?></th>
 				<th colspan="2">Ações</th>
 			</tr>
 		</thead>

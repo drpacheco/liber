@@ -6,15 +6,15 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Código','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Cliente ou fornecedor?','eh_cliente_ou_fornecedor'); ?></th>
-			<th><?php print $this->Paginator->sort('Cliente / fornecedor','cliente_fornecedor_id'); ?></th>
-			<th><?php print $this->Paginator->sort('Documento','tipo_documento_id'); ?></th>
-			<th><?php print $this->Paginator->sort('N. documento','numero_documento'); ?></th>
-			<th><?php print $this->Paginator->sort('Valor','valor'); ?></th>
-			<th><?php print $this->Paginator->sort('Situação','situacao'); ?></th>
-			<th><?php print $this->Paginator->sort('Plano de contas','plano_conta_id'); ?></th>
-			<th><?php print $this->Paginator->sort('Vencimento','data_vencimento'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+			<th><?php print $this->Paginator->sort('eh_cliente_ou_fornecedor','Cliente ou fornecedor?'); ?></th>
+			<th><?php print $this->Paginator->sort('cliente_fornecedor_id','Cliente / fornecedor'); ?></th>
+			<th><?php print $this->Paginator->sort('tipo_documento_id','Documento'); ?></th>
+			<th><?php print $this->Paginator->sort('numero_documento','N. documento'); ?></th>
+			<th><?php print $this->Paginator->sort('valor','Valor'); ?></th>
+			<th><?php print $this->Paginator->sort('situacao','Situação'); ?></th>
+			<th><?php print $this->Paginator->sort('plano_conta_id','Plano de contas'); ?></th>
+			<th><?php print $this->Paginator->sort('data_vencimento','Vencimento'); ?></th>
 			<th colspan="2">Ações</th>
 		</tr>
 	</thead>

@@ -69,6 +69,7 @@ class MotoristasController extends AppController {
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
 			$this->Motorista->recursive = -1;
+			$this->Motorista->id = $id;
 			$this->request->data = $this->Motorista->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Motorista não encontrado.','flash_erro');

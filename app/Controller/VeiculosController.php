@@ -43,6 +43,7 @@ class VeiculosController extends AppController {
 		}
 		if (empty ($this->request->data)) {
 			$this->Veiculo->recursive = -1;
+			$this->Veiculo->id = $id;
 			$this->request->data = $this->Veiculo->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Veículo não encontrado.','flash_erro');

@@ -6,17 +6,17 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Cód','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Tipo','tipo_pessoa'); ?></th>
-			<th><?php print $this->Paginator->sort('Nome','nome'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
+			<th><?php print $this->Paginator->sort('tipo_pessoa','Tipo'); ?></th>
+			<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
 			<th>CNPJ/CPF</th>
 			<th>I.E/RG</th>
-			<th><?php print $this->Paginator->sort('Logradouro','logradouro_nome'); ?></th>
-			<th><?php print $this->Paginator->sort('Número','logradouro_numero'); ?></th>
-			<th><?php print $this->Paginator->sort('Comp.','logradouro_complemento'); ?></th>
-			<th><?php print $this->Paginator->sort('Bairro','bairro'); ?></th>
-			<th><?php print $this->Paginator->sort('Cidade','cidade'); ?></th>
-			<th><?php print $this->Paginator->sort('Celular','numero_telefone'); ?></th>
+			<th><?php print $this->Paginator->sort('logradouro_nome','Logradouro'); ?></th>
+			<th><?php print $this->Paginator->sort('logradouro_numero','Número'); ?></th>
+			<th><?php print $this->Paginator->sort('logradouro_complemento','Comp.'); ?></th>
+			<th><?php print $this->Paginator->sort('bairro','Bairro'); ?></th>
+			<th><?php print $this->Paginator->sort('cidade','Cidade'); ?></th>
+			<th><?php print $this->Paginator->sort('numero_telefone','Celular'); ?></th>
 			<th colspan="2">Ações</th>
 		</tr>
 	</thead>

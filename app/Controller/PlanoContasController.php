@@ -3,8 +3,19 @@
 class PlanoContasController extends AppController {
 	var $name = 'PlanoContas';
 	var $components = array('Sanitizacao');
+	var $helpers = array('Ajax');
 
+	function _obter_opcoes() {
+		$opcoes = array(
+			'D'=>'Despesas',
+			'R'=>'Receitas',
+			'E'=>'Especiais'
+		);
+		$this->set('opcoes',$opcoes);
+	}
+	
 	function index() {
+		$this->_obter_opcoes();
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
@@ -21,6 +32,7 @@ class PlanoContasController extends AppController {
 	}
 	
 	function cadastrar() {
+		$this->_obter_opcoes();
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
@@ -37,11 +49,13 @@ class PlanoContasController extends AppController {
 	}
 	
 	function editar($id=NULL) {
+		$this->_obter_opcoes();
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
 		if (empty ($this->request->data)) {
 			$this->PlanoConta->recursive = -1;
+			$this->PlanoConta->id = $id;
 			$this->request->data = $this->PlanoConta->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Item do plano de contas não encontrado.','flash_erro');

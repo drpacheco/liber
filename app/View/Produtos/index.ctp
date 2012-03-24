@@ -6,14 +6,14 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Código','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Nome','nome'); ?></th>
-			<th><?php print $this->Paginator->sort('Categoria','categoria_produto_id'); ?></th>
-			<th><?php print $this->Paginator->sort('Preço de custo','preco_custo'); ?></th>
-			<th><?php print $this->Paginator->sort('Preço de venda','preco_venda'); ?></th>
-			<th><?php print $this->Paginator->sort('Margem de lucro','margem_lucro'); ?></th>
-			<th><?php print $this->Paginator->sort('Quantidade estoque fiscal','quantidade_estoque_fiscal'); ?></th>
-			<th><?php print $this->Paginator->sort('Quantidade estoque não fiscal','quantidade_estoque_nao_fiscal'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+			<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
+			<th><?php print $this->Paginator->sort('categoria_produto_id','Categoria'); ?></th>
+			<th><?php print $this->Paginator->sort('preco_custo','Preço de custo'); ?></th>
+			<th><?php print $this->Paginator->sort('preco_venda','Preço de venda'); ?></th>
+			<th><?php print $this->Paginator->sort('margem_lucro','Margem de lucro'); ?></th>
+			<th><?php print $this->Paginator->sort('quantidade_estoque_fiscal','Quantidade estoque fiscal'); ?></th>
+			<th><?php print $this->Paginator->sort('quantidade_estoque_nao_fiscal','Quantidade estoque não fiscal'); ?></th>
 			<th colspan="1">Ações</th>
 		</tr>
 	</thead>

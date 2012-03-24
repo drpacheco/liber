@@ -74,14 +74,14 @@ print $this->Form->create(null,array('controller'=>'fornecedores','action'=>'pes
 	<table class="padrao">
 		<thead>
 			<tr>
-				<th><?php print $this->Paginator->sort('Cód','id'); ?></th>
-				<th><?php print $this->Paginator->sort('Pessoa','tipo_pessoa'); ?></th>
-				<th><?php print $this->Paginator->sort('Nome','nome'); ?></th>
-				<th><?php print $this->Paginator->sort('Nome fantasia','nome_fantasia'); ?></th>
-				<th><?php print $this->Paginator->sort('Cidade','cidade'); ?></th>
+				<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
+				<th><?php print $this->Paginator->sort('tipo_pessoa','Pessoa'); ?></th>
+				<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
+				<th><?php print $this->Paginator->sort('nome_fantasia','Nome fantasia'); ?></th>
+				<th><?php print $this->Paginator->sort('cidade','Cidade'); ?></th>
 				<th>CPF/CNPJ</th>
 				<th>RG/IE</th>
-				<th><?php print $this->Paginator->sort('Usuário cadastrou','usuario_cadastrou'); ?></th>
+				<th><?php print $this->Paginator->sort('usuario_cadastrou','Usuário cadastrou'); ?></th>
 				<th colspan="2">Ações</th>
 			</tr>
 		</thead>

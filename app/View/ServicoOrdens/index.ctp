@@ -6,15 +6,15 @@
 <table class="padrao">
 	<thead>
 		<tr>
-			<th><?php print $this->Paginator->sort('Código','id'); ?></th>
-			<th><?php print $this->Paginator->sort('Cadastrada','data_hora_cadastrada'); ?></th>
-			<th><?php print $this->Paginator->sort('Cliente','cliente_id'); ?></th>
-			<th><?php print $this->Paginator->sort('Usuário cadastrou','usuario_id'); ?></th>
-			<th><?php print $this->Paginator->sort('Situação','situacao'); ?></th>
-			<th><?php print $this->Paginator->sort('Início','data_hora_inicio'); ?></th>
-			<th><?php print $this->Paginator->sort('Fim','data_hora_fim'); ?></th>
-			<th><?php print $this->Paginator->sort('Valor bruto','valor_bruto'); ?></th>
-			<th><?php print $this->Paginator->sort('Valor líquido','valor_liquido'); ?></th>
+			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+			<th><?php print $this->Paginator->sort('data_hora_cadastrada','Cadastrada'); ?></th>
+			<th><?php print $this->Paginator->sort('cliente_id','Cliente'); ?></th>
+			<th><?php print $this->Paginator->sort('usuario_id','Usuário cadastrou'); ?></th>
+			<th><?php print $this->Paginator->sort('situacao','Situação'); ?></th>
+			<th><?php print $this->Paginator->sort('data_hora_inicio','Início'); ?></th>
+			<th><?php print $this->Paginator->sort('data_hora_fim','Fim'); ?></th>
+			<th><?php print $this->Paginator->sort('valor_bruto','Valor bruto'); ?></th>
+			<th><?php print $this->Paginator->sort('valor_liquido','Valor líquido'); ?></th>
 			<th colspan="3">Ações</th>
 		</tr>
 	</thead>
