@@ -1,11 +1,8 @@
-cake
-plugins
-vendors
+lib
 .project
 .settings
-app/autocomplete.php
-app/vendors/simpletest
-app/config/database.php
+app/Vendor/simpletest
+app/Config/database.php
 outros/diagrama_banco.mwb.bak
 app/tmp/cache/models/*
 app/tmp/cache/persistent/*
@@ -15,4 +12,6 @@ app/tmp/sessions/*
 app/tmp/tests/*
 /NetBeansProjects
 outros/anotacoes.txt
-app/config/database.php
+app/aptana_helpers.php
+outros/ico
+/app/Console/Config/database.php
