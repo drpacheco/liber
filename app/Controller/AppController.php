@@ -30,8 +30,13 @@ class AppController extends Controller {
 		$this->Auth->loginRedirect = array ('controller' => 'sistema','action' => 'inicio');
 		// Action para redirecionamento apos o logout
 		$this->Auth->logoutRedirect = array( 'controller' => 'usuarios','action' => 'login');
-		// mensagem de erro, ao acessar area restrita
+		// Erro a exibir quando o usuário tenta acessar um objeto ou ação
+		// para a qual eles não têm acesso.
 		$this->Auth->authError = 'Você precisa fazer login para acessar o sistema';
+		// View a ser renderizada quando uma chamada ajax está sendo feita e o 
+		// usuario precisa logar
+		// #TODO implementar
+		//$this->Auth->ajaxLogin = '';
 		
 	}
 	

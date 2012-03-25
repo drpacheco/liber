@@ -14,3 +14,4 @@ app/tmp/tests/*
 outros/anotacoes.txt
 app/aptana_helpers.php
 outros/ico
+/app/Console/Config/database.php
