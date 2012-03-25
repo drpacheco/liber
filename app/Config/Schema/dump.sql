@@ -52,6 +52,7 @@ CREATE  TABLE IF NOT EXISTS `liber`.`empresas` (
   `complemento` VARCHAR(30) NULL ,
   `cidade` VARCHAR(100) NOT NULL ,
   `estado` CHAR(2) NOT NULL ,
+  `cep` CHAR(8) NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -271,11 +272,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `liber`.`categoria_produtos`
+-- Table `liber`.`produto_categorias`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `liber`.`categoria_produtos` ;
+DROP TABLE IF EXISTS `liber`.`produto_categorias` ;
 
-CREATE  TABLE IF NOT EXISTS `liber`.`categoria_produtos` (
+CREATE  TABLE IF NOT EXISTS `liber`.`produto_categorias` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(100) NOT NULL ,
   PRIMARY KEY (`id`) )
@@ -290,7 +291,7 @@ DROP TABLE IF EXISTS `liber`.`produtos` ;
 CREATE  TABLE IF NOT EXISTS `liber`.`produtos` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(100) NOT NULL ,
-  `categoria_produto_id` INT NOT NULL ,
+  `produto_categoria_id` INT NOT NULL ,
   `tipo_produto` CHAR(1) NOT NULL COMMENT 'Tipo_produto:\nPara venda\nMatéria-prima\nMatéria-prima e venda\nProduto composto' ,
   `codigo_ean` VARCHAR(45) NULL ,
   `codigo_dun` VARCHAR(45) NULL ,
@@ -305,10 +306,10 @@ CREATE  TABLE IF NOT EXISTS `liber`.`produtos` (
   `quantidade_reservada` FLOAT NULL ,
   `situacao` CHAR(1) NOT NULL DEFAULT 'L' COMMENT 'L = Em linha\nF = Fora de linha' ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_produtos_categoria_produtos1` (`categoria_produto_id` ASC) ,
+  INDEX `fk_produtos_categoria_produtos1` (`produto_categoria_id` ASC) ,
   CONSTRAINT `fk_produtos_categoria_produtos1`
-    FOREIGN KEY (`categoria_produto_id` )
-    REFERENCES `liber`.`categoria_produtos` (`id` )
+    FOREIGN KEY (`produto_categoria_id` )
+    REFERENCES `liber`.`produto_categorias` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -840,10 +841,10 @@ INSERT INTO `liber`.`tipo_documentos` (`id`, `nome`) VALUES (NULL, 'Sem document
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `liber`.`categoria_produtos`
+-- Data for table `liber`.`produto_categorias`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `liber`;
-INSERT INTO `liber`.`categoria_produtos` (`id`, `nome`) VALUES (1, 'Padrão');
+INSERT INTO `liber`.`produto_categorias` (`id`, `nome`) VALUES (1, 'Padrão');
 
 COMMIT;
