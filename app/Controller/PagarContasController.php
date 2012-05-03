@@ -2,7 +2,7 @@
 
 class PagarContasController extends AppController {
 	var $name = 'PagarContas';
-	var $components = array('Sanitizacao','Geral');
+	var $components = array('Geral');
 	var $helpers = array('CakePtbr.Formatacao','Javascript','Jqplot');
 	
 	/**

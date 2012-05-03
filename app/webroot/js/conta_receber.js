@@ -109,4 +109,13 @@ $(function(){
 		
 	});
 	
+	// para situações onde a página é carrega ja com as informacoes
+	if ( $('#ReceberContaEhClienteOuFornecedor').val() == 'C' )  {
+		$('label[for=ReceberContaClienteFornecedorId]').html('Cliente');
+		definir_pesquisa('cliente');
+	}
+	else {
+		$('label[for=ReceberContaClienteFornecedorId]').html('Fornecedor');
+		definir_pesquisa('fornecedor');
+	}
 });

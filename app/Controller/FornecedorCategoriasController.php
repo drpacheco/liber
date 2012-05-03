@@ -2,7 +2,7 @@
 
 class FornecedorCategoriasController extends AppController {
 	var $name = 'FornecedorCategorias';
-	var $components = array('Sanitizacao','RequestHandler');
+	var $components = array('RequestHandler');
 	var $helpers = array('Js' => array('Jquery'),'Ajax');
 	var $paginate = array (
 		'limit' => 10,

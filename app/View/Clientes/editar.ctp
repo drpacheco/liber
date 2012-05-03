@@ -1,4 +1,4 @@
-<?php print $this->Html->script('clientes'); ?>
+<?php print $this->Html->script('cliente'); ?>
 <h2 class="descricao_cabecalho">
 	Editar cliente
 </h2>

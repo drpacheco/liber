@@ -8,7 +8,7 @@
 
 class CarregamentosController extends AppController {
 	var $name = 'Carregamentos';
-	var $components = array('Sanitizacao','ContasReceber','Geral','RequestHandler');
+	var $components = array('ContasReceber','Geral','RequestHandler');
 	var $helpers = array('CakePtbr.Formatacao','Javascript','Ajax');
 	var $paginate = array (
 		'limit' => 10,

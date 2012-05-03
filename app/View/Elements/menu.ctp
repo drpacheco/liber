@@ -257,6 +257,8 @@
 				</ul>
 			</li>
 			<li><?php print $this->Html-> link('Usuários', "/usuarios/");?></li>
+			<li><?php print $this->Html-> link('Grupos', "/grupos/");?></li>
+			<li><?php print $this->Html-> link('Opções', "/sistemaOpcoes/");?></li>
 			<li>
 				<?php print $this->Html-> link('Ajuda', "/sistema/ajuda",
 					   array('class' => 'ajax_link_dialog',

@@ -8,7 +8,7 @@
 
 class SistemaController extends AppController {
 	var $name = "Sistema";
-	var $components = array('Sanitizacao','RequestHandler');
+	var $components = array('RequestHandler');
 	var $helpers = array('Javascript','Ajax');
 	var $uses = array(); //nao ha model para este controller
 

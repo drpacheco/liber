@@ -2,7 +2,6 @@
 
 class TipoDocumentosController extends AppController {
 	var $name = 'TipoDocumentos';
-	var $components = array('Sanitizacao');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (

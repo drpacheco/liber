@@ -1,22 +1,26 @@
 <?php
 
-class VeiculosController extends AppController {
-	var $name = 'Veiculos';
+class GruposController extends AppController {
+	var $name = 'Grupos';
 	var $components = array('RequestHandler');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (
-			'Veiculo.id' => 'asc'
+			'Grupo.id' => 'asc'
 		),
 	    'contain' => array()
 	);
 
+	public function beforeFilter() {
+			parent::beforeFilter();
+		}
+		
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
-		$dados = $this->paginate('Veiculo');
-		$this->set('consulta_veiculo',$dados);
+		$dados = $this->paginate('Grupo');
+		$this->set('consulta_grupo',$dados);
 	}
 	
 	function cadastrar() {
@@ -25,42 +29,40 @@ class VeiculosController extends AppController {
 		}
 		if (! empty($this->request->data)) {
 			
-			if ($this->Veiculo->save($this->request->data)) {
-				$this->Session->setFlash('Veiculo cadastrado com sucesso.','flash_sucesso');
+			if ($this->Grupo->save($this->request->data)) {
+				$this->Session->setFlash('Grupo cadastrado com sucesso.','flash_sucesso');
 				if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect($this->referer(array('action' => 'index')));
 				}
 			}
 			else {
-				$this->Session->setFlash('Erro ao cadastrar o veículo.','flash_erro');
+				$this->Session->setFlash('Erro ao cadastrar o grupo.','flash_erro');
 			}
 		}
 	}
 	
 	function editar($id=NULL) {
+		$this->Grupo->id = $id;
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'default_ajax';
 		}
 		if (empty ($this->request->data)) {
-			$this->Veiculo->recursive = -1;
-			$this->Veiculo->id = $id;
-			$this->request->data = $this->Veiculo->read();
+			$this->Grupo->recursive = -1;
+			$this->request->data = $this->Grupo->read();
 			if ( ! $this->request->data) {
-				$this->Session->setFlash('Veículo não encontrado.','flash_erro');
+				$this->Session->setFlash('Grupo não encontrado.','flash_erro');
 				if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect(array('action'=>'index'));
 				}
 			}
 		}
 		else {
-			$this->request->data['Veiculo']['id'] = $id;
-			
-			if ($this->Veiculo->save($this->request->data)) {
-				$this->Session->setFlash('Veículo atualizado com sucesso.','flash_sucesso');
+			if ($this->Grupo->save($this->request->data)) {
+				$this->Session->setFlash('Grupo atualizado com sucesso.','flash_sucesso');
 				$this->redirect(array('action'=>'index'));
 			}
 			else {
-				$this->Session->setFlash('Erro ao atualizar o veículo.','flash_erro');
+				$this->Session->setFlash('Erro ao atualizar o grupo.','flash_erro');
 			}
 		}
 	}
@@ -70,14 +72,14 @@ class VeiculosController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (! empty($id)) {
-			if ($this->Veiculo->delete($id)) $this->Session->setFlash("Veículo $id excluído com sucesso.",'flash_sucesso');
-			else $this->Session->setFlash("Veículo $id não pode ser excluído.",'flash_erro');
+			if ($this->Grupo->delete($id)) $this->Session->setFlash("Grupo $id excluído com sucesso.",'flash_sucesso');
+			else $this->Session->setFlash("Grupo $id não pode ser excluído.",'flash_erro');
 			if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect(array('action'=>'index'));
 				}
 		}
 		else {
-			$this->Session->setFlash('Veículo não informado.','flash_erro');
+			$this->Session->setFlash('Grupo não informado.','flash_erro');
 		}
 	}
 	
