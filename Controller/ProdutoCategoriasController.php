@@ -2,7 +2,7 @@
 
 class ProdutoCategoriasController extends AppController {
 	var $name = 'ProdutoCategorias';
-	var $components = array('Sanitizacao','RequestHandler');
+	var $components = array('RequestHandler');
 	var $helpers = array('Javascript','Ajax');
 	var $paginate = array (
 		'limit' => 10,

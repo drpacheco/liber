@@ -2,7 +2,6 @@
 
 class EmpresasController extends AppController {
 	var $name = 'Empresas';
-	var $components = array('Sanitizacao');
 	var $helpers = array('CakePtbr.Estados');
 	var $paginate = array (
 		'limit' => 10,

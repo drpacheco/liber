@@ -2,7 +2,6 @@
 
 class PlanoContasController extends AppController {
 	var $name = 'PlanoContas';
-	var $components = array('Sanitizacao');
 	var $helpers = array('Ajax');
 
 	function _obter_opcoes() {

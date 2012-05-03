@@ -5,7 +5,7 @@
 
 class UsuariosController extends AppController {
 	var $name = 'Usuarios';
-	var $components = array('Auth','Sanitizacao','RequestHandler');
+	var $components = array('Auth','RequestHandler');
 	var $helpers = array('Javascript','Ajax');
 	var $paginate = array (
 		'limit' => 10,
@@ -21,6 +21,7 @@ class UsuariosController extends AppController {
 		}
 	
 	public function _obter_opcoes() {
+		$this->Usuario->Grupo->recursive = -1;
 		$grupos = $this->Usuario->Grupo->find('list',array('fields'=>array('Grupo.id','Grupo.nome')));
 		$this->set('opcoes_grupos',$grupos);
 	}
@@ -126,6 +127,7 @@ class UsuariosController extends AppController {
 			    )
 			);
 			$this->UsuarioAcessoLog->save($dadosAcesso);
+			$this->Session->destroy();
 			$this->Session->write('Usuario.sessao_id', $this->UsuarioAcessoLog->id);
 			return $this->redirect($this->Auth->redirect());
 		}
@@ -172,7 +174,7 @@ class UsuariosController extends AppController {
 			$this->layout = 'default_ajax';
 		}
 		if (! empty($this->request->data)) {
-			if ($this->request->data['Usuario']['senha'] == $this->Auth->password($this->request->data['Usuario']['senha_confirma'])) {
+			if ($this->request->data['Usuario']['senha'] == $this->request->data['Usuario']['senha_confirma']) {
 				$this->Usuario->create();
 				if ($this->Usuario->save($this->request->data)) {
 					$this->Session->setFlash('Usuário cadastrado com sucesso.','flash_sucesso');

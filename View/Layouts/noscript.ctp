@@ -25,10 +25,6 @@
 					
 				</ul>
 			</div>
-			
-			<div id="banner">
-				<div class="logo">Liber</div>
-			</div>
 		</div>
 		
 		<div id="conteudo">

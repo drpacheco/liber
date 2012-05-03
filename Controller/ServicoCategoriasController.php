@@ -2,7 +2,6 @@
 
 class ServicoCategoriasController extends AppController {
 	var $name = 'ServicoCategorias';
-	var $components = array('Sanitizacao');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (

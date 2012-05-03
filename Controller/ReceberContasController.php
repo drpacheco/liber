@@ -2,7 +2,6 @@
 
 class ReceberContasController extends AppController {
 	var $name = 'ReceberContas';
-	var $components = array('Sanitizacao');
 	var $helpers = array('CakePtbr.Formatacao','Javascript','Jqplot');
 	
 	/**

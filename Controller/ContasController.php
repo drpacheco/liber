@@ -2,7 +2,7 @@
 
 class ContasController extends AppController {
 	var $name = 'Contas';
-	var $components = array('Sanitizacao','RequestHandler');
+	var $components = array('RequestHandler');
 	var $paginate = array (
 		'limit' => 10,
 		'order' => array (

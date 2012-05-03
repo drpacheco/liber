@@ -2,7 +2,7 @@
 
 class ClienteCategoriasController extends AppController {
 	var $name = 'ClienteCategorias';
-	var $components = array('Sanitizacao','RequestHandler');
+	var $components = array('RequestHandler');
 	var $helpers = array('Javascript','Ajax');
 	var $paginate = array (
 		'limit' => 10,

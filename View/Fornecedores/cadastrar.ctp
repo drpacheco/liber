@@ -1,4 +1,4 @@
-<?php print $this->Html->script('fornecedores'); ?>
+<?php print $this->Html->script('fornecedor'); ?>
 <h2 class="descricao_cabecalho">
 	Adicionar fornecedor
 </h2>
