@@ -18,13 +18,7 @@ print $this->Form->create('Usuario', array('autocomplete'=>'off','onsubmit'=>'su
 	
 	<div class="div2_2">
 		<?php
-		print $this->Form->input('tipo', array('label'=>'Tipo de usuário','options'=>
-		array(
-		'0'=>'Administrador',
-		'1'=>'Usuário comum',
-		'2' => 'Vendedor',
-		'3' => 'Técnico'
-		)));
+		print $this->Form->input('grupo_id',array('label'=>'Grupo','options'=>$opcoes_grupos));
 		print $this->Form->input('email', array('label'=>'Endereço de e-mail'));
 		print $this->Form->input('ativo', array('label'=>'Ativo?','checked'=>'checked'));
 		print $this->Form->input('eh_tecnico',array('label'=>'É técnico?'));
