@@ -9,7 +9,7 @@
 			<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
 			<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
 			<th><?php print $this->Paginator->sort('login','Login'); ?></th>
-			<th><?php print $this->Paginator->sort('tipo','Tipo'); ?></th>
+			<th><?php print $this->Paginator->sort('grupo_id','Grupo'); ?></th>
 			<th><?php print $this->Paginator->sort('ativo','Ativo'); ?></th>
 			<th><?php print $this->Paginator->sort('email','E-mail'); ?></th>
 			<th><?php print $this->Paginator->sort('ultimo_login','Último login'); ?></th>
@@ -26,7 +26,7 @@
 			<td><?php print $usuario['Usuario']['id'];?></td>
 			<td><?php print $this->Html->link($usuario['Usuario']['nome'],'editar/' . $usuario['Usuario']['id']) ;?></td>
 			<td><?php print $usuario['Usuario']['login']; ?></td>
-			<td><?php print $usuario['Usuario']['tipo']; ?></td>
+			<td><?php print $opcoes_grupos[$usuario['Usuario']['grupo_id']]; ?></td>
 			<td>
 				<?php
 				if ($usuario['Usuario']['ativo'] == 1) print "Sim";
@@ -40,7 +40,10 @@
 				<?php print $this->element('painel_editar',array('id'=>$usuario['Usuario']['id'])) ;?>
 			</td>
 			<td>
-				<?php print $this->element('painel_excluir',array('id'=>$usuario['Usuario']['id'])) ;?>
+				<?php
+				$imagem = $this->Html->image('del24x24.png',array('title'=>"Inativar usuário {$usuario['Usuario']['id']}",'alt'=>"Inativar usuário {$usuario['Usuario']['id']}",));
+				print $this->Html->link($imagem, array('action' => 'inativar',$usuario['Usuario']['id']), array('escape'=>false),'Deseja realmente inativar este usuário?', false);
+				?>
 			</td>
 		</tr>
 

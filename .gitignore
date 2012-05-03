@@ -10,7 +10,6 @@ app/tmp/cache/views/*
 app/tmp/logs/*
 app/tmp/sessions/*
 app/tmp/tests/*
-/NetBeansProjects
 outros/anotacoes.txt
-app/aptana_helpers.php
 outros/ico
+/nbproject/private/

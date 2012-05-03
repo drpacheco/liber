@@ -46,11 +46,20 @@ class Usuario extends AppModel {
 		'ServicoOrdens_alterou' => array(
 			'className' => 'ServicoOrdem',
 			'foreignKey' => 'usuario_alterou'
-		)
+		),
+	    'UsuarioAcessoLog_usuario' => array(
+			'className' => 'UsuarioAcessoLog',
+			'foreignKey' => 'usuario_id'
+		),
 		
 	);
+	var $belongsTo = array(
+		'Grupo' => array(
+			'className' => 'Grupo'
+		),
+	);
 	var $validate = array(
-		'nome' => array(
+		'nome' => array (
 			'allowEmpty' => false,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
