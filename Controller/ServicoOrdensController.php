@@ -112,10 +112,11 @@ class ServicoOrdensController extends AppController {
 	function _gerar_conta_receber($valor_total=null) {
 		// Apenas crio a conta a receber se a situacao do serviço for Finalizado ou Entregue
 		if (strtoupper($this->request->data['ServicoOrdem']['situacao']) == 'F' || strtoupper($this->request->data['ServicoOrdem']['situacao']) == 'E'  ) {
+			$this->loadModel('SistemaOpcao');
 			$dados = array_merge (
 				array('valor_total'=>$valor_total),
 				array('numero_documento'=>$this->ServicoOrdem->id),
-				array('plano_conta_id'=>10),
+				array('plano_conta_id'=>$this->SistemaOpcao->field('item_plano_contas_ordem_servicos', array('id'=>1))),
 				$this->request->data['ServicoOrdem']
 				);
 			return $this->ContasReceber->gerarContaReceber($dados);

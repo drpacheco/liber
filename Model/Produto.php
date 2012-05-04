@@ -16,7 +16,7 @@ class Produto extends AppModel {
 				'message' => 'Já cadastrado.'
 			)
 		),
-		'categoria_produto_id' => array(
+		'produto_categoria_id' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),

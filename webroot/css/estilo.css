@@ -984,4 +984,4 @@ div.code-coverage-results span.result-good {
 .ui-autocomplete-loading { background: white url('../img/carregando.gif') right center no-repeat; }
 .ui-autocomplete-input { background: #DBDBDB; }
 .carregando { background: url('../img/carregando.gif') center no-repeat !important}
-.ui-datepicker-trigger { float:left; }
+.ui-datepicker-trigger { float:left; margin-right: 2px; }

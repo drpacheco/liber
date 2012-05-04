@@ -22,7 +22,11 @@ class PedidoVenda extends AppModel {
 		),
 		'Empresa' => array(
 			'className' => 'Empresa',
-		)
+		),
+	    'Vendedor' => array(
+			'className' => 'Usuario',
+			'foreignKey' => 'vendedor_id'
+		),
 	);
 	
 	var $hasMany = array(
@@ -67,6 +71,10 @@ class PedidoVenda extends AppModel {
 			'message' => 'Data obrigatória.'
 		),
 		'empresa_id' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
+	    'vendedor_id' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),

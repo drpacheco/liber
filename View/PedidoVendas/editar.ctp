@@ -40,16 +40,17 @@ print $this->Html->script('formatar_moeda');
 				<?php
 				//$opcoes_forma_pamamento = array_merge(array('0'=>''),$opcoes_forma_pamamento);
 				print $this->Form->input('forma_pagamento_id',array('label'=>'Forma de pagamento','options'=>$opcoes_forma_pamamento));
-				print $this->Form->input('data_venda',array('label'=>'Data da venda','type'=>'text','class'=>'mascara_data datepicker'));
+				unset($opcoes_situacoes['T']);
+				print $this->Form->input('situacao',array('label'=>'Situação','options'=>$opcoes_situacoes));
+				print $this->Form->input('vendedor_id',array('label'=>'Vendedor','options'=>$opcoes_vendedores));
 				?>
 			</div>
 			<div class="div2_2">
 				<?php
+				print $this->Form->input('data_venda',array('label'=>'Data da venda','type'=>'text','class'=>'mascara_data datepicker'));
 				print $this->Form->input('data_saida',array('label'=>'Data da saída','type'=>'text','class'=>'mascara_data datepicker'));
 				print $this->Form->input('data_entrega',array('label'=>'Data entrega','type'=>'text','class'=>'mascara_data datepicker'));
-				unset($opcoes_situacoes['T']);
-				print $this->Form->input('situacao',array('label'=>'Situação','options'=>$opcoes_situacoes));
-				print $this->Form->input('desconto',array('label'=>'Desconto'));
+				print $this->Form->input('desconto',array('label'=>'Desconto','type'=>'text'));
 				?>
 			</div>
 		</div>
@@ -130,13 +131,13 @@ print $this->Html->script('formatar_moeda');
 		<?php print $this->Form->input('empresa_id',array('label'=>'Empresa','options'=>$opcoes_empresas)); ?>
 		
 		<div class="grupo_horizontal">
-			<?php print $this->Form->input('custo_frete',array('label'=>'Custo do frete')); ?>
+			<?php print $this->Form->input('custo_frete',array('label'=>'Custo do frete','type'=>'text')); ?>
 		</div>
 		<div class="grupo_horizontal">
-			<?php print $this->Form->input('custo_seguro',array('label'=>'Custo do seguro')); ?>
+			<?php print $this->Form->input('custo_seguro',array('label'=>'Custo do seguro','type'=>'text')); ?>
 		</div>
 		<div class="grupo_horizontal">
-			<?php print $this->Form->input('custo_outros',array('label'=>'Outros custos')); ?>
+			<?php print $this->Form->input('custo_outros',array('label'=>'Outros custos','type'=>'text')); ?>
 		</div>
 		<div class="limpar"></div>
 		<?php print $this->Form->input('observacao',array('label'=>'Observação')); ?>
@@ -147,3 +148,5 @@ print $this->Html->script('formatar_moeda');
 <br/>
 
 <?php print $this->Form->end('Gravar'); ?>
+
+</div>
