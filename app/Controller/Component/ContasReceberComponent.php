@@ -15,7 +15,8 @@ class ContasReceberComponent extends Component {
 	 * Gera conta a receber
 	 * Executar depois de se ter os dados prontos para serem inseridos no banco
 	 * 
-	 * @param $dados (array) conteudo de $this->request->data['Modelo'] mais $dados['numero_documento'] e $dados['valor_total'], este ultimo em formato americano
+	 * @param $dados (array) conteudo de $this->request->data['Modelo'] mais $dados['numero_documento'],$dados['valor_total'], este ultimo em formato americano
+	 * @param se $dados['plano_conta_id'] estiver vazio, será utilizado o valor de 'item_plano_contas_pedido_vendas' do model SistemaOpcao
 	 * 
 	 * @return false em caso de erros de validação. Seta mensagem no flash
 	 * @return null em casos de argumentos faltantes. Não seta mensagem no flash
@@ -24,12 +25,14 @@ class ContasReceberComponent extends Component {
 	 */
 	function gerarContaReceber ($dados=array()) {
 		if (empty($dados)) return null;
-		$padrao = array (
-			'plano_conta_id' => 11,
-		);
+		$padrao = array ();
+		
+		if ( empty($dados['plano_conta_id']) ) {
+			$SistemaOpcao = ClassRegistry::init('SistemaOpcao'); // carrega model
+			$dados['plano_conta_id'] = $SistemaOpcao->field('item_plano_contas_pedido_vendas', array('id'=>1));
+		}
 		
 		$dados = array_merge($padrao,$dados);
-		
 		$valor_liquido = abs($dados['valor_total']);
 		
 		$FormaPagamento = ClassRegistry::init('FormaPagamento'); // carrega model

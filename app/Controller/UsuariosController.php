@@ -127,7 +127,7 @@ class UsuariosController extends AppController {
 			    )
 			);
 			$this->UsuarioAcessoLog->save($dadosAcesso);
-			$this->Session->destroy();
+			$this->Session->delete('Usuario.sessao_id'); // caso reste de uma seção anterior
 			$this->Session->write('Usuario.sessao_id', $this->UsuarioAcessoLog->id);
 			return $this->redirect($this->Auth->redirect());
 		}
@@ -214,7 +214,7 @@ class UsuariosController extends AppController {
 		}
 		//formulario ja estava populado
 		else {
-			if ($this->request->data['Usuario']['senha'] == $this->Auth->password($this->request->data['Usuario']['senha_confirma'])) {
+			if ($this->request->data['Usuario']['senha'] == $this->request->data['Usuario']['senha_confirma']) {
 				/**
 				 * caso a senha não seja informada, pego a antiga
 				 * nota para cake < 2.0: o campo senha sempre terá valor, pois é feito hash do que havia nele

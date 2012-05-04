@@ -20,7 +20,7 @@ print $this->Form->create('Usuario', array('autocomplete'=>'off','onsubmit'=>'su
 		<?php
 		print $this->Form->input('grupo_id',array('label'=>'Grupo','options'=>$opcoes_grupos));
 		print $this->Form->input('email', array('label'=>'Endereço de e-mail'));
-		print $this->Form->input('ativo', array('label'=>'Ativo?','checked'=>'checked'));
+		print $this->Form->input('ativo', array('label'=>'Ativo?'));
 		print $this->Form->input('eh_tecnico',array('label'=>'É técnico?'));
 		print $this->Form->input('eh_vendedor',array('label'=>'É vendedor?'));
 		?>

@@ -114,7 +114,33 @@ class Usuario extends AppModel {
 		}
 	return true;
     }
-	
+    
+    function findAtivo($tipo='list',$opcoes=array()) {
+	    $opcoesPadrao = array (
+		   'fields' => array('Usuario.id','Usuario.nome'),
+		   'conditions' => array('Usuario.ativo'=>'1'),
+	    );
+	    $opcoes = array_merge($opcoesPadrao,$opcoes);
+	    return $this->find($tipo,$opcoes);
+    }
+    
+    function findTecnico($tipo='list',$opcoes=array()) {
+	    $opcoesPadrao = array (
+		   'fields' => array('Usuario.id','Usuario.nome'),
+		   'conditions' => array('Usuario.ativo'=>'1','Usuario.eh_tecnico'=>'1'),
+	    );
+	    $opcoes = array_merge($opcoesPadrao,$opcoes);
+	    return $this->find($tipo,$opcoes);
+    }
+    
+    function findVendedor($tipo='list',$opcoes=array()) {
+	    $opcoesPadrao = array (
+		   'fields' => array('Usuario.id','Usuario.nome'),
+		   'conditions' => array('Usuario.ativo'=>'1','Usuario.eh_vendedor'=>'1'),
+	    );
+	    $opcoes = array_merge($opcoesPadrao,$opcoes);
+	    return $this->find($tipo,$opcoes);
+    }
 }
 
 ?>

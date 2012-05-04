@@ -14,6 +14,13 @@ class ProdutosController extends AppController {
 		$this->ProdutoCategoria->recursive = -1;
 		$consulta1 = $this->ProdutoCategoria->find('list',array('fields'=>array('ProdutoCategoria.id','ProdutoCategoria.nome')));
 		$this->set('opcoes_categoria_produto',array_merge(array(0=>''),$consulta1));
+		$opcoes_tipos = array (
+			'V' => 'Para venda',
+			'M' => 'Matéria prima',
+			//'A' => 'Matéria prima e venda',
+			//'C' => 'Produto composto',
+		);
+		$this->set('opcoes_tipos',$opcoes_tipos);
 	}
 	
 	function index() {
@@ -37,7 +44,7 @@ class ProdutosController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
-			if ($this->request->data['Produto']['categoria_produto_id'] == 0) $this->request->data['Produto']['categoria_produto_id'] = null;
+			if ($this->request->data['Produto']['produto_categoria_id'] == 0) $this->request->data['Produto']['produto_categoria_id'] = null;
 			if ($this->Produto->save($this->request->data)) {
 				$this->Session->setFlash('Produto cadastrado com sucesso.','flash_sucesso');
 				$this->redirect($this->referer(array('action' => 'index')));
@@ -64,7 +71,7 @@ class ProdutosController extends AppController {
 		}
 		else {
 			$this->request->data['Produto']['id'] = $id;
-			if ($this->request->data['Produto']['categoria_produto_id'] == 0) $this->request->data['Produto']['categoria_produto_id'] = null;
+			if ($this->request->data['Produto']['produto_categoria_id'] == 0) $this->request->data['Produto']['produto_categoria_id'] = null;
 			if ($this->Produto->save($this->request->data)) {
 				$this->Session->setFlash("Produto $id atualizado com sucesso.",'flash_sucesso');
 				$this->redirect(array('action'=>'index'));
@@ -106,7 +113,7 @@ class ProdutosController extends AppController {
 			$dados = $this->request->params['named'];
 			$condicoes=array();
 			if (! empty($dados['nome'])) $condicoes[] = array('Produto.nome LIKE'=>'%'.$dados['nome'].'%');
-			if (! empty($dados['categoria_produto_id'])) $condicoes[] = array('Produto.categoria_produto_id'=>$dados['categoria_produto_id']);
+			if (! empty($dados['produto_categoria_id'])) $condicoes[] = array('Produto.produto_categoria_id'=>$dados['produto_categoria_id']);
 			if (! empty($dados['tipo_produto'])) $condicoes[] = array('Produto.tipo_produto'=>$dados['tipo_produto']);
 			if (! empty($dados['codigo_ean'])) $condicoes[] = array('Produto.codigo_ean'=>$dados['codigo_ean']);
 			if (! empty($dados['codigo_dun'])) $condicoes[] = array('Produto.codigo_dun'=>$dados['codigo_dun']);

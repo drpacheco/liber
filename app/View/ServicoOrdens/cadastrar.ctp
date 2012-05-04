@@ -140,8 +140,8 @@ else {
 	<div id="outros">
 		<?php
 		print $this->Form->input('empresa_id',array('label'=>'Empresa','options'=>$opcoes_empresas));
-		print $this->Form->input('custo_outros',array('label'=>'Outros custos'));
-		print $this->Form->input('desconto',array('label'=>'Desconto'));
+		print $this->Form->input('custo_outros',array('label'=>'Outros custos','type'=>'text'));
+		print $this->Form->input('desconto',array('label'=>'Desconto','type'=>'text'));
 		print $this->Form->input('defeitos_relatados',array('label'=>'Defeitos relatados','rows'=>'3'));
 		print $this->Form->input('laudo_tecnico',array('label'=>'Laudo técnico','rows'=>'3'));
 		print $this->Form->input('observacao',array('label'=>'Observação','rows'=>'3'));
@@ -153,3 +153,5 @@ else {
 <br/>
 
 <?php print $this->Form->end('Gravar'); ?>
+
+</div>

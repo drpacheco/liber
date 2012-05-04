@@ -33,8 +33,8 @@
 <?php print $this->Form->create('Produto',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;')); ?>
 	<div class="grupo_horizontal">
 		<?php
-		print $this->Form->label('categoria_produto_id','Categoria',array('class'=>'required'));
-		print $this->Form->input('categoria_produto_id', array(
+		print $this->Form->label('produto_categoria_id','Categoria',array('class'=>'required'));
+		print $this->Form->input('produto_categoria_id', array(
 			'div'=>false,
 			'label'=>false,
 			'options'=>$opcoes_categoria_produto
@@ -54,12 +54,7 @@
 	<div class="grupo_horizontal">
 		<?php
 		print $this->Form->label('tipo_produto','Tipo',array('class'=>'required'));
-		print $this->Form->input('tipo_produto',array('label'=>false,'div'=>false,'options'=>array(
-			'V' => 'Para venda',
-			'M' => 'Matéria prima',
-			'A' => 'Matéria prima e venda',
-			//'C' => 'Produto composto'
-			)));
+		print $this->Form->input('tipo_produto',array('label'=>false,'div'=>false,'options'=>array($opcoes_tipos)));
 		?>
 	</div>
 	<div class="limpar">&nbsp;</div>
@@ -88,9 +83,9 @@
 			</div>
 			<div>
 				<?php
-				print $this->Form->input('preco_custo',array('label'=>'Preço de custo'));
-				print $this->Form->input('preco_venda',array('label'=>'Preço de venda'));
-				print $this->Form->input('margem_lucro',array('label'=>'Margem de lucro (%)'));
+				print $this->Form->input('preco_custo',array('label'=>'Preço de custo','type'=>'text'));
+				print $this->Form->input('preco_venda',array('label'=>'Preço de venda','type'=>'text'));
+				print $this->Form->input('margem_lucro',array('label'=>'Margem de lucro (%)','type'=>'text'));
 				?>
 			</div>
 			

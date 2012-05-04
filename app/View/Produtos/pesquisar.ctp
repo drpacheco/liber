@@ -12,8 +12,8 @@ print $this->Form->create(null,array('controller'=>'produtos','action'=>'pesquis
 	<div class="div1_2">
 		<?php
 		print '<div>'.$this->Form->input('nome', array('label'=>'Nome','div'=>false)).'</div>';
-		print '<div>'.$this->Form->input('categoria_produto_id', array('label'=>'Categoria','div'=>false,'options'=>$opcoes_categoria_produto)).'</div>';
-		print '<div>'.$this->Form->input('tipo_produto',array('div'=>false,'label'=>'Tipo','options'=>array(''=>''))).'</div>';
+		print '<div>'.$this->Form->input('produto_categoria_id', array('label'=>'Categoria','div'=>false,'options'=>$opcoes_categoria_produto)).'</div>';
+		print '<div>'.$this->Form->input('tipo_produto',array('div'=>false,'label'=>'Tipo','options'=>$opcoes_tipos)).'</div>';
 		print '<div>'.$this->Form->input('codigo_ean',array('div'=>false,'label'=>'Código EAN')).'</div>';
 		?>
 	</div>
@@ -39,7 +39,7 @@ print $this->Form->create(null,array('controller'=>'produtos','action'=>'pesquis
 			<tr>
 				<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
 				<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
-				<th><?php print $this->Paginator->sort('categoria_produto_id','Categoria'); ?></th>
+				<th><?php print $this->Paginator->sort('produto_categoria_id','Categoria'); ?></th>
 				<th><?php print $this->Paginator->sort('tipo_produto','Tipo produto'); ?></th>
 				<th><?php print $this->Paginator->sort('preco_custo','Preço de custo'); ?></th>
 				<th><?php print $this->Paginator->sort('preco_venda','Preço de venda'); ?></th>
@@ -54,7 +54,7 @@ print $this->Form->create(null,array('controller'=>'produtos','action'=>'pesquis
 				<tr>
 					<td><?php print $r['Produto']['id']; ?></td>
 					<td><?php print $this->Html->link($r['Produto']['nome'],'editar/' . $r['Produto']['id']) ;?></td>
-					<td><?php print $r['Produto']['categoria_produto_id'].' '.$r['ProdutoCategoria']['nome']; ?></td>
+					<td><?php print $r['Produto']['produto_categoria_id'].' '.$r['ProdutoCategoria']['nome']; ?></td>
 					<td><?php print $r['Produto']['tipo_produto']; ?></td>
 					<td><?php print $r['Produto']['preco_custo']; ?></td>
 					<td><?php print $r['Produto']['preco_venda']; ?></td>

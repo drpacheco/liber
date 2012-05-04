@@ -8,7 +8,7 @@
 		<tr>
 			<th><?php print $this->Paginator->sort('id','Código'); ?></th>
 			<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
-			<th><?php print $this->Paginator->sort('categoria_produto_id','Categoria'); ?></th>
+			<th><?php print $this->Paginator->sort('produto_categoria_id','Categoria'); ?></th>
 			<th><?php print $this->Paginator->sort('preco_custo','Preço de custo'); ?></th>
 			<th><?php print $this->Paginator->sort('preco_venda','Preço de venda'); ?></th>
 			<th><?php print $this->Paginator->sort('margem_lucro','Margem de lucro'); ?></th>

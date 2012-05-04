@@ -42,6 +42,9 @@ class ServicosController extends AppController {
 			
 			if ($this->Servico->save($this->request->data)) {
 				$this->Session->setFlash('Serviço cadastrado com sucesso.','flash_sucesso');
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect($this->referer(array('action' => 'index')));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao cadastrar o serviço.','flash_erro');
@@ -68,7 +71,9 @@ class ServicosController extends AppController {
 			
 			if ($this->Servico->save($this->request->data)) {
 				$this->Session->setFlash('Serviço atualizado com sucesso.','flash_sucesso');
-				$this->redirect(array('action'=>'index'));
+				if ( ! $this->RequestHandler->isAjax() ) {
+					$this->redirect($this->referer(array('action' => 'index')));
+				}
 			}
 			else {
 				$this->Session->setFlash('Erro ao atualizar o serviço.','flash_erro');

@@ -35,10 +35,13 @@ class PedidoVendasController extends AppController {
 		);
 		$this->set('opcoes_situacoes',$opcoes_situacoes);
 		
-		// view pesquisa
 		$this->loadModel('Usuario');
+		$opcoes_vendedores = $this->Usuario->findVendedor();
+		$this->set('opcoes_vendedores',$opcoes_vendedores);
+		
+		// view pesquisa
 		$this->Usuario->recursive = -1;	
-		$opcoes_usuarios = $this->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'), 'conditions'=>array('Usuario.ativo'=>'1','Usuario.eh_tecnico'=>'0')));
+		$opcoes_usuarios = $this->Usuario->findAtivo();
 		$this->set('opcoes_usuarios',$opcoes_usuarios);
 	}
 	
@@ -112,9 +115,11 @@ class PedidoVendasController extends AppController {
 	function _gerar_conta_receber($valor_total=null) {
 		// Apenas crio a forma de pagamento se a situacao do pedido for 'Vendido'
 		if (strtoupper($this->request->data['PedidoVenda']['situacao']) == 'V' ) {
+			$this->loadModel('SistemaOpcao');
 			$dados = array_merge(
 				array('valor_total'=>$valor_total),
 				array('numero_documento'=>$this->PedidoVenda->id),
+				array('plano_conta_id'=>$this->SistemaOpcao->field('item_plano_contas_pedido_vendas', array('id'=>1))),
 				$this->request->data['PedidoVenda']
 				);
 			return $this->ContasReceber->gerarContaReceber($dados);
