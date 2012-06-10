@@ -4,8 +4,8 @@ App::uses('BrValidation', 'Localized.Lib');
 
 class Fornecedor extends AppModel {
 	
-	var $name = 'Fornecedor'; // para compatibilidade com o PHP 4
-	var $actsAs = array('Containable');
+	var $name = 'Fornecedor';
+	var $actsAs = array('Containable','Empresa');
 	var $belongsTo = array(
 		'FornecedorCategoria' => array(
 			'className' => 'FornecedorCategoria'

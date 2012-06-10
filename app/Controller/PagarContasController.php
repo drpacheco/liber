@@ -24,7 +24,7 @@ class PagarContasController extends AppController {
 		$this->set('opcoes_plano_contas',array_merge(array(0=>''),$consulta3));
 		
 		$this->PagarConta->Empresa->recursive = -1;
-		$consulta4 = $this->PagarConta->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
+		$consulta4 = $this->PagarConta->Empresa->findEmpresa();
 		$this->set('opcoes_empresas',$consulta4);
 		
 		$opcoes_situacoes = array (

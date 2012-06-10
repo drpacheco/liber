@@ -2,7 +2,7 @@
 
 class PagarConta extends AppModel {
 	var $name = 'PagarConta';
-	var $actsAs = array('CakePtbr.AjusteFloat','CakePtbr.AjusteData' => 'data_vencimento','Containable');
+	var $actsAs = array('CakePtbr.AjusteFloat','CakePtbr.AjusteData' => 'data_vencimento','Containable','Empresa');
 	var $belongsTo = array(
 		'PlanoConta' => array(
 			'className' => 'PlanoConta'

@@ -2,13 +2,16 @@
 
 class Motorista extends AppModel {
 	var $name = 'Motorista';
-	var $actsAs = array('CakePtbr.AjusteData','Containable');
+	var $actsAs = array('CakePtbr.AjusteData','Containable','Empresa');
 	var $hasOne = array('Carregamento');
 	var $belongsTo = array(
 		'Veiculo' => array(
 			'className' => 'veiculo',
 			'foreignKey' => 'veiculo_padrao'
-		)
+		),
+	    'Empresa' => array(
+			'className' => 'Empresa'
+		),
 	);
 	var $validate = array(
 		'nome' => array(
@@ -37,7 +40,12 @@ class Motorista extends AppModel {
 			'allowEmpty' => true,
 			'rule' => 'date',
 			'message' => 'Data inválida.'
-		)
+		),
+	    'empresa_id' => array(
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
 	);
 }
 
