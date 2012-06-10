@@ -1,8 +1,13 @@
 <?php
 class TipoDocumento extends  Model {
 	var $name = 'TipoDocumento';
+	var $actsAs = array('Containable','Empresa');
+	var $belongsTo = array(
+	    'Empresa' => array(
+			'className' => 'Empresa'
+		),
+	);
 	var $hasMany = array('PagarConta','ReceberConta','FormaPagamento');
-	var $actsAs = array('Containable');
 	var $validate = array(
 		'nome' => array(
 			'obrigatorio' => array (
@@ -14,6 +19,11 @@ class TipoDocumento extends  Model {
 				'rule' => 'isUnique',
 				'message' => 'Já cadastrado.'
 			)
+		),
+	    'empresa_id' => array(
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
 		),
 	);
 	

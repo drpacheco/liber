@@ -2,6 +2,7 @@
 
 class Carregamento extends AppModel {
 	var $name = 'Carregamento';
+	var $actsAs = array('Empresa');
 	var $hasMany = array('CarregamentoItem');
 	var $belongsTo = array(
 		'Motorista' => array(
@@ -11,7 +12,10 @@ class Carregamento extends AppModel {
 		'Veiculo' => array(
 			'className' => 'veiculo',
 			'foreignKey' => 'veiculo_id'
-		)
+		),
+	    'Empresa' => array(
+			'className' => 'Empresa'
+		),
 	);
 	var $validate = array(
 		'descricao' => array(
@@ -32,7 +36,12 @@ class Carregamento extends AppModel {
 		'veiculo_id' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
-		)
+		),
+	    'empresa_id' => array(
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
 	);
 }
 

@@ -24,6 +24,7 @@ class UsuariosController extends AppController {
 		$this->Usuario->Grupo->recursive = -1;
 		$grupos = $this->Usuario->Grupo->find('list',array('fields'=>array('Grupo.id','Grupo.nome')));
 		$this->set('opcoes_grupos',$grupos);
+		$this->set('opcoes_empresas',$this->Usuario->Empresa->findEmpresa());
 	}
 	
 	public function login() {
@@ -84,6 +85,7 @@ class UsuariosController extends AppController {
 			);
 			$this->UsuarioAcessoTentativa->save($dadosTentativaAcesso);
 			// Consulto quantas tentativas restam e se é necessario fazer o bloqueio
+			//#TODO verificar uso quando ha virada do dia
 			$numeroTentativas = $this->UsuarioAcessoTentativa->find('count',array (
 					'conditions' => array (
 					    'cliente_ip' => $_SERVER['REMOTE_ADDR'],
@@ -176,6 +178,8 @@ class UsuariosController extends AppController {
 		if (! empty($this->request->data)) {
 			if ($this->request->data['Usuario']['senha'] == $this->request->data['Usuario']['senha_confirma']) {
 				$this->Usuario->create();
+				$this->request->data['Usuario'] += array ('tempo_criado' => date('Y-m-d H:i:s'));
+				$this->request->data['Usuario']['senha'] = AuthComponent::password($this->data['Usuario']['senha']);
 				if ($this->Usuario->save($this->request->data)) {
 					$this->Session->setFlash('Usuário cadastrado com sucesso.','flash_sucesso');
 					$this->redirect($this->referer(array('action' => 'index')));
@@ -215,16 +219,14 @@ class UsuariosController extends AppController {
 		//formulario ja estava populado
 		else {
 			if ($this->request->data['Usuario']['senha'] == $this->request->data['Usuario']['senha_confirma']) {
-				/**
-				 * caso a senha não seja informada, pego a antiga
-				 * nota para cake < 2.0: o campo senha sempre terá valor, pois é feito hash do que havia nele
-				 * por isso vejo se a segunda senha informada está em branco
-				 */
-				if (empty($this->request->data['Usuario']['senha_confirma'])) {
+				if (empty($this->request->data['Usuario']['senha'])) {
 					$this->Usuario->recursive = -1;
 					$old = $this->Usuario->read();
 					$this->request->data['Usuario']['senha'] = $old['Usuario']['senha'];
 					$this->request->data['Usuario']['senha_confirma'] = $old['Usuario']['senha'];
+				}
+				else {
+					$this->request->data['Usuario']['senha'] = AuthComponent::password($this->data['Usuario']['senha']);
 				}
 				if ($this->Usuario->save($this->request->data)) {
 					$this->Session->setFlash(__('Usuário alterado com sucesso.'),'flash_sucesso');
@@ -268,6 +270,17 @@ class UsuariosController extends AppController {
 		}
 	}
 	
+	function acessoLog() {
+		$this->set('opcoes_usuarios',$this->Usuario->find('list',array('contain'=>array(),'fields'=>array('id','nome'))));
+		//$this->redirect('RelUsuarioAcessoLog/');
+		if ($this->data['Usuario']) {
+			
+		}
+	}
+	
+	function RelUsuarioAcessoLog() {
+		
+	}
 	
 }
 

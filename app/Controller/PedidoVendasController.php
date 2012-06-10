@@ -23,7 +23,7 @@ class PedidoVendasController extends AppController {
 		$this->set('opcoes_forma_pamamento',$opcoes_forma_pagamento);
 		
 		$this->PedidoVenda->Empresa->recursive = -1;
-		$opcoes_empresas = $this->PedidoVenda->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
+		$opcoes_empresas = $this->PedidoVenda->Empresa->findEmpresa();
 		$this->set('opcoes_empresas',$opcoes_empresas);
 		
 		$opcoes_situacoes = array(

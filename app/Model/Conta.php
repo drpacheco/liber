@@ -2,6 +2,12 @@
 
 class Conta extends AppModel {
 	var $name = 'Conta';
+	var $actsAs = array('Empresa');
+	var $belongsTo = array(
+	    'Empresa' => array(
+			'className' => 'Empresa'
+		),
+	);
 	var $hasMany = array(
 		'forma_pagamentos' => array(
 			'className' => 'FormaPagamento',
@@ -29,6 +35,11 @@ class Conta extends AppModel {
 			)
 		),
 		'apelido' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
+	    'empresa_id' => array(
+			'allowEmpty' => false,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),

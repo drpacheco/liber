@@ -39,17 +39,6 @@ print $this->Html->script('formatar_moeda');
 
 <div class="grupo_horizontal">
 	<?php
-	print $this->Form->label('empresa_id','Empresa',array('class'=>'required'));
-	print $this->Form->input('empresa_id', array(
-		'div'=>false,
-		'label'=>false,
-		'options'=>$opcoes_empresas
-		));
-	?>
-</div>
-
-<div class="grupo_horizontal">
-	<?php
 	print $this->Form->label('situacao','Situação',array('class'=>'required'));
 	print $this->Form->input('situacao', array(
 		'div'=>false,

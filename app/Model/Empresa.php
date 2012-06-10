@@ -2,8 +2,16 @@
 
 class Empresa extends AppModel {
 	var $name = 'Empresa';
-	var $hasMany = array('Cliente','Fornecedor');
-	var $validate = array(
+	var $actsAs = array('Containable');
+	var $hasMany = array(
+	    'Usuario','Grupo',
+	    'PlanoConta','FormaPagamento','Conta','TipoDocumento','PagarConta','ReceberConta',
+	    'Cliente','ClienteCategoria',
+	    'Fornecedor','FornecedorCategoria','Produto','ProdutoCategoria',
+	    'ServicoOrdem','Servico','ServicoCategoria',
+	    'Motorista','Veiculo','Carregamento'
+	    );
+	var $validate = array (
 		'nome' => array(
 			'obrigatorio' => array (
 				'rule' => 'notEmpty',
@@ -62,6 +70,16 @@ class Empresa extends AppModel {
 			'message' => 'Campo obrigatório.'
 		)
 	);
+	
+	//#TODO aplicar filtros apos implementar controle de acesso
+	function findEmpresa($tipo='list',$opcoes=array()) {
+	    $opcoesPadrao = array (
+		   'fields' => array('Empresa.id','Empresa.nome'),
+	    );
+	    $opcoes = array_merge($opcoesPadrao,$opcoes);
+	    return $this->find($tipo,$opcoes);
+    }
+    
 }
 
 ?>

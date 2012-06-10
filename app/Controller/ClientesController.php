@@ -17,9 +17,18 @@ class ClientesController extends AppController {
 		
 		$this->loadModel('Empresa');
 		$this->Empresa->recursive = -1;
-		$consulta2 = $this->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
+		$consulta2 = $this->Empresa->findEmpresa();
 		$this->set('opcoes_empresa',$consulta2);
-
+		
+		$tipos = array(
+		    ''=>'','F'=>'Física','J'=>'Jurídica'
+		);
+		$this->set('opcoes_tipos',$tipos);
+		
+		$situacoes = array (
+		    ''=>'','A'=>'Ativo','I'=>'Inativo','B'=>'Bloqueado'
+		);
+		$this->set('opcoes_situacoes',$situacoes);
 		return null;
 	}
 	
@@ -206,6 +215,15 @@ class ClientesController extends AppController {
 				print json_encode($retorno);
 			}
 		}
+	}
+	
+	function RelClientesListagem() {
+		$this->_obter_opcoes();
+		$this->layout = 'relatorio1';
+		$this->Cliente->recursive = -1;
+		$consulta = $this->Cliente->find('all');
+		$this->set('consulta',$consulta);
+		unset($consulta);
 	}
 
 }

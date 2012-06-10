@@ -83,6 +83,24 @@
 					<li><?php print $this->Html-> link('Listar', "/pedidoVendas/");?></li>
 				</ul>
 			</li>
+			<li>
+				<a href="#">Relatórios</a>
+				<ul>
+					<li>
+						<a href="#">Clientes</a>
+						<ul>
+							<li> <?php print $this->Html->link('Listagem de clientes cadastrados',array('controller'=>'Clientes','action'=>'RelClientesListagem'),array('target'=>'_blank')) ?> </li>
+						</ul>
+					</li>
+					
+					<li>
+						<a href="#">Pedidos de venda</a>
+						<ul>
+							<li> Item um</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
 		</ul>
 	</li>
 	
@@ -256,8 +274,21 @@
 					<li><?php print $this->Html-> link('Listar', "/empresas/");?></li>
 				</ul>
 			</li>
-			<li><?php print $this->Html-> link('Usuários', "/usuarios/");?></li>
-			<li><?php print $this->Html-> link('Grupos', "/grupos/");?></li>
+			<li>
+				<?php print $this->Html-> link('Usuários', "/usuarios/");?>
+				<ul>
+					<li> <?php print $this->Html->link('Cadastrar','/usuarios/cadastrar'); ?> </li>
+					<li> <?php print $this->Html->link('Listar','/usuarios/'); ?> </li>
+					<li> <?php print $this->Html->link('Log de acesso','/usuarios/acessoLog'); ?> </li>
+				</ul>
+			</li>
+			<li>
+				<?php print $this->Html-> link('Grupos', "/grupos/");?>
+				<ul>
+					<li> <?php print $this->Html->link('Cadastrar','/grupos/cadastrar'); ?> </li>
+					<li> <?php print $this->Html->link('Listar','/grupos/'); ?> </li>
+				</ul>
+			</li>
 			<li><?php print $this->Html-> link('Opções', "/sistemaOpcoes/");?></li>
 			<li>
 				<?php print $this->Html-> link('Ajuda', "/sistema/ajuda",

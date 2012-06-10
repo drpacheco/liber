@@ -1,6 +1,12 @@
 <?php
 class PlanoConta extends  Model {
 	var $name = 'PlanoConta';
+	var $actsAs = array('Empresa','Containable');
+	var $belongsTo = array(
+	    'Empresa' => array(
+			'className' => 'Empresa'
+		),
+	);
 	var $hasMany = array(
 	    'PagarConta' => array(
 		   'className' => 'PagarConta',
@@ -17,7 +23,6 @@ class PlanoConta extends  Model {
 		   'foreignKey' => 'item_plano_contas_ordem_servicos',
 	    ),
 	);
-	var $actsAs = array('Containable');
 	var $validate = array(
 		'nome' => array(
 			'obrigatorio' => array (
@@ -30,10 +35,15 @@ class PlanoConta extends  Model {
 				'message' => 'Já cadastrado.'
 			)
 		),
-		'tipo' => array(
+		'tipo' => array (
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
-		)
+		),
+	    'empresa_id' => array (
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
 	);
 	
 }

@@ -2,10 +2,15 @@
 
 class Veiculo extends AppModel {
 	var $name = 'Veiculo';
-	var $actsAs = array('Containable');
-	var $hosOne = array(
-		'Veiculo' => array(
-			'className' => 'veiculo',
+	var $actsAs = array('Containable','Empresa');
+	var $belongsTo = array(
+	    'Empresa' => array(
+			'className' => 'Empresa'
+		),
+	);
+	var $hasMany = array(
+		'Motorista' => array(
+			'className' => 'motorista',
 			'foreignKey' => 'veiculo_padrao'
 		),
 		'Carregamento' => array (
@@ -33,7 +38,12 @@ class Veiculo extends AppModel {
 			'allowEmpty' => true,
 			'rule' => 'numeric',
 			'message' => 'Somente números.'
-		)
+		),
+	    'empresa_id' => array(
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
 	);
 }
 

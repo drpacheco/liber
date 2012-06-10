@@ -128,7 +128,6 @@ print $this->Html->script('formatar_moeda');
 	</div> <!-- fim de produtos -->
 	
 	<div id="outros">
-		<?php print $this->Form->input('empresa_id',array('label'=>'Empresa','options'=>$opcoes_empresas)); ?>
 		
 		<div class="grupo_horizontal">
 			<?php print $this->Form->input('custo_frete',array('label'=>'Custo do frete','type'=>'text')); ?>

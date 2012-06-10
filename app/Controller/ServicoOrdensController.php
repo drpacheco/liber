@@ -20,7 +20,7 @@ class ServicoOrdensController extends AppController {
 		$this->set('opcoes_forma_pamamento',$consulta2);
 		
 		$this->ServicoOrdem->Empresa->recursive = -1;
-		$consulta3 = $this->ServicoOrdem->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
+		$consulta3 = $this->ServicoOrdem->Empresa->findEmpresa();
 		$this->set('opcoes_empresas',$consulta3);
 		
 		$situacoes = array (

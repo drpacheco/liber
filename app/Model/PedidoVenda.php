@@ -1,7 +1,7 @@
 <?php
 class PedidoVenda extends AppModel {
 	var $name = 'PedidoVenda';
-	var $actsAs = array('CakePtbr.AjusteFloat','CakePtbr.AjusteData','Containable');
+	var $actsAs = array('CakePtbr.AjusteFloat','CakePtbr.AjusteData','Containable','Empresa');
 
 	var $belongsTo = array(
 		'Cliente' => array(

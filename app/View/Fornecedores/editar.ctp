@@ -36,16 +36,6 @@
 			));
 		?>
 	</div>
-	<div class="grupo_horizontal">
-	<?php
-		print $this->Form->label('empresa_id','Empresa',array('class'=>'required'));
-		print $this->Form->input('empresa_id',array(
-			'div'=>false,
-			'label'=>false,
-			'options'=>$opcoes_empresa
-			));
-		?>
-	</div>
 
 <div class="limpar"></div>
 
