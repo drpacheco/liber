@@ -17,7 +17,7 @@ class FornecedoresController extends AppController {
 		
 		$this->loadModel('Empresa');
 		$this->Empresa->recursive = -1;
-		$consulta2 = $this->Empresa->find('list',array('fields'=>array('Empresa.id','Empresa.nome')));
+		$consulta2 = $this->Empresa->findEmpresa();
 		$this->set('opcoes_empresa',$consulta2);
 		return null;
 	}

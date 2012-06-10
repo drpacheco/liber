@@ -1,12 +1,15 @@
 <?php
 class Servico extends AppModel {
 	var $name = 'Servico';
-	var $actsAs = array('CakePtbr.AjusteFloat','Containable');
+	var $actsAs = array('CakePtbr.AjusteFloat','Containable','Empresa');
 	var $belongsTo = array(
 		'ServicoCategoria' => array(
 			'className' => 'ServicoCategoria',
 			'foreignKey' => 'servico_categoria_id'
-		)
+		),
+	    'Empresa' => array(
+			'className' => 'Empresa'
+		),
 	);
 	var $hasMany = array(
 		'ServicoOrdemItem' => array(
@@ -41,7 +44,12 @@ class Servico extends AppModel {
 			'notempty' => array(
 				'rule' => array('numeric')
 			)
-		)
+		),
+	    'empresa_id' => array(
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
 	);
 
 }

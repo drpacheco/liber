@@ -19,7 +19,7 @@ else {
 		print $this->Form->input('tipo_pessoa', array(
 			'div'=>false,
 			'label'=>false,
-			'options'=>array(''=>'','F'=>'Física','J'=>'Jurídica')
+			'options'=>$opcoes_tipos
 			));
 		?>
 	</div>
@@ -29,7 +29,7 @@ else {
 		print $this->Form->input('situacao',array(
 			'div'=>false,
 			'label'=>false,
-			'options'=>array(''=>'','A'=>'Ativo','I'=>'Inativo','B'=>'Bloqueado')
+			'options'=>$opcoes_situacoes
 			));
 		?>
 	</div>
@@ -41,16 +41,6 @@ else {
 			'div'=>false,
 			'label'=>false,
 			'options'=>$opcoes_categoria_cliente
-			));
-		?>
-	</div>
-	<div class="grupo_horizontal">
-	<?php
-		print $this->Form->label('empresa_id','Empresa',array('class'=>'required'));
-		print $this->Form->input('empresa_id',array(
-			'div'=>false,
-			'label'=>false,
-			'options'=>$opcoes_empresa
 			));
 		?>
 	</div>

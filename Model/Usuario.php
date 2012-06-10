@@ -6,9 +6,9 @@
  */
 
 // Carrego o AuthComponent
-App::uses('AuthComponent', 'Controller/Component');
+//App::uses('AuthComponent', 'Controller/Component');
 class Usuario extends AppModel {
-	var $name = "usuario";
+	var $name = "Usuario";
 	var $actsAs = array('Containable');
 	var $hasMany = array(
 		'Cliente_usuario_cadastrou' => array(
@@ -57,6 +57,9 @@ class Usuario extends AppModel {
 		'Grupo' => array(
 			'className' => 'Grupo'
 		),
+	    'Empresa' => array(
+			'className' => 'Empresa'
+		),
 	);
 	var $validate = array(
 		'nome' => array (
@@ -77,11 +80,13 @@ class Usuario extends AppModel {
 			)
 		),
 		'senha' => array(
+		    'on' => 'create',
 			'allowEmpty' => false,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),
 		'senha_confirma' => array(
+		    'on' => 'create',
 			'allowEmpty' => false,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
@@ -100,7 +105,12 @@ class Usuario extends AppModel {
 			'allowEmpty' => true,
 			'rule' => array('boolean'),
 			'message' => 'Valor incorreto.'
-		)
+		),
+	    'empresa_id' => array(
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
 	);
 	
 	/**
@@ -108,12 +118,12 @@ class Usuario extends AppModel {
 	 * gravada no banco
 	 * @return boolean 
 	 */
-	public function beforeSave() {
+	/*public function beforeSave() {
 		if (isset($this->data[$this->alias]['senha'])) {
 			$this->data[$this->alias]['senha'] = AuthComponent::password($this->data[$this->alias]['senha']);
 		}
 	return true;
-    }
+    }*/
     
     function findAtivo($tipo='list',$opcoes=array()) {
 	    $opcoesPadrao = array (

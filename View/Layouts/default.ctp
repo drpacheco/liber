@@ -4,8 +4,8 @@
 		<?php print $this->Html->charset()."\n"; ?>
 		<noscript>
 			<meta http-equiv="refresh" content="0; URL=<?php print $this->Html->url('/',true); ?>sistema/noscript" />
-			<?php print $this->fetch('meta'); ?>
 		</noscript>
+		<?php print $this->fetch('meta'); ?>
 		<title>
 			<?php print 'Liber - '.$title_for_layout."\n"; ?>
 		</title>
@@ -38,9 +38,11 @@
 			
 			<?php print $this->fetch('content') ?>
 		
-			<div id="rodape">
-				
-			</div>
+		</div>
+		
+		<div id="rodape">
+			<?php print $this->element('painel_usuario_info'); ?>
+			
 			
 		</div>
 		

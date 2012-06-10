@@ -4,7 +4,7 @@ App::uses('BrValidation', 'Localized.Lib');
 
 class Cliente extends AppModel {
 	var $name = 'Cliente';
-	var $actsAs = array('Containable');
+	var $actsAs = array('Containable','Empresa');
 	var $belongsTo = array(
 		'ClienteCategoria' => array(
 			'className' => 'ClienteCategoria'

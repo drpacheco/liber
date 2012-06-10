@@ -2,9 +2,9 @@
 
 class FormaPagamento extends AppModel {
 	var $name='FormaPagamento';
-	var $actsAs = array('Containable');
-	var $belongsTo = array(
-		'Conta' => array(
+	var $actsAs = array('Containable','Empresa');
+	var $belongsTo = array (
+		'Conta' => array (
 			'className' => 'Conta',
 			'foreignKey' => 'conta_principal'
 		),
@@ -12,8 +12,11 @@ class FormaPagamento extends AppModel {
 		    'className' => 'TipoDocumento',
 		    'foreignKey' => 'tipo_documento_id'
 		),
+	    'Empresa' => array(
+			'className' => 'Empresa'
+		),
 	);
-	var $hasMany = array(
+	var $hasMany = array (
 		'FormaPagamentoItem' => array(
 			'class_name' => 'FormaPagamentoItem',
 		),
@@ -24,8 +27,8 @@ class FormaPagamento extends AppModel {
 			'className' => 'PedidoVenda'
 		)
 	);
-	var $validate = array(
-		'nome' => array(
+	var $validate = array (
+		'nome' => array (
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),
@@ -34,6 +37,11 @@ class FormaPagamento extends AppModel {
 			'message' => 'Campo obrigatório.'
 		),
 		'tipo_documento_id' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
+	    'empresa_id' => array(
+			'allowEmpty' => false,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),

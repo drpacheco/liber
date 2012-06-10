@@ -139,7 +139,6 @@ else {
 	
 	<div id="outros">
 		<?php
-		print $this->Form->input('empresa_id',array('label'=>'Empresa','options'=>$opcoes_empresas));
 		print $this->Form->input('custo_outros',array('label'=>'Outros custos','type'=>'text'));
 		print $this->Form->input('desconto',array('label'=>'Desconto','type'=>'text'));
 		print $this->Form->input('defeitos_relatados',array('label'=>'Defeitos relatados','rows'=>'3'));

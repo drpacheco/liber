@@ -2,8 +2,8 @@
 
 class Produto extends AppModel {
 	var $name = 'Produto';
-	var $belongsTo = array('ProdutoCategoria');
-	var $actsAs = array('CakePtbr.AjusteFloat');
+	var $actsAs = array('CakePtbr.AjusteFloat','Empresa');
+	var $belongsTo = array('ProdutoCategoria','Empresa');
 	var $validate = array(
 		'nome' => array(
 			'obrigatorio' => array (
@@ -70,7 +70,12 @@ class Produto extends AppModel {
 		'situacao' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
-		)
+		),
+	    'empresa_id' => array(
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
 	);
 }
 
