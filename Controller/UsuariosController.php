@@ -110,6 +110,10 @@ class UsuariosController extends AppController {
 		/** Usuário pode logar **/
 		
 		unset($consultaUsuario['Usuario']['senha']);
+		$this->Usuario->Empresa->id = $consultaUsuario['Usuario']['id'];
+		$consultaUsuario['Usuario'] = array_merge(
+			   $consultaUsuario['Usuario'],array('empresa_nome'=>$this->Usuario->Empresa->field('nome'))
+		);
 		// registro uma sessao que contera alguns dados do usuario
 		if ($this->Auth->login($consultaUsuario['Usuario'])) {
 			$this->Usuario->id = $this->Auth->user('id');

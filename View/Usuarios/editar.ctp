@@ -3,7 +3,13 @@
 </h2>
 
 <?php
-print $this->Form->create('Usuario', array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+if ($this->Ajax->isAjax()) {
+	print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'Usuario','update'=>'conteudo_ajax'));
+
+}
+else {
+	print $this->Form->create('Usuario',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
 ?>
 <div class="divs_grupo_2">
 	

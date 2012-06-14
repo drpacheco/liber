@@ -20,7 +20,10 @@
 	margin-right: auto;
 	background-color: white;
 	color: #367889;
-	padding: 5px;
+	padding-top: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -28,9 +31,6 @@
 
 #rodape {
 	margin-top: 10px;
-}
-
-.painel_usuario_info {
 	width: 95%;
 	margin-left: auto;
 	margin-right: auto;
@@ -91,6 +91,10 @@
 	color: #FFFFFF;
 }
 
+.texto_label {
+	color: #666;
+}
+
 /**
  * 	campos input que nao devem se parecer com um
  */
@@ -109,6 +113,14 @@ div .grafico {
 	padding: 0px;
 	vertical-align: text-top;
 	border: 0px;
+}
+
+.botao_carregando {
+	padding-left:20px;
+	background-image: url('../img/carregando.gif'); /* 16px */
+	background-color: #0a0;
+	color: #0a0;
+	background-repeat:no-repeat;
 }
 
 /** Jquery **/

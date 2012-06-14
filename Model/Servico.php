@@ -19,13 +19,9 @@ class Servico extends AppModel {
 		)
 	);
 	var $validate = array(
-		'id' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			)
-		),
 		'nome' => array(
 			'obrigatorio' => array (
+				'allowEmpty' => false,
 				'rule' => 'notEmpty',
 				'message' => 'Campo obrigatório.'
 			),
@@ -36,11 +32,19 @@ class Servico extends AppModel {
 			)
 		),
 		'servico_categoria_id' => array(
-			'notempty' => array(
-				'rule' => array('notempty')
-			)
+			'obrigatorio' => array (
+				'required'   => true,
+				'allowEmpty' => false,
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
 		),
 		'valor' => array(
+			'obrigatorio' => array (
+				'allowEmpty' => false,
+				'rule' => 'notEmpty',
+				'message' => 'Campo obrigatório.'
+			),
 			'notempty' => array(
 				'rule' => array('numeric')
 			)

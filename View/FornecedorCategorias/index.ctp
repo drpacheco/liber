@@ -31,13 +31,19 @@
 		</tbody>
 	</table>
 	
-	<?php
-	print $this->Paginator->counter(array(
-		'format' => 'Exibindo %current% registros de um total de %count% registros. Página %page% de %pages%.'
-	)); 
-	
-	print '<br/>';
-	
-	print $this->Paginator->prev('« Anterior ', null, null, array('class' => 'disabled'));
-	print $this->Paginator->next(' Próximo »', null, null, array('class' => 'disabled'));
-	?>
+<?php
+$this->Paginator->options (array (
+	'update' => '#conteudo',
+	'before' => $this->Js->get('.indicador_carregando')->effect('fadeIn', array('buffer' => false)),
+	'complete' => $this->Js->get('.indicador_carregando')->effect('fadeOut', array('buffer' => false)),
+));
+
+print $this->Paginator->prev('« Anterior ', null, null, array('class' => 'disabled'));
+print $this->Paginator->next(' Próximo »', null, null, array('class' => 'disabled'));
+
+print '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+
+print $this->Paginator->counter(array(
+	'format' => 'Página %page% de %pages%. Total de %count% registros.'
+)); 
+?>
