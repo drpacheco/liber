@@ -46,7 +46,7 @@ function adicionar_parcela() {
 		'<tr>'+
 			'<td> <input name="none" value="'+parseInt(numero_campo+1)+'" class="noinput" /> </td>' +
 			'<td> <input type="text" name="data[FormaPagamentoItem]['+numero_campo+'][dias_intervalo_parcela]" value="'+dias+'" class="noinput dias_intervalo_parcela" /> </td>'+
-			'<td> <img src="'+raiz_site+'/img/del24x24.png" class="remover_linha"/> </td>'+
+			'<td> <img src="'+site_raiz+'/img/del24x24.png" class="remover_linha"/> </td>'+
 		'</tr>'+"\n";
 		
 		$('#parcelas_inseridas').append(novo_campo);

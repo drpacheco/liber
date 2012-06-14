@@ -12,6 +12,9 @@ function submissaoFormulario(objeto) {
 					'Sim': function() {
 						$(this).dialog( "close" );
 						document.forms[objeto.id].submit();
+						$('#'+objeto.id).find('input:submit')
+							.val('Enviando...')
+							.attr("disabled", true);
 					},
 					'Não': function() {
 						$(this).dialog( "close" );
@@ -269,6 +272,61 @@ $(function() {
 		
 	});
 	*/
+    
+    $('a.ajax_link').click(function(objetoEvento) {
+		var objetoLink = $(this);
+		var areaConteudo = $('#conteudo');
+		var indicador = $('.indicador_carregando');
+		indicador.css('display','block');
+		
+		var requisicaoAjax = $.ajax({
+			url: objetoLink.attr('href'),
+			type: 'GET',
+			cache: false,
+			dataType: 'html'
+		});
+		requisicaoAjax
+			.done(function(dados) {
+				areaConteudo.html(dados);
+				history.pushState(null, null, objetoLink.attr('href'));
+				document.title = "Liber";
+			})
+			.fail(function(jqXHR, textStatus) {
+				areaConteudo.html('<b>Erro ao carregar a página.</b>');
+			})
+			/*.always(function(dados, statusTexto, objeto) {
+				// a cada requisicao
+			});*/
+		indicador.css('display','none');
+		// previne que o Browser siga o link
+		return (false);
+    });
+	
+	$('#conteudo').ajaxComplete(function(evento, jqXHR, opcoes) {
+		liber_log_ajax = $('#liber_log_ajax');
+		if ( liber_log_ajax != null) {
+			// move log para a area do layout gerado sem ajax
+			liber_log = $('#liber_log');
+			liber_log.html(liber_log_ajax.html());
+			liber_log_ajax.html('');
+			// cria logs ajax
+			/*if( console ) {
+				console.group('Link ajax');
+				console.log('Status %d (%s). ReadyState: %d',jqXHR.status,jqXHR.statusText,jqXHR.readyState);
+				console.log('Objeto: ',jqXHR);
+				console.groupEnd();
+			}*/
+		}
+	});
+	$('#conteudo').ajaxError(function(evento, jqxhr, opcoes, excecao) {
+		// Acesso negado
+		if ( jqxhr.status == 403 ) {
+			$('#conteudo').append('Acesso negado, redirecionando para a página de login.');
+			setTimeout(function(){
+				window.location = site_raiz;
+			},5000);
+		}
+	});
 
 });
 

@@ -1,7 +1,3 @@
-<script type="text/javascript">
-	// variaveis a serem utilizadas no arquivo forma_pagamento.js
-	var raiz_site = "<?php print $this->Html->url('/',true); ?>/";
-</script>
 
 <?php print $this->Html->script('forma_pagamento'); ?>
 

@@ -1,6 +1,14 @@
 <h2 class="descricao_cabecalho">Cadastrar empresa</h2>
 
-<?php print $this->Form->create('Empresa',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));?>
+<?php
+if ($this->Ajax->isAjax()) {
+	print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'Empresa','update'=>'conteudo_ajax'));
+
+}
+else {
+	print $this->Form->create('Empresa',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
+?>
 <div class="divs_grupo_3">
 	<div class="div1_3">
 		<?php

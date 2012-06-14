@@ -30,7 +30,15 @@
 
 <h2 class="descricao_cabecalho">Cadastrar produto</h2>
 
-<?php print $this->Form->create('Produto',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;')); ?>
+<?php
+if ($this->Ajax->isAjax()) {
+	print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'Produto','update'=>'conteudo_ajax'));
+
+}
+else {
+	print $this->Form->create('Produto',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
+?>
 	<div class="grupo_horizontal">
 		<?php
 		print $this->Form->label('produto_categoria_id','Categoria',array('class'=>'required'));

@@ -14,6 +14,9 @@
 		print $this->Html->css('estilo.css');
 		print $this->fetch('css');
 		print $this->Html->css('jquery-ui/jquery-ui.css');
+		print '<script type="text/javascript">';
+		print 'var site_raiz = "'.$this->Html->url('/',true).'";';
+		print '</script>';
 		print $this->Html->script('jquery');
 		print $this->Html->script('auxiliares.js');
 		?>
@@ -41,9 +44,16 @@
 		</div>
 		
 		<div id="rodape">
-			<?php print $this->element('painel_usuario_info'); ?>
-			
-			
+			<span class="texto_label">Usuário</span>: <?php print AuthComponent::user('nome'); ?> &nbsp;&nbsp;&nbsp;&nbsp;
+			<span class="texto_label">Empresa</span>: <?php print AuthComponent::user('empresa_nome');  ?>
+
+			<span style="float: right;">
+				<a style="text-decoration: none" href="#menu">Topo &uarr;</a>
+			</span>
+
+			<div class="indicador_carregando" style="float: right; display: none; margin-right: 5px;">
+				<?php print $this->Html->image('carregando3.gif',array('alt'=>'Carregando','title'=>'Carregando')); ?>
+			</div>
 		</div>
 		
 		<?php 
@@ -51,9 +61,12 @@
 		print $this->Html->script('jquery-ui.js');
 		print $this->Html->script('mascaras.js');
 		print $this->fetch('script');
+		print $this->Js->writeBuffer();
 		?>
 		
-		<?php print $this->element('sql_dump'); ?>
+		<div id="liber_log">
+			<?php print $this->element('sql_dump'); ?>
+		</div>
 	</body>
 	
 </html>

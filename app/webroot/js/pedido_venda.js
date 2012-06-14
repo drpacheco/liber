@@ -2,7 +2,7 @@ $(function() {
 
 	$(".datepicker").datepicker({
 		showOn: "button",
-		buttonImage: raiz_site+"/img/calendario_icone.gif",
+		buttonImage: site_raiz+"/img/calendario_icone.gif",
 		buttonImageOnly: true
 	});
 		
@@ -279,7 +279,7 @@ function adicionar_produto() {
 			'<td> <input type="text" name="data[PedidoVendaItem]['+numero_campo+'][produto_nome]" value="'+nome+'" class="noinput item_nome" /> </td>'+
 			'<td> <input type="text" name="data[PedidoVendaItem]['+numero_campo+'][quantidade]" value="'+quantidade+'" class="noinput item_qtd" /> </td>'+
 			'<td> <input type="text" name="data[PedidoVendaItem]['+numero_campo+'][preco_venda]" value="'+valor+'" class="noinput item_val" /> </td>'+
-			'<td> <img src="'+raiz_site+'/img/del24x24.png" class="remover_linha"/> </td>'+
+			'<td> <img src="'+site_raiz+'/img/del24x24.png" class="remover_linha"/> </td>'+
 		'</tr>'+"\n";
 		
 		$('#produtos_incluidos').append(novo_campo);

@@ -7,6 +7,15 @@ print $this->Html->css('jquery.jqplot.css');
 ?>
 <h2 class="descricao_cabecalho">Resumo das contas a receber</h2>
 
+<?php
+
+if ( ($data1 == '[]') && ($data2 == '[]') && ($data3 == '[]') ) {
+	print '<div style="text-align: center; font-size: 300%;"> <b>Nenhum resultado encontrado</b> </div>';
+	return null;
+}
+
+?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		

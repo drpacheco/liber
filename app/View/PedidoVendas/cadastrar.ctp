@@ -1,6 +1,5 @@
 <script type="text/javascript">
 	// variaveis a serem utilizadas no arquivo pedido_venda.js
-	var raiz_site = "<?php print $this->Html->url('/',true); ?>/";
 	var ajaxPesqCliente = "<?php print $this->Html->url(array('controller'=>'Clientes','action'=>'pesquisaAjaxCliente')); ?>/";
 	var ajaxPesqProduto = "<?php print $this->Html->url(array('controller'=>'Produtos','action'=>'pesquisaAjaxProduto')); ?>/";
 	var ajaxPesqFormaPagamento = "<?php print $this->Html->url(array('controller'=>'FormaPagamentos','action'=>'pesquisaAjaxNumeroMaximoParcelas')); ?>/";
@@ -13,7 +12,15 @@ print $this->Html->script('formatar_moeda');
 
 <h2 class="descricao_cabecalho">Cadastrar pedido de venda</h2>
 
-<?php print $this->Form->create('PedidoVenda',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;')); ?>
+<?php
+if ($this->Ajax->isAjax()) {
+	print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'PedidoVenda','update'=>'conteudo_ajax'));
+
+}
+else {
+	print $this->Form->create('PedidoVenda',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
+?>
 
 <div id="pedido_venda_abas">
 	<ul>

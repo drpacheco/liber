@@ -1,6 +1,5 @@
 <script type="text/javascript">
 	// variaveis a serem utilizadas no arquivo ordem_servico.js
-	var raiz_site = "<?php print $this->Html->url('/',true); ?>/";
 	var ajaxPesqCliente = "<?php print $this->Html->url(array('controller'=>'Clientes','action'=>'pesquisaAjaxCliente')); ?>/";
 	var ajaxPesqServico = "<?php print $this->Html->url(array('controller'=>'Servicos','action'=>'pesquisaAjaxServico')); ?>/";
 	var ajaxPesqFormaPagamento = "<?php print $this->Html->url(array('controller'=>'FormaPagamentos','action'=>'pesquisaAjaxNumeroMaximoParcelas')); ?>/";

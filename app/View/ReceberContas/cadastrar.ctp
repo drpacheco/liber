@@ -1,6 +1,5 @@
 <script type="text/javascript">
 	// variaveis a serem utilizadas no arquivo conta_receber.js
-	var raiz_site = "<?php print $this->Html->url('/',true); ?>/";
 	var ajaxPesqCliente = "<?php print $this->Html->url(array('controller'=>'Clientes','action'=>'pesquisaAjaxCliente')); ?>/";
 	var ajaxPesqFornecedor = "<?php print $this->Html->url(array('controller'=>'Fornecedores','action'=>'pesquisaAjaxFornecedor')); ?>/";
 </script>
@@ -12,7 +11,15 @@ print $this->Html->script('formatar_moeda');
 
 <h2 class="descricao_cabecalho">Cadastrar conta a receber</h2>
 
-<?php print $this->Form->create('ReceberConta',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;')); ?>
+<?php
+if ($this->Ajax->isAjax()) {
+	print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'ReceberConta','update'=>'conteudo_ajax'));
+
+}
+else {
+	print $this->Form->create('ReceberConta',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+}
+?>
 <div class="grupo_horizontal">
 	<?php
 	print $this->Form->label('eh_cliente_ou_fornecedor','É cliente ou fornecedor?',array('class'=>'required'));
