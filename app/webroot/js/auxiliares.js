@@ -224,7 +224,7 @@ function abrir_dialogo_ajax (url, largura, altura, titulo) {
 			height: altura,
 			title: titulo
 		});
-	            
+				
 		// carrega conteudo remoto
 		dialog.load (
 			url,
@@ -239,10 +239,15 @@ function abrir_dialogo_ajax (url, largura, altura, titulo) {
 	});
 }
 
-$(function() {
-	// #TODO submissao nao está funcionando
+$(document).ready(function() {
+	
+	// ######################################
+	//   Principais funções Jquery com ajax
+	// ######################################
+	
+	// #XXX submissao nao está funcionando
 	// abre links com a classe "ajax_link_dialog" via ajax e jquery ui
-	/*$('a.ajax_link_dialog').click(function() {
+	$('a.ajax_link_dialog').click(function() {
 		url = this.href;
 		largura = $(this).attr('data-ajax_link_dialog_largura');
 		altura = $(this).attr('data-ajax_link_dialog_altura');
@@ -263,7 +268,7 @@ $(function() {
 		
 		abrir_dialogo_ajax(url,largura,altura,titulo);
 		return false;
-	});*/
+	});
 	
 	/*
 	$('a[title="Excluir"]').click(function(evento) {
@@ -272,12 +277,10 @@ $(function() {
 		
 	});
 	*/
-    
-    $('a.ajax_link').click(function(objetoEvento) {
+	
+	$('a.ajax_link').click(function(objetoEvento) {
 		var objetoLink = $(this);
 		var areaConteudo = $('#conteudo');
-		var indicador = $('.indicador_carregando');
-		indicador.css('display','block');
 		
 		var requisicaoAjax = $.ajax({
 			url: objetoLink.attr('href'),
@@ -297,11 +300,42 @@ $(function() {
 			/*.always(function(dados, statusTexto, objeto) {
 				// a cada requisicao
 			});*/
-		indicador.css('display','none');
 		// previne que o Browser siga o link
 		return (false);
-    });
+	});
 	
+	// ##########################
+	//    Funcoes globais Ajax
+	// ##########################
+	
+	/**
+	 * Uma chave para definir se ha alguma operacao ajax em andamento.
+	 */
+	var ajax_carregando = false;
+	
+	/*
+	 * Este evento é disparado se uma solicitação Ajax é iniciada e nenhuma
+	 * outra solicitação Ajax está atualmente em execução.
+	 */
+	$('#conteudo').ajaxStart(function(){
+		$('.indicador_carregando').css('display','block');
+		ajax_carregando = true;
+	});
+	
+	/*
+	 * Este evento global é acionado se houverem solicitações Ajax não mais
+	 * sendo processadas.
+	 */
+	$('#conteudo').ajaxStop(function(){
+		$('.indicador_carregando').css('display','none');
+		ajax_carregando = false;
+	});	
+	
+	/*
+	 * Este evento é chamado cada vez que uma solicitação Ajax termina, independentemente
+	 * do pedido ser bem-sucedido ou não. É recebido sempre um retorno completo,
+	 * mesmo para pedidos síncronos.
+	 */
 	$('#conteudo').ajaxComplete(function(evento, jqXHR, opcoes) {
 		liber_log_ajax = $('#liber_log_ajax');
 		if ( liber_log_ajax != null) {
@@ -318,15 +352,44 @@ $(function() {
 			}*/
 		}
 	});
+	
+	/*
+	 * Este evento é chamado caso alguma requisição Ajax tenha algum erro.
+	 */
 	$('#conteudo').ajaxError(function(evento, jqxhr, opcoes, excecao) {
 		// Acesso negado
 		if ( jqxhr.status == 403 ) {
-			$('#conteudo').append('Acesso negado, redirecionando para a página de login.');
+			$('#conteudo').append(' Acesso negado, redirecionando para a página de login.');
 			setTimeout(function(){
 				window.location = site_raiz;
 			},5000);
 		}
 	});
+	
+	// #########################
+	//         Fim ajax
+	// #########################
+	
+	
+	/**
+	 * Define se é necessário avisar ao usuário que ele está saindo da página.
+	 */
+	var avisar_saida_site = true;
+	
+	/**
+	 * Aviso, genérico, ao usuário de que ele está saindo da página enquanto
+	 * uma requisição ajax está sendo processada.
+	 */
+	window.onbeforeunload = function (e) {
+		if (ajax_carregando && avisar_saida_site) {
+			e = e || window.event;
+			// Para IE<8 e Firefox < 4
+			if (e) {
+				e.returnValue = 'Você está deixando o sistema enquanto ações estão sendo processadas';
+			}
+			return 'Você está deixando o sistema enquanto ações estão sendo processadas';
+		}
+	}
 
-});
+}); // fim document.ready
 
