@@ -1,4 +1,4 @@
-$(function() {
+jQuery(document).ready(function(){
 
 	$(".datepicker").datepicker({
 		showOn: "button",
@@ -139,6 +139,12 @@ $(function() {
 			e.preventDefault();
 			adicionar_produto();
 		}
+	});
+	
+	$('#produtos_incluidos tr').live('click',function() {
+		procurar_por_codigo( $(this).find('.item_id').val() );
+		$('#produtos_pesquisar #ProdutoQuantidade').val( $(this).find('.item_qtd').val() );
+		$('#produtos_pesquisar #ProdutoPrecoVenda').val( $(this).find('.item_val').val() );
 	});
 	
 	// verificacoes ao submeter o formulario

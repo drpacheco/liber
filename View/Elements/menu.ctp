@@ -17,7 +17,7 @@
 						<ul>
 							<li>
 								<?php print $this->Html-> link('Cadastrar', "/fornecedorCategorias/cadastrar",
-									   array('class' => 'ajax_link_dialog',
+									   array('class' => '-ajax_link_dialog',
 										'data-ajax_link_dialog_altura'=>'300',
 										'data-ajax_link_dialog_largura'=>'500',
 										'data-ajax_link_dialog_titulo'=>'Categoria de fornecedores'));?>
@@ -38,7 +38,7 @@
 						<ul>
 							<li>
 								<?php print $this->Html-> link('Cadastrar', "/produtoCategorias/cadastrar",
-									    array('class' => 'ajax_link_dialog',
+									    array('class' => '-ajax_link_dialog',
 										'data-ajax_link_dialog_altura'=>'300',
 										'data-ajax_link_dialog_largura'=>'500',
 										'data-ajax_link_dialog_titulo'=>'Categoria de produtos'));?>
@@ -65,7 +65,7 @@
 						<ul>
 							<li>
 								<?php print $this->Html-> link('Cadastrar', "/clienteCategorias/cadastrar",
-								    array('class' => 'ajax_link_dialog',
+								    array('class' => '-ajax_link_dialog',
 										'data-ajax_link_dialog_altura'=>'300',
 										'data-ajax_link_dialog_largura'=>'500',
 										'data-ajax_link_dialog_titulo'=>'Categoria de clientes'));?>
@@ -78,7 +78,7 @@
 			<li>
 				<?php print $this->Html-> link('Pedido de venda', "/pedidoVendas",array('class' => 'ajax_link'));?>
 				<ul>
-					<li><?php print $this->Html-> link('Cadastrar', "/pedidoVendas/cadastrar",array('class' => 'ajax_link'));?></li>
+					<li><?php print $this->Html-> link('Cadastrar', "/pedidoVendas/cadastrar");?></li>
 					<li><?php print $this->Html-> link('Pesquisar', "/pedidoVendas/pesquisar");?></li>
 					<li><?php print $this->Html-> link('Listar', "/pedidoVendas/",array('class' => 'ajax_link'));?></li>
 				</ul>
@@ -110,7 +110,7 @@
 			<li>
 				<?php print $this->Html-> link('Ordens de serviço', "/servicoOrdens",array('class' => 'ajax_link'));?>
 				<ul>
-					<li><?php print $this->Html-> link('Cadastrar', "/servicoOrdens/cadastrar",array('class' => 'ajax_link'));?></li>
+					<li><?php print $this->Html-> link('Cadastrar', "/servicoOrdens/cadastrar");?></li>
 					<li><?php print $this->Html-> link('Pesquisar', "/servicoOrdens/pesquisar");?></li>
 					<li><?php print $this->Html-> link('Listar', "/servicoOrdens",array('class' => 'ajax_link'));?></li>
 				</ul>
@@ -120,7 +120,7 @@
 				<ul>
 					<li>
 						<?php print $this->Html-> link('Cadastrar', "/servicos/cadastrar",
-							   array('class' => 'ajax_link_dialog',
+							   array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'400',
 							'data-ajax_link_dialog_largura'=>'500',
 							'data-ajax_link_dialog_titulo'=>'Cadastrar serviço'));?>
@@ -133,7 +133,7 @@
 				<ul>
 					<li>
 						<?php print $this->Html-> link('Cadastrar', "/servicoCategorias/cadastrar",
-						array('class' => 'ajax_link_dialog',
+						array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'300',
 							'data-ajax_link_dialog_largura'=>'500',
 							'data-ajax_link_dialog_titulo'=>'Categoria de serviços'));?>
@@ -163,7 +163,7 @@
 				<ul>
 					<li>
 						<?php print $this->Html-> link('Cadastrar', "/motoristas/cadastrar",
-						array('class' => 'ajax_link_dialog',
+						array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'400',
 							'data-ajax_link_dialog_largura'=>'500',
 							'data-ajax_link_dialog_titulo'=>'Cadastro de motorista'));?>
@@ -177,7 +177,7 @@
 				<ul>
 					<li>
 						<?php print $this->Html-> link('Cadastrar', "/veiculos/cadastrar",
-						array('class' => 'ajax_link_dialog',
+						array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'400',
 							'data-ajax_link_dialog_largura'=>'500',
 							'data-ajax_link_dialog_titulo'=>'Cadastro de veículo'));?>
@@ -214,7 +214,7 @@
 				<?php print $this->Html-> link('Plano de contas', "/planoContas/",array('class' => 'ajax_link'));?>
 				<ul>
 					<li> <?php print $this->Html-> link('Cadastrar', "/planoContas/cadastrar",
-						   array('class' => 'ajax_link_dialog',
+						   array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'300',
 							'data-ajax_link_dialog_largura'=>'500',
 							'data-ajax_link_dialog_titulo'=>'Cadastro de item do plano de contas'));?>
@@ -227,7 +227,7 @@
 				<ul>
 					<li>
 						<?php print $this->Html-> link('Cadastrar', "/tipoDocumentos/cadastrar",
-							   array('class' => 'ajax_link_dialog',
+							   array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'300',
 							'data-ajax_link_dialog_largura'=>'500',
 							'data-ajax_link_dialog_titulo'=>'Cadastro de tipo de documento'));?>
@@ -241,7 +241,7 @@
 				<ul>
 					<li>
 						<?php print $this->Html-> link('Cadastrar', "/formaPagamentos/cadastrar",
-							   array('class' => 'ajax_link_dialog',
+							   array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'500',
 							'data-ajax_link_dialog_largura'=>'600',
 							'data-ajax_link_dialog_titulo'=>'Cadastro de forma de pagamento'));?>
@@ -253,7 +253,7 @@
 				<?php print $this->Html-> link('Contas', "/contas/",array('class' => 'ajax_link'));?>
 				<ul>
 					<li> <?php print $this->Html-> link('Cadastrar', "/contas/cadastrar",
-						   array('class' => 'ajax_link_dialog',
+						   array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'400',
 							'data-ajax_link_dialog_largura'=>'500',
 							'data-ajax_link_dialog_titulo'=>'Cadastro de conta'));?>

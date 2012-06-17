@@ -18,7 +18,7 @@
 		print 'var site_raiz = "'.$this->Html->url('/',true).'";';
 		print '</script>';
 		print $this->Html->script('jquery');
-		print $this->Html->script('auxiliares.js');
+		print $this->Html->script('auxiliares');
 		?>
 	</head>
 	
@@ -57,9 +57,18 @@
 		</div>
 		
 		<?php 
-		print $this->Html->script('menu.superfish.js');
-		print $this->Html->script('jquery-ui.js');
-		print $this->Html->script('mascaras.js');
+		print $this->Html->script('menu.hoverIntent');
+		print $this->Html->script('menu.superfish');?>
+		<script type="text/javascript">
+			$(document).ready(function(){ 
+				$("ul.sf-menu").superfish({ 
+					delay:     0
+				}); 
+			}); 
+		</script>
+		<?php
+		print $this->Html->script('jquery-ui');
+		print $this->Html->script('mascaras');
 		print $this->fetch('script');
 		print $this->Js->writeBuffer();
 		?>

@@ -119,7 +119,3 @@
 	});
 
 })(jQuery);
-
-$( function() {
-	$('ul.sf-menu').superfish();
-});

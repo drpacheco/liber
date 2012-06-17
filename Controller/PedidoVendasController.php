@@ -139,10 +139,10 @@ class PedidoVendasController extends AppController {
 		// apenas baixa o estoque se o pedido estiver Vendido
 		if (strtoupper($this->request->data['PedidoVenda']['situacao']) != 'V' ) return null;
 		
-		$erro=0;
 		foreach ($this->request->data['PedidoVendaItem'] as $item) {
+			$erro=0;
 			$temEstoqueIlimitado = $this->PedidoVenda->PedidoVendaItem->Produto->field('tem_estoque_ilimitado',array('Produto.id'=>$item['produto_id']));
-			if ($temEstoqueIlimitado) return null;
+			if ($temEstoqueIlimitado) continue;
 		
 			$quantidadeNaoFiscal = $this->PedidoVenda->PedidoVendaItem->Produto->field('quantidade_estoque_nao_fiscal',array('Produto.id'=>$item['produto_id']));
 			if (empty($quantidadeNaoFiscal)) {

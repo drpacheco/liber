@@ -95,6 +95,12 @@ $(function() {
 		}
 	});
 	
+	$('#servicos_incluidos tr').live('click',function() {
+		procurar_por_codigo( $(this).find('.item_id').val() );
+		$('#servicos_pesquisar #ServicoQuantidade').val( $(this).find('.item_qtd').val() );
+		$('#servicos_pesquisar #ServicoPrecoVenda').val( $(this).find('.item_val').val() );
+	});
+	
 	// verificacoes ao submeter o formulario
 	$('input[type="submit"]').click(function(){
 		registro = 0;
