@@ -4,6 +4,7 @@ lib
 app/Vendor/simpletest
 app/Config/database.php
 outros/diagrama_banco.mwb.bak
+app/tmp/cache/*
 app/tmp/cache/models/*
 app/tmp/cache/persistent/*
 app/tmp/cache/views/*
@@ -13,3 +14,5 @@ app/tmp/tests/*
 outros/anotacoes.txt
 outros/ico
 /nbproject/private/
+/plugins/
+/vendors/

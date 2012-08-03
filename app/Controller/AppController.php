@@ -4,7 +4,7 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 	
 	// Componentes utilizados por toda a aplicação
-	var $components = array('Session', 'Cookie','Auth','RequestHandler');
+	var $components = array('Session', 'Cookie','Auth','RequestHandler','DebugKit.Toolbar');
 	// Helpers utilizados por toda a aplicacao
 	var $helpers = array('Html','Form','Session','Js','Javascript','Ajax');
 	
