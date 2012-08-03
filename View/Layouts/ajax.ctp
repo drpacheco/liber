@@ -18,5 +18,8 @@
 </div>
 
 <div id="liber_log_ajax">
-	<?php print $this->element('sql_dump'); ?>
+	<?php 
+	// Substituido pelo Cake DebugKitToolbar
+	//print $this->element('sql_dump');
+	?>
 </div>
