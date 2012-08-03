@@ -110,7 +110,7 @@ class UsuariosController extends AppController {
 		/** Usuário pode logar **/
 		
 		unset($consultaUsuario['Usuario']['senha']);
-		$this->Usuario->Empresa->id = $consultaUsuario['Usuario']['id'];
+		$this->Usuario->Empresa->id = $consultaUsuario['Usuario']['empresa_id'];
 		$consultaUsuario['Usuario'] = array_merge(
 			   $consultaUsuario['Usuario'],array('empresa_nome'=>$this->Usuario->Empresa->field('nome'))
 		);
@@ -169,7 +169,7 @@ class UsuariosController extends AppController {
 	function index() {
 		$this->_obter_opcoes();
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->set('consulta_usuario',$this->paginate('Usuario'));
 	}
@@ -177,7 +177,7 @@ class UsuariosController extends AppController {
 	function cadastrar() {
 		$this->_obter_opcoes();
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($this->request->data)) {
 			if ($this->request->data['Usuario']['senha'] == $this->request->data['Usuario']['senha_confirma']) {
@@ -206,7 +206,7 @@ class UsuariosController extends AppController {
 		$this->_obter_opcoes();
 		$this->Usuario->id = $id;
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		//popular o formulario, na primeira carga
 		if (empty ($this->request->data)) {
@@ -252,7 +252,7 @@ class UsuariosController extends AppController {
 	
 	function inativar ($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->Usuario->id = $id;	
 		if ( empty($id)) {

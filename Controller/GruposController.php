@@ -17,7 +17,7 @@ class GruposController extends AppController {
 		
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$dados = $this->paginate('Grupo');
 		$this->set('consulta_grupo',$dados);
@@ -25,7 +25,7 @@ class GruposController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($this->request->data)) {
 			
@@ -44,7 +44,7 @@ class GruposController extends AppController {
 	function editar($id=NULL) {
 		$this->Grupo->id = $id;
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (empty ($this->request->data)) {
 			$this->Grupo->recursive = -1;
@@ -69,7 +69,7 @@ class GruposController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->Grupo->delete($id)) $this->Session->setFlash("Grupo $id excluído com sucesso.",'flash_sucesso');

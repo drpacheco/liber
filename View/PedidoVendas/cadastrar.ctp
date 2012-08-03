@@ -86,8 +86,7 @@ else {
 						<input type="hidden" name="[Produto][categoria]" id="ProdutoCategoria" value="" />
 						<div style="clear: both;"></div>
 					</div>
-					<input type="button" value="Adicionar" class="botao_aviso"
-					style="float: left; width: 10%;" onclick="adicionar_produto(); return false;" />
+					<input type="button" value="Adicionar" class="botao_aviso" style="float: left; width: 10%;" id="ProdutoAdicionar" />
 				</div>
 			</fieldset>
 		</div>

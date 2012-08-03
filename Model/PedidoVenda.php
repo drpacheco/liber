@@ -47,6 +47,7 @@ class PedidoVenda extends AppModel {
 			'message' => 'Campo obrigatório. Somente números.'
 		),
 		'forma_pagamento_id' => array(
+			'required' => true,
 			'allowEmpty' => false,
 			'rule' => 'numeric',
 			'message' => 'Campo obrigatório.'
@@ -68,7 +69,7 @@ class PedidoVenda extends AppModel {
 		'data_venda' => array(
 			'allowEmpty' => false,
 			'rule' => 'date',
-			'message' => 'Data obrigatória.'
+			'message' => 'Data inválida.'
 		),
 		'empresa_id' => array(
 			'rule' => 'notEmpty',

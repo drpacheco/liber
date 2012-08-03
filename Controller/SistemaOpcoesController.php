@@ -17,7 +17,7 @@ class SistemaOpcoesController extends AppController {
 		$this->SistemaOpcao->id = 1;
 		$this->_obter_opcoes();
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (empty ($this->request->data)) {
 			$this->SistemaOpcao->recursive = -1;

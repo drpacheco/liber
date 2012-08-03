@@ -311,7 +311,6 @@ li.sfHover > a > .sf-sub-indicator {
 
 /** Estilo geral **/
 body {
-	/*background: url('../img/bg.png') repeat;*/
      background: url('../img/img.png');
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
@@ -901,36 +900,108 @@ div.related {
 pre {
 	color: #000;
 	background: #f0f0f0;
-	padding: 1em;
+	padding: 15px;
+	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
-pre.cake-debug {
-	background: #ffcc00;
-	line-height: 140%;
-	margin-top: 1em;
-	overflow: auto;
+.cake-debug-output {
+	padding: 0;
 	position: relative;
 }
-div.cake-stack-trace {
-	background: #fff;
+.cake-debug-output > span {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background: rgba(255, 255, 255, 0.3);
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	padding: 5px 6px;
+	color: #000;
+	display: block;
+	float: left;
+	-moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
+	-webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
+	box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+.cake-debug,
+.cake-error {
+	font-size: 16px;
+	line-height: 20px;
+	clear: both;
+}
+.cake-error > a {
+	text-shadow: none;
+}
+.cake-error {
+	white-space: normal;
+}
+.cake-stack-trace {
+	background: rgba(255, 255, 255, 0.7);
 	color: #333;
-	margin: 0px;
-	padding: 6px;
+	margin: 10px 0 5px 0;
+	padding: 10px 10px 0 10px;
+	font-size: 120%;
 	line-height: 140%;
 	overflow: auto;
 	position: relative;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 }
-div.cake-code-dump pre {
+.cake-stack-trace a {
+	text-shadow: none;
+	background: rgba(255, 255, 255, 0.7);
+	padding: 5px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	margin: 0px 4px 10px 2px;
+	font-family: sans-serif;
+	font-size: 14px;
+	line-height: 14px;
+	display: inline-block;
+	text-decoration: none;
+	-moz-box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.3);
+}
+.cake-code-dump pre {
 	position: relative;
 	overflow: auto;
 }
-div.cake-stack-trace pre, div.cake-code-dump pre {
+.cake-context {
+	margin-bottom: 10px;
+}
+.cake-stack-trace pre {
 	color: #000;
 	background-color: #F0F0F0;
-	margin: 0px;
+	margin: 0px 0 10px 0;
 	padding: 1em;
 	overflow: auto;
+	text-shadow: none;
 }
-div.cake-code-dump pre, div.cake-code-dump pre code {
+.cake-stack-trace li {
+	padding: 10px 5px 0px;
+	margin: 0 0 4px 0;
+	font-family: monospace;
+	border: 1px solid #bbb;
+	-moz-border-radius: 4px;
+	-wekbkit-border-radius: 4px;
+	border-radius: 4px;
+	background: #dcdcdc;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dcdcdc));
+	background-image: -webkit-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: -moz-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: -ms-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: -o-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: linear-gradient(top, #fefefe, #dcdcdc);
+}
+/* excerpt */
+.cake-code-dump pre,
+.cake-code-dump pre code {
 	clear: both;
 	font-size: 12px;
 	line-height: 15px;
@@ -938,25 +1009,25 @@ div.cake-code-dump pre, div.cake-code-dump pre code {
 	padding: 4px;
 	overflow: auto;
 }
-div.cake-code-dump span.code-highlight {
-	background-color: #ff0;
-	padding: 4px;
+.cake-code-dump .code-highlight {
+	display: block;
+	background-color: rgba(255, 255, 0, 0.5);
 }
-div.code-coverage-results div.code-line {
+.code-coverage-results div.code-line {
 	padding-left:5px;
 	display:block;
 	margin-left:10px;
 }
-div.code-coverage-results div.uncovered span.content {
+.code-coverage-results div.uncovered span.content {
 	background:#ecc;
 }
-div.code-coverage-results div.covered span.content {
+.code-coverage-results div.covered span.content {
 	background:#cec;
 }
-div.code-coverage-results div.ignored span.content {
+.code-coverage-results div.ignored span.content {
 	color:#aaa;
 }
-div.code-coverage-results span.line-num {
+.code-coverage-results span.line-num {
 	color:#666;
 	display:block;
 	float:left;
@@ -964,37 +1035,37 @@ div.code-coverage-results span.line-num {
 	text-align:right;
 	margin-right:5px;
 }
-div.code-coverage-results span.line-num strong {
+.code-coverage-results span.line-num strong {
 	color:#666;
 }
-div.code-coverage-results div.start {
+.code-coverage-results div.start {
 	border:1px solid #aaa;
 	border-width:1px 1px 0px 1px;
 	margin-top:30px;
 	padding-top:5px;
 }
-div.code-coverage-results div.end {
+.code-coverage-results div.end {
 	border:1px solid #aaa;
 	border-width:0px 1px 1px 1px;
 	margin-bottom:30px;
 	padding-bottom:5px;
 }
-div.code-coverage-results div.realstart {
+.code-coverage-results div.realstart {
 	margin-top:0px;
 }
-div.code-coverage-results p.note {
+.code-coverage-results p.note {
 	color:#bbb;
 	padding:5px;
 	margin:5px 0 10px;
 	font-size:10px;
 }
-div.code-coverage-results span.result-bad {
+.code-coverage-results span.result-bad {
 	color: #a00;
 }
-div.code-coverage-results span.result-ok {
+.code-coverage-results span.result-ok {
 	color: #fa0;
 }
-div.code-coverage-results span.result-good {
+.code-coverage-results span.result-good {
 	color: #0a0;
 }
 

@@ -35,6 +35,20 @@ class AppController extends Controller {
 		
 	}
 	
+	function beforeRender() {
+		parent::beforeRender();
+		// Se cliente nao estiver logado
+		if ( ! $this->Auth->loggedIn() ) {
+			/*
+			* Altera o layout para todos os erros do Cake
+			* http://groups.google.com/group/cake-php/browse_thread/thread/090eb7d3bbe179cb
+			*/
+			if ($this->name === 'CakeError') {
+				$this->layout = 'erro';
+			}
+		}
+	}
+	
 }
 
 

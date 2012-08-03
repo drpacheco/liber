@@ -12,7 +12,7 @@ class ServicoCategoriasController extends AppController {
 
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$dados = $this->paginate('ServicoCategoria');
 		$this->set('consulta',$dados);
@@ -20,7 +20,7 @@ class ServicoCategoriasController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($this->request->data)) {
 			
@@ -38,7 +38,7 @@ class ServicoCategoriasController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (empty ($this->request->data)) {
 			$this->ServicoCategoria->recursive = -1;
@@ -68,7 +68,7 @@ class ServicoCategoriasController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->ServicoCategoria->delete($id)) $this->Session->setFlash("Categoria de serviço $id excluída com sucesso.",'flash_sucesso');

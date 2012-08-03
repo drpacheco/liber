@@ -20,7 +20,7 @@ class ServicosController extends AppController {
 	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->paginate = array (
 			'limit' => 10,
@@ -35,7 +35,7 @@ class ServicosController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
@@ -54,7 +54,7 @@ class ServicosController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
@@ -83,7 +83,7 @@ class ServicosController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->Servico->delete($id)) $this->Session->setFlash("Serviço $id excluído com sucesso.",'flash_sucesso');

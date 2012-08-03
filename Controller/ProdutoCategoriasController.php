@@ -13,7 +13,7 @@ class ProdutoCategoriasController extends AppController {
 
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$dados = $this->paginate('ProdutoCategoria');
 		$this->set('consulta',$dados);
@@ -21,7 +21,7 @@ class ProdutoCategoriasController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($this->request->data)) {
 			
@@ -39,7 +39,7 @@ class ProdutoCategoriasController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (empty ($this->request->data)) {
 			$this->ProdutoCategoria->id = $id;
@@ -69,7 +69,7 @@ class ProdutoCategoriasController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->ProdutoCategoria->delete($id)) $this->Session->setFlash("Categoria de produto $id excluída com sucesso.",'flash_sucesso');

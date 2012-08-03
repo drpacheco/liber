@@ -190,7 +190,7 @@ class PedidoVendasController extends AppController {
 	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		// Filtrando os dados solicitados na query
 		$dados = $this->paginate = array(
@@ -205,7 +205,7 @@ class PedidoVendasController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->set("title_for_layout","Pedido de venda"); 
 		$this->_obter_opcoes();
@@ -264,7 +264,7 @@ class PedidoVendasController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->set("title_for_layout","Pedido de venda"); 
 		$this->_obter_opcoes();
@@ -363,7 +363,7 @@ class PedidoVendasController extends AppController {
 	
 	function detalhar($id = null) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->set("title_for_layout","Pedido de venda");
 		$this->PedidoVenda->contain('PedidoVendaItem','Cliente.nome','FormaPagamento.nome');
@@ -388,7 +388,7 @@ class PedidoVendasController extends AppController {
 
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			$this->PedidoVenda->id = $id;
@@ -424,7 +424,7 @@ class PedidoVendasController extends AppController {
 	
 	function pesquisar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->set("title_for_layout","Pedido de venda");
 		$this->_obter_opcoes();

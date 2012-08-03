@@ -36,7 +36,7 @@ class ReceberContasController extends AppController {
 	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->paginate = array (
 		    'limit' => 10,
@@ -53,7 +53,7 @@ class ReceberContasController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
@@ -93,7 +93,7 @@ class ReceberContasController extends AppController {
 	
 	function editar($id=null) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
@@ -144,7 +144,7 @@ class ReceberContasController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->ReceberConta->delete($id)) $this->Session->setFlash("Conta a receber $id excluída com sucesso.",'flash_sucesso');
@@ -158,7 +158,7 @@ class ReceberContasController extends AppController {
 
 	function pesquisar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		//#FIXME pesquisa por valor nao funciona se informar valor em notação brasileira ou valor contiver .
 		$this->_obter_opcoes();
@@ -221,7 +221,7 @@ class ReceberContasController extends AppController {
 
 	function resumo() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		//grafico de percentual do uso dos itens do plano de contas
 		$consulta = $this->ReceberConta->query("SELECT receber_conta.plano_conta_id,COUNT(*) AS numero_ocorrencias, plano_conta.nome

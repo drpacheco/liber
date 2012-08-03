@@ -1,4 +1,4 @@
-$(function(){
+jQuery(document).ready(function() {
 	
 	$(".datepicker").datepicker({
 		showOn: "button",
@@ -17,9 +17,6 @@ $(function(){
 			.attr('disabled','disabled')
 			.val('');
 	}
-	
-	// Definido assim que a pagina é carregada
-	if ($("#ReceberContaClienteFornecedorId").val() == '') valor_padrao();
 	
 	// Aplica, as opcoes de pesquisa pelo codigo ou pelo nome
 	// do cliente ou fornecedor
@@ -53,7 +50,9 @@ $(function(){
 			}
 		});
 		// ao digitar o codigo
-		$('#ReceberContaClienteFornecedorId').blur(function(){
+		$('#ReceberContaClienteFornecedorId')
+		.off()
+		.on('blur',function(){
 			codigo = $(this).val();
 			if (codigo == null || codigo == '') return null;
 			$.getJSON(ajaxPesquisa + 'codigo', {'term': codigo}, function(data) {
@@ -110,6 +109,8 @@ $(function(){
 	});
 	
 	// para situações onde a página é carrega ja com as informacoes
+	if ($("#ReceberContaClienteFornecedorId").val() == '') valor_padrao();
+	
 	if ( $('#ReceberContaEhClienteOuFornecedor').val() == 'C' )  {
 		$('label[for=ReceberContaClienteFornecedorId]').html('Cliente');
 		definir_pesquisa('cliente');
@@ -118,4 +119,5 @@ $(function(){
 		$('label[for=ReceberContaClienteFornecedorId]').html('Fornecedor');
 		definir_pesquisa('fornecedor');
 	}
-});
+	
+}); // fim document ready
