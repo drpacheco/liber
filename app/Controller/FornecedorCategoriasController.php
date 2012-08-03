@@ -13,7 +13,7 @@ class FornecedorCategoriasController extends AppController {
 
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->FornecedorCategoria->recursive = -1;
 		$this->set('consulta',$this->paginate());
@@ -21,7 +21,7 @@ class FornecedorCategoriasController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($this->request->data)) {
 			
@@ -39,7 +39,7 @@ class FornecedorCategoriasController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (empty ($this->request->data)) {
 			$this->FornecedorCategoria->recursive = -1;
@@ -69,7 +69,7 @@ class FornecedorCategoriasController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->FornecedorCategoria->delete($id)) $this->Session->setFlash("Categoria de fornecedor $id excluída com sucesso.",'flash_sucesso');

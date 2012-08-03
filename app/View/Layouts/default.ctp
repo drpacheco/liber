@@ -18,6 +18,7 @@
 		print 'var site_raiz = "'.$this->Html->url('/',true).'";';
 		print '</script>';
 		print $this->Html->script('jquery');
+		print $this->Html->script('funcoes');
 		print $this->Html->script('auxiliares');
 		?>
 	</head>

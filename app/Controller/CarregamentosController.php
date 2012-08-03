@@ -34,7 +34,7 @@ class CarregamentosController extends AppController {
 	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		$dados = $this->paginate('Carregamento');
@@ -43,7 +43,7 @@ class CarregamentosController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($this->request->data)) {
 			$this->request->data['Carregamento'] += array ('data_hora_criado' => date('Y-m-d H:i:s'));
@@ -91,7 +91,7 @@ class CarregamentosController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			$this->Carregamento->id = $id;
@@ -146,7 +146,7 @@ class CarregamentosController extends AppController {
 	
 	function pesquisar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
@@ -205,7 +205,7 @@ class CarregamentosController extends AppController {
 
 	function detalhar($id = NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if ($id) {
 			$this->Carregamento->id = $id;
@@ -223,7 +223,7 @@ class CarregamentosController extends AppController {
 	
 	function enviar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (empty($this->request->data)) {
 			

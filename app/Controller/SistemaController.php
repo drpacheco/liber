@@ -14,19 +14,19 @@ class SistemaController extends AppController {
 
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 	}
 	
 	function ajuda() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 	}
 	
 	function sobre() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 	}
 	
@@ -46,7 +46,7 @@ class SistemaController extends AppController {
 	 */
 	function inicio() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->loadModel('PagarConta');
 		$this->PagarConta->contain('Cliente.nome');

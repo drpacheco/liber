@@ -15,7 +15,6 @@ class Servico extends AppModel {
 		'ServicoOrdemItem' => array(
 			'className' => 'ServicoOrdemItem',
 			'foreignKey' => 'servico_id',
-			'dependent' => false
 		)
 	);
 	var $validate = array(
@@ -45,7 +44,7 @@ class Servico extends AppModel {
 				'rule' => 'notEmpty',
 				'message' => 'Campo obrigatório.'
 			),
-			'notempty' => array(
+			'numerico' => array(
 				'rule' => array('numeric')
 			)
 		),

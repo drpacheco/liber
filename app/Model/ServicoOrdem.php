@@ -36,24 +36,29 @@ class ServicoOrdem extends AppModel {
 	);
 	var $validate = array(
 		'cliente_id'  => array(
+			'required' => true,
 			'allowEmpty' => false,
 			'rule' => 'numeric',
 			'message' => 'Campo obrigatório. Somente números.'
 		),
 		'usuario_id' => array(
 			'allowEmpty' => false,
+			'required' => true,
 			'rule' => 'numeric',
 			'message' => 'Campo obrigatório.'
 		),
 		'forma_pagamento_id' => array(
+			'required' => true,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),
 		'situacao' => array(
+			'required' => true,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),
 		'data_hora_inicio' => array(
+			'required' => true,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),

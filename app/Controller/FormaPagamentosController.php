@@ -48,7 +48,7 @@ class FormaPagamentosController extends AppController {
 	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$dados = $this->paginate('FormaPagamento');
 		$this->set('consulta_forma_pagamento',$dados);
@@ -56,7 +56,7 @@ class FormaPagamentosController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		
 		$this->_obter_opcoes();
@@ -76,7 +76,7 @@ class FormaPagamentosController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		
@@ -115,7 +115,7 @@ class FormaPagamentosController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		#FIXME nao estah deletando
 		if (! empty($id)) {

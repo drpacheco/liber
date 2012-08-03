@@ -38,7 +38,7 @@ class PagarContasController extends AppController {
 	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->paginate = array (
 		    'limit' => 10,
@@ -54,7 +54,7 @@ class PagarContasController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
@@ -94,7 +94,7 @@ class PagarContasController extends AppController {
 	
 	function editar($id=null) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
@@ -145,7 +145,7 @@ class PagarContasController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->PagarConta->delete($id)) $this->Session->setFlash("Conta a pagar $id excluída com sucesso.",'flash_sucesso');
@@ -159,7 +159,7 @@ class PagarContasController extends AppController {
 
 	function pesquisar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		//#FIXME pesquisa por valor nao funciona se informar valor em notação brasileira ou valor contiver .
 		$this->_obter_opcoes();
@@ -222,7 +222,7 @@ class PagarContasController extends AppController {
 
 	function resumo() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		//grafico de percentual do uso dos itens do plano de contas
 		$consulta = $this->PagarConta->query("SELECT pagar_conta.plano_conta_id,COUNT(*) AS numero_ocorrencias, plano_conta.nome

@@ -25,7 +25,7 @@ class ProdutosController extends AppController {
 	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->paginate = array (
 			'limit' => 10,
@@ -40,7 +40,7 @@ class ProdutosController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
@@ -57,7 +57,7 @@ class ProdutosController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
@@ -84,7 +84,7 @@ class ProdutosController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->Produto->delete($id)) $this->Session->setFlash("Produto $id excluído com sucesso.",'flash_sucesso');
@@ -98,7 +98,7 @@ class ProdutosController extends AppController {
 
 	function pesquisar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {

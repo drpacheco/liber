@@ -13,7 +13,7 @@ class VeiculosController extends AppController {
 
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$dados = $this->paginate('Veiculo');
 		$this->set('consulta_veiculo',$dados);
@@ -21,7 +21,7 @@ class VeiculosController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($this->request->data)) {
 			
@@ -39,7 +39,7 @@ class VeiculosController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (empty ($this->request->data)) {
 			$this->Veiculo->recursive = -1;
@@ -67,7 +67,7 @@ class VeiculosController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->Veiculo->delete($id)) $this->Session->setFlash("Veículo $id excluído com sucesso.",'flash_sucesso');

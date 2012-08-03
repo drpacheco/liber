@@ -127,7 +127,7 @@ class ServicoOrdensController extends AppController {
 	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		$this->paginate = array (
@@ -143,7 +143,7 @@ class ServicoOrdensController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->set("title_for_layout","Ordem de serviço"); 
 		$this->_obter_opcoes();
@@ -194,7 +194,7 @@ class ServicoOrdensController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->set("title_for_layout","Ordem de serviço"); 
 		$this->_obter_opcoes();
@@ -278,7 +278,7 @@ class ServicoOrdensController extends AppController {
 	
 	function detalhar($id = null) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->_obter_opcoes();
 		$this->set("title_for_layout","Ordem de serviço");
@@ -303,7 +303,7 @@ class ServicoOrdensController extends AppController {
 
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			$this->ServicoOrdem->id = $id;
@@ -338,7 +338,7 @@ class ServicoOrdensController extends AppController {
 	
 	function pesquisar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->set("title_for_layout","Ordem de serviço");
 		$this->_obter_opcoes_pesquisa();

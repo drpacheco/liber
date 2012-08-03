@@ -14,7 +14,7 @@ class ClienteCategoriasController extends AppController {
 
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$this->ClienteCategoria->recursive = 0;
 		$this->set('consulta',$this->paginate());
@@ -23,7 +23,7 @@ class ClienteCategoriasController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($this->request->data)) {
 			
@@ -41,7 +41,7 @@ class ClienteCategoriasController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (empty ($this->request->data)) {
 			$this->ClienteCategoria->id = $id;
@@ -71,7 +71,7 @@ class ClienteCategoriasController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->ClienteCategoria->delete($id)) $this->Session->setFlash("Categoria de cliente $id excluída com sucesso.",'flash_sucesso');

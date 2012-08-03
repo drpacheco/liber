@@ -13,7 +13,7 @@ class ContasController extends AppController {
 
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		$dados = $this->paginate('Conta');
 		$this->set('consulta_conta',$dados);
@@ -21,7 +21,7 @@ class ContasController extends AppController {
 	
 	function cadastrar() {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($this->request->data)) {
 			
@@ -37,7 +37,7 @@ class ContasController extends AppController {
 	
 	function editar($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (empty ($this->request->data)) {
 			$this->Conta->recursive = -1;
@@ -63,7 +63,7 @@ class ContasController extends AppController {
 	
 	function excluir($id=NULL) {
 		if ( $this->RequestHandler->isAjax() ) {
-			$this->layout = 'default_ajax';
+			$this->layout = 'ajax';
 		}
 		if (! empty($id)) {
 			if ($this->Conta->delete($id)) $this->Session->setFlash("Conta $id excluída com sucesso.",'flash_sucesso');
