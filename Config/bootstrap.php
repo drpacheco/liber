@@ -147,6 +147,7 @@ CakePlugin::load('CakePtbr');
 include CakePlugin::path('CakePtbr') . 'Config' . DS . 'bootstrap.php';
 CakePlugin::load('Localized');
 CakePlugin::load('DebugKit');
+CakePlugin::load('TwitterBootstrap');
 
 /**
  * You can attach event listeners to the request lifecyle as Dispatcher Filter . By Default CakePHP bundles two filters:

@@ -1,17 +1,20 @@
 <?php print $this->Html->docType('html5'); ?>
-<html>
+<html lang="pt-br">
 	<head>
 		<?php
 		print $this->Html->charset()."\n";
 		print $this->fetch('meta');
 		print $this->Html->meta(array('name' => 'robots', 'content' => 'noindex'));
 		?>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
 			Liber - login
 		</title>
 		<?php
 			print $this->Html->meta('icon');
 			print $this->Html->css('login.css');
+			print $this->Html->css('bootstrap.min');
+			print $this->Html->css('bootstrap-responsive.min');
 			print $this->fetch('css');
 			print $this->fetch('script');;
 			print $this->Html->script('jquery');
@@ -40,14 +43,16 @@
 			&nbsp;
 		</div>
 		
-		<div id="conteudo">
+		<div id="conteudo" class="container-fluid">
 			
 			<div id="flash">
 				<?php
 				print $this->Session->flash();
-				print $this->Session->flash('auth');
+				print $this->Session->flash('auth', array(
+					'element' => 'alert',
+					'params' => array('plugin' => 'TwitterBootstrap'),
+				));
 				?>
-				
 			</div>
 			
 			<?php print $this->fetch('content') ?>
@@ -58,6 +63,7 @@
 			
 		</div>
 		
+		<?php print $this->Html->script('bootstrap.min'); ?>
 	</body>
 	
 </html>

@@ -1,49 +1,62 @@
-<h2 class="descricao_cabecalho">Exibindo as categorias de fornecedor</h2>
-
-<?php print $this->element('painel_index'); ?>
-
-	<table class="padrao">
-		<thead>
-			<tr>
-				<th><?php print $this->Paginator->sort('id','Código'); ?></th>
-				<th><?php print $this->Paginator->sort('descricao','Descrição'); ?></th>
-				<th colspan="2">Ações</th>
-			</tr>
-		</thead>
+<div class="row-fluid">
+	
+	<div class="span12">
 		
-		<tbody>
+		<fieldset>
 			
-	<?php foreach ($consulta as $c): ?>
-			
-			<tr>
-				<td><?php print $c['FornecedorCategoria']['id'];?></td>
-				<td><?php print $this->Html->link($c['FornecedorCategoria']['descricao'],'editar/' . $c['FornecedorCategoria']['id']) ;?></td>
-				<td>
-					<?php print $this->element('painel_editar',array('id'=>$c['FornecedorCategoria']['id'])) ;?>
-				</td>
-				<td>
-					<?php print $this->element('painel_excluir',array('id'=>$c['FornecedorCategoria']['id'])) ;?>
-				</td>
-			</tr>
-	
-	<?php endforeach ?>
-	
-		</tbody>
-	</table>
-	
-<?php
-$this->Paginator->options (array (
-	'update' => '#conteudo',
-	'before' => $this->Js->get('.indicador_carregando')->effect('fadeIn', array('buffer' => false)),
-	'complete' => $this->Js->get('.indicador_carregando')->effect('fadeOut', array('buffer' => false)),
-));
+			<legend class="descricao_cabecalho">
+				Exibindo as categorias de fornecedor
+				<?php
+				if ($this->Ajax->isAjax()) {
+					print $this->element('painel_index_ajax');
+				}
+				else {
+					print $this->element('painel_index');
+				}
+				?>
+			</legend>
 
-print $this->Paginator->prev('« Anterior ', null, null, array('class' => 'disabled'));
-print $this->Paginator->next(' Próximo »', null, null, array('class' => 'disabled'));
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th><?php print $this->Paginator->sort('id','Código'); ?></th>
+						<th><?php print $this->Paginator->sort('descricao','Descrição'); ?></th>
+						<th colspan="2">Ações</th>
+					</tr>
+				</thead>
 
-print '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+				<tbody>
 
-print $this->Paginator->counter(array(
-	'format' => 'Página %page% de %pages%. Total de %count% registros.'
-)); 
-?>
+			<?php foreach ($consulta as $c): ?>
+
+					<tr>
+						<td><?php print $c['FornecedorCategoria']['id'];?></td>
+						<td><?php print $this->Html->link($c['FornecedorCategoria']['descricao'],'editar/' . $c['FornecedorCategoria']['id']) ;?></td>
+						<td>
+							<?php print $this->element('painel_editar',array('id'=>$c['FornecedorCategoria']['id'])) ;?>
+						</td>
+						<td>
+							<?php print $this->element('painel_excluir',array('id'=>$c['FornecedorCategoria']['id'])) ;?>
+						</td>
+					</tr>
+
+			<?php endforeach ?>
+
+				</tbody>
+			</table>
+
+			<?php
+			$this->Paginator->options (array (
+				'update' => '#conteudo',
+				'before' => $this->Js->get('.indicador_carregando')->effect('fadeIn', array('buffer' => false)),
+				'complete' => $this->Js->get('.indicador_carregando')->effect('fadeOut', array('buffer' => false)),
+			));
+
+			print $this->Paginator->pagination();
+			?>
+
+		</fieldset>
+
+	</div>
+	
+</div>

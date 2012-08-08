@@ -1,13 +1,21 @@
-<h2 class="descricao_cabecalho">Editar categoria de produto</h2>
+<div class="row-fluid">
+	
+	<div class="span12">
+		<fieldset>
+			<legend class="descricao_cabecalho"><?php print __('Editar categoria de fornecedor'); ?></legend>
 
-<?php
-if ($this->Ajax->isAjax()) {
-	print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'ProdutoCategoria','update'=>'conteudo_ajax'));
+			<?php
+			if ($this->Ajax->isAjax()) {
+				print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'ProdutoCategoria','update'=>'conteudo_ajax'));
 
-}
-else {
-	print $this->Form->create('ProdutoCategoria',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
-}
-print $this->Form->input('nome',array('label'=>'Nome'));
-print $this->Form->end('Gravar');
-?>
+			}
+			else {
+				print $this->Form->create('ProdutoCategoria',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+			}
+			print $this->Form->input('nome',array('label'=>'Nome','class'=>'span4'));
+			print $this->Form->end('Gravar');
+			?>
+		</fieldset>
+	</div>
+
+</div>

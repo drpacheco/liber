@@ -6,7 +6,11 @@ class AppController extends Controller {
 	// Componentes utilizados por toda a aplicação
 	var $components = array('Session', 'Cookie','Auth','RequestHandler','DebugKit.Toolbar');
 	// Helpers utilizados por toda a aplicacao
-	var $helpers = array('Html','Form','Session','Js','Javascript','Ajax');
+	var $helpers = array('Session','Js','Javascript','Ajax',
+		'Html' => array('className' => 'TwitterBootstrap.BootstrapHtml'),
+		'Form' => array('className' => 'TwitterBootstrap.BootstrapForm'),
+		'Paginator' => array('className' => 'TwitterBootstrap.BootstrapPaginator')
+	);
 	
 	function beforeFilter() {
 		

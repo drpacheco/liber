@@ -229,3 +229,25 @@ function abrir_dialogo_ajax (url, largura, altura, titulo) {
 	// previne que o browser siga o link
 	return false;
 }
+
+function formulario_cancelar($formulario) {
+	if ($formulario == null || $formulario == '') $formulario = $('form')
+	
+	var dialogo = $('<div title="Cancelar"><p>Deseja cancelar o formulário ?</p></div>');
+	dialogo.dialog({
+			resizable: false,
+			autoOpen: true,
+			buttons: {
+				'Sim': function() {
+					$(this).dialog( "close" );
+					$formulario.find('input:text, input:password, input:file, select, textarea').val('');
+					$formulario.find('input:radio, input:checkbox')
+					.removeAttr('checked').removeAttr('selected');
+				},
+				'Não': function() {
+					$(this).dialog( "close" );
+				}
+			}
+		});
+	return false;
+}

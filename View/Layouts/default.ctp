@@ -1,17 +1,20 @@
 <?php print $this->Html->docType('html5'); ?>
-<html>
+<html lang="pt-br">
 	<head>
 		<?php print $this->Html->charset()."\n"; ?>
 		<noscript>
 			<meta http-equiv="refresh" content="0; URL=<?php print $this->Html->url('/',true); ?>sistema/noscript" />
 		</noscript>
 		<?php print $this->fetch('meta'); ?>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
 			<?php print 'Liber - '.$title_for_layout."\n"; ?>
 		</title>
 		<?php
 		print $this->Html->meta('icon');
 		print $this->Html->css('estilo.css');
+		print $this->Html->css('bootstrap.min');
+		print $this->Html->css('bootstrap-responsive.min');
 		print $this->fetch('css');
 		print $this->Html->css('jquery-ui/jquery-ui.css');
 		print '<script type="text/javascript">';
@@ -31,17 +34,20 @@
 			</div>
 		</div>
 		
-		<div id="conteudo">
-			
+		<div class="clearfix"></div>
+		
+		<div id="conteudo" class="container-fluid">
 			<div id="flash">
 				<?php
 				print $this->Session->flash();
-				print $this->Session->flash('auth');
+				print $this->Session->flash('auth', array(
+					'element' => 'alert',
+					'params' => array('plugin' => 'TwitterBootstrap'),
+				));
 				?>
 			</div>
 			
 			<?php print $this->fetch('content') ?>
-		
 		</div>
 		
 		<div id="rodape">
@@ -70,6 +76,7 @@
 		<?php
 		print $this->Html->script('jquery-ui');
 		print $this->Html->script('mascaras');
+		print $this->Html->script('bootstrap.min');
 		print $this->fetch('script');
 		print $this->Js->writeBuffer();
 		?>

@@ -53,7 +53,7 @@ jQuery(document).ready(function() {
 				document.title = "Liber";
 			})
 			.fail(function(jqXHR, textStatus) {
-				areaConteudo.html('<b>Erro ao carregar a página.</b>');
+				areaConteudo.html('<h1>Erro ao carregar a página.</h1>'+jqXHR.responseText);
 			})
 			/*.always(function(dados, statusTexto, objeto) {
 				// a cada requisicao
@@ -95,20 +95,20 @@ jQuery(document).ready(function() {
 	 * mesmo para pedidos síncronos.
 	 */
 	$('#conteudo').ajaxComplete(function(evento, jqXHR, opcoes) {
-		liber_log_ajax = $('#liber_log_ajax');
+		/*liber_log_ajax = $('#liber_log_ajax');
 		if ( liber_log_ajax != null) {
 			// move log para a area do layout gerado sem ajax
 			liber_log = $('#liber_log');
 			liber_log.html(liber_log_ajax.html());
 			liber_log_ajax.html('');
 			// cria logs ajax
-			if( console ) {
+			*/if( console ) {
 				console.group('Link ajax');
 				console.log('Status %d (%s). ReadyState: %d',jqXHR.status,jqXHR.statusText,jqXHR.readyState);
 				console.log('Objeto: ',jqXHR);
 				console.groupEnd();
 			}
-		}
+		//}
 	});
 	
 	/*

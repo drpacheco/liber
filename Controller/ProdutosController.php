@@ -21,6 +21,8 @@ class ProdutosController extends AppController {
 			//'C' => 'Produto composto',
 		);
 		$this->set('opcoes_tipos',$opcoes_tipos);
+		$opcoes_situacoes = array('E'=>'Em linha','F'=>'Fora de linha');
+		$this->set('opcoes_situacoes',$opcoes_situacoes);
 	}
 	
 	function index() {
