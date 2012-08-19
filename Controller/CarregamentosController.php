@@ -65,7 +65,7 @@ class CarregamentosController extends AppController {
 					}
 					$r = $this->Carregamento->CarregamentoItem->PedidoVenda->save(array('PedidoVenda'=>array('situacao'=>'T')));
 					if (! $r) {
-						$this->setFlash('Erro ao atualizar os itens do carregamento','flash_erro');
+						$this->Session->setFlash('Erro ao atualizar os itens do carregamento','flash_erro');
 						$this->Carregamento->rollback();
 						break;
 					}
@@ -218,6 +218,7 @@ class CarregamentosController extends AppController {
 		}
 		else {
 			$this->Session->setFlash('Erro: nenhum carregamento informado.','flash_erro');
+			$this->redirect(array('action'=>'index'));
 		}
 	}
 	

@@ -178,6 +178,7 @@ class ClientesController extends AppController {
 		}
 		else {
 			$this->Session->setFlash('Erro: nenhum cliente informado.','flash_erro');
+			$this->redirect(array('controller'=>'Clientes'));
 		}
 	}
 	

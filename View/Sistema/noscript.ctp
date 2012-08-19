@@ -1,10 +1,10 @@
-<div class="flash_erro">
+<div class="alert alert-info">
 	O suporte a javascript, do seu navegador, não está habilitado.
 </div>
 
-<h2>Para habilitar</h2>
+<legend>Para habilitar</legend>
 
-<h3>No firefox</h3>
+<h4>No firefox</h4>
 <p>
 	Vá no menu: 'Ferramentas', 'Opções'. Aba 'Conteúdo'. Marque 'Permitir javascript'.
 	<br/><br/>

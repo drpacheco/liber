@@ -63,7 +63,6 @@
 		<?php
 		if ($this->Ajax->isAjax()) {
 			print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'Fornecedor','update'=>'conteudo_ajax'));
-
 		}
 		else {
 			print $this->Form->create('Fornecedor',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));

@@ -1,10 +1,6 @@
 jQuery(document).ready(function() {
 	
-	$(".datepicker").datepicker({
-		showOn: "button",
-		buttonImage: site_raiz+"/img/calendario_icone.gif",
-		buttonImageOnly: true
-	});
+	$(".datepicker").datepicker();
 	
 	$('#PagarContaValor').priceFormat();
 	

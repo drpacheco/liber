@@ -12,6 +12,13 @@ jQuery(document).ready(function() {
 		}
 	});
 	
+	$('#botao_adicionar_parcela').bind('click',function(){
+		adicionar_parcela();
+	})
+	$('#botao_limpar_pesquisa').bind('click',function(){
+		limpar_pesquisa();
+	});
+	
 	// verificacoes ao submeter o formulario
 	$('input[type="submit"]').click(function(){
 		registro = 0;

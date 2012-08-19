@@ -25,7 +25,11 @@
 	margin-right: auto;
 	background-color: white;
 	color: #000000;
-	padding: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
 .botoes {
@@ -53,6 +57,20 @@ label {
 	font-weight: bold !important;
 }
 
+form .required {
+	font-weight:lighter;
+}
+form .required label:after {
+	color: #e32;
+	content: '*';
+	display:inline;
+}
+label.required:after {
+	color: #e32;
+	content: '*';
+	display:inline;
+}
+
 /**
  * 	campos input que nao devem se parecer com um
  */
@@ -63,6 +81,11 @@ table tr:nth-child(2n) td .noinput {
 	width: 100%;
 	border: none;
 	clear: none;
+	-moz-transition: none !important;
+	background-color: transparent !important;
+	border: none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
 }
 
 div .grafico {

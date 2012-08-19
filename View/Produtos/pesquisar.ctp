@@ -1,3 +1,11 @@
+<style type="text/css">
+form .required label:after {
+	content: '' !important;
+}
+label.required:after {
+	content: '' !important;
+}
+</style>
 <div class="row-fluid">
 	
 	<div class="span12">
@@ -5,10 +13,6 @@
 			<legend class="descricao_cabecalho">Pesquisar produto</legend>
 
 			<?php
-			/**
-			* Elimino as divs dos campos input para que nao apareça quais campos
-			* sao marcados como obrigatorios no BD, pois aqui isso non ecxiste
-			*/
 			print $this->Form->create(null,array('controller'=>'produtos','action'=>'pesquisar','autocomplete'=>'off'));
 			?>
 

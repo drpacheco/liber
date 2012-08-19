@@ -13,9 +13,14 @@
 			}
 		});
 		
-		$('input[type=submit]').click(function(){
+		$('*[type=submit]').click(function(){
 			if ($('#CarregamentoDescricao').val() == '') {
 				alert ('O campo descrição é obrigatório!');
+				return false;
+			}
+			
+			if ($('#CarregamentoVeiculoId option:selected').val() == '') {
+				alert ('Defina um veículo!');
 				return false;
 			}
 			
@@ -31,82 +36,74 @@
 	});
 </script>
 
-<h2 class="descricao_cabecalho">Cadastrar carregamento</h2>
+<div class="row-fluid">
+	
+	<div class="span12">
+		<fieldset>
+			<legend class="descricao_cabecalho"><?php print __('Cadastrar categoria de fornecedor'); ?></legend>
 
-
-<?php
-// #XXX implementar o escolha automatica do veiculo assim que escolhe o motorista
-// com base no veiculo definido como padrao no cadastro do motorista
-if ($this->Ajax->isAjax()) {
-	print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'Carregamento','update'=>'conteudo_ajax'));
-
-}
-else {
-	print $this->Form->create('Carregamento',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
-}
-?>
-<div class="grupo_horizontal">
-	<?php print $this->Form->input('descricao',array('label'=>'Descrição')); ?>
-</div>
-<div class="grupo_horizontal">
-	<?php
-		print $this->Form->label('motorista_id','Motorista',array('class'=>'required'));
-		print $this->Form->input('motorista_id',array(
-			'div'=>false,
-			'label'=>false,
-			'options'=>$opcoes_motoristas
-			));
-		?>
-</div>
-<div class="grupo_horizontal">
-	<?php
-		print $this->Form->label('veiculo_id','Veículo',array('class'=>'required'));
-		print $this->Form->input('veiculo_id',array(
-			'div'=>false,
-			'label'=>false,
-			'options'=>$opcoes_veiculos
-			));
-		?>
-</div>
-<div class="limpar"></div>
-
-	<fieldset>
-		<legend>Pedidos</legend>
-		<table class="padrao">
-			<thead>
-				<th> <input type="checkbox" name="selecionar_checkbox" id="selecionar_checkbox" /> Selecionar</th>
-				<th>Pedido</th>
-				<th>Cliente</th>
-				<th>Valor bruto</th>
-				<th>Valor líquido</th>
-			</thead>
-			
-			<tbody>
 				<?php
-				$cont = 0;
-				foreach ($consulta_pedidos as $c):
-					$id_pedido = $c['PedidoVenda']['id'];
-					$id = "CarregamentoItemPedidoVendaId${id_pedido}";
-					$nome = "data[CarregamentoItem][${cont}][pedido_venda_id]";
-					$valor = $id_pedido;
-				?>
-					<tr>
-						<td> <input type="checkbox" name="<?php print $nome;?>" id="<?php print $id;?>" value="<?php print $valor; ?>" /> </td>
-						<td><?php print $c['PedidoVenda']['id']?></td>
-						<td><?php print $c['Cliente']['nome']?></td>
-						<td><?php print $c['PedidoVenda']['valor_bruto']?></td>
-						<td><?php print $c['PedidoVenda']['valor_liquido']?></td>
-					</tr>
-				<?php
-					$cont++;
-				endforeach;
-				?>
-			</tbody>
-			
-		</table>
-	</fieldset>
-<?php
-print $this->Form->input('observacao',array('label'=>'Observação'));
-print $this->Form->end('Gravar');
-?>
+				// #XXX implementar o escolha automatica do veiculo assim que escolhe o motorista
+				// com base no veiculo definido como padrao no cadastro do motorista
+				if ($this->Ajax->isAjax()) {
+					print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'Carregamento','update'=>'conteudo_ajax'));
 
+				}
+				else {
+					print $this->Form->create('Carregamento',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+				}
+				
+				$this->Form->defineRow(array(3,2,2));
+				print $this->Form->input('descricao',array('label'=>__('Descrição')));
+				print $this->Form->input('motorista_id',array(
+					'label'=>__('Motorista'),
+					'options'=>$opcoes_motoristas
+					));
+				print $this->Form->input('veiculo_id',array(
+					'label'=>__('Veículo'),
+					'options'=>$opcoes_veiculos
+					));
+				?>
+
+				<fieldset>
+					<legend>Pedidos</legend>
+					<table class="table table-striped">
+						<thead>
+							<th> <input type="checkbox" name="selecionar_checkbox" id="selecionar_checkbox" /> Selecionar</th>
+							<th>Pedido</th>
+							<th>Cliente</th>
+							<th>Valor bruto</th>
+							<th>Valor líquido</th>
+						</thead>
+
+						<tbody>
+							<?php
+							$cont = 0;
+							foreach ($consulta_pedidos as $c):
+								$id_pedido = $c['PedidoVenda']['id'];
+								$id = "CarregamentoItemPedidoVendaId${id_pedido}";
+								$nome = "data[CarregamentoItem][${cont}][pedido_venda_id]";
+								$valor = $id_pedido;
+							?>
+								<tr>
+									<td> <input type="checkbox" name="<?php print $nome;?>" id="<?php print $id;?>" value="<?php print $valor; ?>" /> </td>
+									<td><?php print $c['PedidoVenda']['id']?></td>
+									<td><?php print $c['Cliente']['nome']?></td>
+									<td><?php print $c['PedidoVenda']['valor_bruto']?></td>
+									<td><?php print $c['PedidoVenda']['valor_liquido']?></td>
+								</tr>
+							<?php
+								$cont++;
+							endforeach;
+							?>
+						</tbody>
+
+					</table>
+				</fieldset>
+			<?php print $this->Form->input('observacao',array('label'=>__('Observação'))); ?>
+			<div class="clearfix"></div>
+			<?php print $this->Form->end(__('Gravar')); ?>
+		</fieldset>
+	</div>
+
+</div>

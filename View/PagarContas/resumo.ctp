@@ -5,16 +5,6 @@ print $this->Html->script('jqplot/plugins/jqplot.pieRenderer');
 
 print $this->Html->css('jquery.jqplot.css');
 ?>
-<h2 class="descricao_cabecalho">Resumo das contas a pagar</h2>
-
-<?php
-
-if ( ($data1 == '[]') && ($data2 == '[]') && ($data3 == '[]') ) {
-	print '<div style="text-align: center; font-size: 300%;"> <b>Nenhum resultado encontrado</b> </div>';
-	return null;
-}
-
-?>
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -71,18 +61,38 @@ if ( ($data1 == '[]') && ($data2 == '[]') && ($data3 == '[]') ) {
 	});
 </script>
 
+<fieldset>
+	<legend class="descricao_cabecalho">Resumo das contas a receber</legend>
+
+	<?php
+	if ( ($data1 == '[]') && ($data2 == '[]') && ($data3 == '[]') ) {
+		print '<div style="text-align: center; font-size: 300%;"> <b>Nenhum resultado encontrado</b> </div>';
+		return null;
+	}
+	?>
 
 
-<div id="grafico1" class="grafico grupo_horizontal" style="height:300px;width:30%; margin-left: 2%; ">
-	
-</div>
+	<div class="span4">
+		<div id="grafico1" class="grafico">
+		</div>
+	</div>
 
-<div id="grafico2" class="grafico grupo_horizontal" style="height:300px;width:30%; margin-left: 2%; ">
-	
-</div>
+	<div class="span4">
+		<div id="grafico2" class="grafico">
+		</div>
+	</div>
 
-<div id="grafico3" class="grafico grupo_horizontal" style="height:300px;width:30%; margin-left: 2%;">
-	
-</div>
+	<div class="span4">
+		<div id="grafico3" class="grafico">
+		</div>
+	</div>
 
-<div class="limpar">&nbsp;</div>
+	<div class="clearfix">&nbsp;</div>
+
+	<div class="span4">
+		<div id="grafico4" class="grafico">
+		</div>
+	</div>
+
+	<div class="clearfix">&nbsp;</div>
+</fieldset>

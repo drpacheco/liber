@@ -31,6 +31,15 @@
 			});
 		});
 </script>
+<style type="text/css">
+form .required label:after {
+	content: '' !important;
+}
+label.required:after {
+	content: '' !important;
+}
+</style>
+
 <div class="row-fluid">
 	
 	<div class="span12">
@@ -38,41 +47,41 @@
 			<legend class="descricao_cabecalho">Pesquisar fornecedor</legend>
 
 			<?php
-			/**
-			* Elimino as divs dos campos input para que nao apareça quais campos
-			* sao marcados como obrigatorios no BD, pois aqui isso non ecxiste
-			*/
 			print $this->Form->create(null,array('controller'=>'fornecedores','action'=>'pesquisar','autocomplete'=>'off'));
 			?>
 
-			<div class="span6">
-				<?php
-				$this->Form->defineRow(array(2,10));
-				print $this->Form->input('id', array('label'=>__('Cód.'),'type'=>'text'));
-				print $this->Form->input('nome', array('label'=>__('Nome')));
+			<div class="row-fluid">
 				
-				$this->Form->defineRow(array(6,6));
-				print $this->Form->input('nome_fantasia', array('label'=>__('Nome fantasia')));
-				print $this->Form->input('bairro',array('label'=>__('Bairro')));
-				
-				$this->Form->defineRow(array(6));
-				print $this->Form->input('cidade',array('label'=>__('Cidade')));
-				?>
-			</div>
+				<div class="span6">
+					<?php
+					$this->Form->defineRow(array(2,10));
+					print $this->Form->input('id', array('label'=>__('Cód.'),'type'=>'text'));
+					print $this->Form->input('nome', array('label'=>__('Nome')));
 
-			<div class="span5">
-				<?php
-				$this->Form->defineRow(array(6,6));
-				print $this->Form->input('cnpj',array('label'=>__('CNPJ')));
-				print $this->Form->input('inscricao_estadual',array('label'=>__('Inscrição estadual')));
+					$this->Form->defineRow(array(6,6));
+					print $this->Form->input('nome_fantasia', array('label'=>__('Nome fantasia')));
+					print $this->Form->input('bairro',array('label'=>__('Bairro')));
+
+					$this->Form->defineRow(array(6));
+					print $this->Form->input('cidade',array('label'=>__('Cidade')));
+					?>
+				</div>
+
+				<div class="span5">
+					<?php
+					$this->Form->defineRow(array(6,6));
+					print $this->Form->input('cnpj',array('label'=>__('CNPJ')));
+					print $this->Form->input('inscricao_estadual',array('label'=>__('Inscrição estadual')));
+
+					$this->Form->defineRow(array(6,6));
+					print $this->Form->input('cpf',array('label'=>__('CPF')));
+					print $this->Form->input('rg',array('label'=>__('RG')));
+					?>
+				</div>
 				
-				$this->Form->defineRow(array(6,6));
-				print $this->Form->input('cpf',array('label'=>__('CPF')));
-				print $this->Form->input('rg',array('label'=>__('RG')));
-				?>
 			</div>
 			
-			<div class="clearfix"></div>
+			
 			<?php print $this->Form->end(__('Pesquisar')); ?>
 
 			<?php if (isset($num_resultados) && $num_resultados > 0) : ?>

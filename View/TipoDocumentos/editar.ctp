@@ -1,12 +1,20 @@
-<h2 class="descricao_cabecalho">Alterar tipo de documento</h2>
+<div class="row-fluid">
+	
+	<div class="span12">
+		<fieldset>
+			<legend class="descricao_cabecalho"><?php print __('Editar tipo de documento'); ?></legend>
+			<?php
+			if ($this->Ajax->isAjax()) {
+				print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'TipoDocumentos','update'=>'conteudo_ajax'));
 
-<?php
-if ($this->Ajax->isAjax()) {
-	print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'TipoDocumento','update'=>'conteudo_ajax'));
-}
-else {
-	print $this->Form->create('TipoDocumento',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
-}
-print $this->Form->input('nome',array('label'=>'Nome'));
-print $this->Form->end('Gravar');
-?>
+			}
+			else {
+				print $this->Form->create('TipoDocumento',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+			}
+			print $this->Form->input('nome',array('label'=>'Nome'));
+			print $this->Form->end('Gravar');
+			?>
+		</fieldset>
+	</div>
+
+</div>

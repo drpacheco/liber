@@ -1,76 +1,55 @@
-<?php if (! isset($cliente) || ! $cliente) die; ?>
+<div class="row-fluid">
+		
+	<fieldset class="descricao_cabecalho">
+		<legend>Visualizar Cliente</legend>
 
-<h2 class="descricao_cabecalho">Detalhar cliente</h2>
+		<div class="row-fluid">
+			
+			<div class="span6">
+				<dl class="dl-horizontal">
+					<dt>Nome:</dt> <dd><?php print $cliente['Cliente']['nome'] ?></dd>
+					<dt>Nome fantasia:</dt> <dd><?php  print $cliente['Cliente']['nome_fantasia'];?></dd>
+					<dt>Tipo pessoa:</dt> <?php
+									if ( $cliente['Cliente']['tipo_pessoa'] == 'J'):
+										print '<dd>Jurídica</dd>';
+									elseif ( $cliente['Cliente']['tipo_pessoa'] == 'F' ):
+										print '<dd>Física</dd>';
+									endif;
+								?>
+					<dt>Criado em:</dt> <?php print '<dd>'.$cliente['Cliente']['data_cadastrado'].'</dd>'; ?>
+					<dt>por</dt> <?php print '<dd>'.$cliente['Usuario']['nome'].'</dd>'; ?>
 
-Nome: <h1><?php print $cliente['Cliente']['nome'] ?></h1>
-Nome fantasia: <h1><?php  print $cliente['Cliente']['nome_fantasia'];?></h1>
-Tipo pessoa: <?php
-					if ( $cliente['Cliente']['tipo_pessoa'] == 'J'):
-						print '<h1>Jurídica</h1>';
-					elseif ( $cliente['Cliente']['tipo_pessoa'] == 'F' ):
-						print '<h1>Física</h1>';
-					endif;
-				?>
-<p>
-	<small>
-		Criado em: <?php print '<h1>'.$cliente['Cliente']['data_cadastrado'].'</h1>'; ?>
-		por <?php print '<h1>'.$cliente['Usuario']['nome'].'</h1>'; ?>
-	</small>
-</p>
-<p>
-	<small>
-		Atualizado em: <?php print '<h1>'.$cliente['Cliente']['atualizado'].'</h1>'; ?>
-		por <?php print '<h1>'.$cliente['Usuario2']['nome'].'</h1>'; ?>
-		</small>
-</p>
+					<dt>Atualizado em:</dt> <?php print '<dd>'.$cliente['Cliente']['atualizado'].'</dd>'; ?>
+					<dt>por</dt> <?php print '<dd>'.$cliente['Usuario2']['nome'].'</dd>';?>
+					<dt>Observação:</dt> <dd><textarea rows="5" readonly="readonly"><?php  print $cliente['Cliente']['observacao'];?></textarea></dd>
 
-<table class="padrao">
-	<thead>
-		<tr>
-			<th>Nome</th>
-			<th>Log. nome</th>
-			<th>Log. número</th>
-			<th>Log. complemento</th>
-			<th>Bairro</th>
-			<th>Cidade</th>
-			<th>UF</th>
-			<th>CEP</th>
-			<?php if ( strtoupper($cliente['Cliente']['tipo_pessoa']) == 'J'): ?>
-				<th>CNPJ</th>
-				<th>IE.</th>
-			<?php else: ?>
-				<th>CPF</th>
-				<th>RG</th>
-			<?php endif; ?>
-			<th>Telefone</th>
-			<th>Celular</th>
-			<th>E-mail</th>
-		</tr>
-	</thead>
+				</dl>
+			</div>
+
+			<div class="span5">
+				<dl class="dl-horizontal">
+					<dt>Logradouro nome:</dt> <dd><?php  print $cliente['Cliente']['logradouro_nome'];?></dd>
+					<dt>Logradouro número:</dt> <dd><?php  print $cliente['Cliente']['logradouro_numero'];?></dd>
+					<dt>Logradouro complemento:</dt> <dd><?php  print $cliente['Cliente']['logradouro_complemento'];?></dd>
+					<dt>Bairro:</dt> <dd><?php  print $cliente['Cliente']['bairro'];?></dd>
+					<dt>Cidade:</dt> <dd><?php  print $cliente['Cliente']['cidade'];?></dd>
+					<dt>UF:</dt> <dd><?php  print $cliente['Cliente']['uf'];?></dd>
+					<dt>CEP:</dt> <dd><?php  print $cliente['Cliente']['cep'];?></dd>
+					<?php if ( $cliente['Cliente']['tipo_pessoa'] == 'J'): ?>
+						<dt>CNPJ</dt> <dd><?php  print $cliente['Cliente']['cnpj'];?></dd>
+						<dt>IE.</dt> <dd><?php  print $cliente['Cliente']['inscricao_estadual'];?></dd>
+					<?php else: ?>
+						<dt>CPF</dt> <dd><?php  print $cliente['Cliente']['cpf'];?></dd>
+						<dt>RG:</dt> <dd><?php  print $cliente['Cliente']['rg'];?></dd>
+					<?php endif; ?>
+					<dt>Telefone:</dt> <dd><?php  print $cliente['Cliente']['numero_telefone'];?></dd>
+					<dt>Celular:</dt> <dd><?php  print $cliente['Cliente']['numero_celular'];?></dd>
+					<dt>E-mail:</dt> <dd><?php  print $cliente['Cliente']['endereco_email'];?></dd>
+				</dl>
+			</div>
+			
+		</div>
+
+	</fieldset>
 	
-	<tbody>
-		<tr>
-			<td><?php  print $cliente['Cliente']['nome'];?></td>
-			<td><?php  print $cliente['Cliente']['logradouro_nome'];?></td>
-			<td><?php  print $cliente['Cliente']['logradouro_numero'];?></td>
-			<td><?php  print $cliente['Cliente']['logradouro_complemento'];?></td>
-			<td><?php  print $cliente['Cliente']['bairro'];?></td>
-			<td><?php  print $cliente['Cliente']['cidade'];?></td>
-			<td><?php  print $cliente['Cliente']['uf'];?></td>
-			<td><?php  print $cliente['Cliente']['cep'];?></td>
-			<?php if ( strtoupper($cliente['Cliente']['tipo_pessoa']) == 'J'): ?>
-				<td><?php  print $cliente['Cliente']['cnpj'];?></td>
-				<td><?php  print $cliente['Cliente']['inscricao_estadual'];?></td>
-			<?php else: ?>
-				<td><?php  print $cliente['Cliente']['cpf'];?></td>
-				<td><?php  print $cliente['Cliente']['rg'];?></td>
-			<?php endif; ?>
-			<td><?php  print $cliente['Cliente']['numero_telefone'];?></td>
-			<td><?php  print $cliente['Cliente']['numero_celular'];?></td>
-			<td><?php  print $cliente['Cliente']['endereco_email'];?></td>
-		</tr>
-	</tbody>
-	
-</table>
-
-Observação: <textarea rows="5" readonly="readonly"><?php  print $cliente['Cliente']['observacao'];?></textarea>
+</div>

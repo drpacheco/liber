@@ -1,92 +1,164 @@
 <script type="text/javascript">
 	// variaveis a serem utilizadas no arquivo conta_receber.js
 	var ajaxPesqCliente = "<?php print $this->Html->url(array('controller'=>'Clientes','action'=>'pesquisaAjaxCliente')); ?>/";
-	var ajaxPesqFornecedor = "<?php print $this->Html->url(array('controller'=>'Fornecedores','action'=>'pesquisaAjaxFornecedor')); ?>/";
+	var ajaxPesqFornecedor = "<?php print $this->Html->url(array('controller'=>'ReceberContas','action'=>'pesquisaAjaxFornecedor')); ?>/";
 </script>
 
 <?php
-//#FIXME Ao recuperar a data ela nao volta para o padrao brasileiro
-//# exibir alerta se a data de vencimento for menor que a data atual?
 print $this->Html->script('conta_receber');
 print $this->Html->script('formatar_moeda');
 ?>
 
-<h2 class="descricao_cabecalho">Editar conta a receber</h2>
+<div class="row-fluid">
+	
+	<div class="span2 visible-desktop">
+		<ul class="nav nav-pills nav-stacked" style="margin-top: 35px;">
 
-<?php
-if ($this->Ajax->isAjax()) {
-	print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'ReceberConta','update'=>'conteudo_ajax'));
+			<li class="nav-header">
+				Ações
+			</li>
+			<li>
+				<a href="<?php print $this->Html->url(array('controller'=>'ReceberContas','action'=>'index'));?>" onclick="formulario_cancelar(); return false;">
+					<i class="icon-remove"></i>
+					Cancelar
+				</a>
+			</li>
 
-}
-else {
-	print $this->Form->create('ReceberConta',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
-}
-?>
-<div class="grupo_horizontal">
-	<?php
-	print $this->Form->label('eh_cliente_ou_fornecedor','É cliente ou fornecedor?',array('class'=>'required'));
-	print $this->Form->input('eh_cliente_ou_fornecedor', array(
-		'div'=>false,
-		'label'=>false,
-		'options'=>array(''=>'','C'=>'Cliente','F'=>'Fornecedor')
-		));
-	?>
-</div>
+			<li class="nav-header">
+				Contas a receber
+			</li>
+			<li>
+				<a href="<?php print $this->Html->url(array('controller'=>'ReceberContas','action'=>'cadastrar'));?>">
+					<i class="icon-file"></i>
+					Cadastrar
+				</a>
+			</li>
+			<li class="active">
+				<a href="<?php print $this->Html->url(array('controller'=>'ReceberContas','action'=>'editar'));?>">
+					<i class="icon-edit"></i>
+					Editar
+				</a>
+			</li>
+			<li>
+				<a href="<?php print $this->Html->url(array('controller'=>'ReceberContas','action'=>'pesquisar'));?>">
+					<i class="icon-filter"></i>
+					Pesquisar
+				</a>
+			</li>
+			<li>
+				<a href="<?php print $this->Html->url(array('controller'=>'ReceberContas','action'=>'index'));?>">
+					<i class="icon-list"></i>
+					Listar
+				</a>
+			</li>
+
+			<li class="nav-header">
+				Contas
+			</li>
+			<li>
+				<a href="<?php print $this->Html->url(array('controller'=>'Contas','action'=>'cadastrar'));?>">
+					<i class="icon-file"></i>
+					Cadastrar
+				</a>
+				<a href="<?php print $this->Html->url(array('controller'=>'Contas','action'=>'index'));?>">
+					<i class="icon-list"></i>
+					Listar
+				</a>
+			</li>
+			<li class="nav-header">
+				Formas de pagamento
+			</li>
+			<li>
+				<a href="<?php print $this->Html->url(array('controller'=>'FormaPagamentos','action'=>'cadastrar'));?>">
+					<i class="icon-file"></i>
+					Cadastrar
+				</a>
+				<a href="<?php print $this->Html->url(array('controller'=>'FormaPagamentos','action'=>'index'));?>">
+					<i class="icon-list"></i>
+					Listar
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="span10">
+
+		<?php
+		if ($this->Ajax->isAjax()) {
+			print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'ReceberConta','update'=>'conteudo_ajax'));
+
+		}
+		else {
+			print $this->Form->create('ReceberConta',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+		}
+		?>
 		
-<div class="grupo_horizontal">
-	<?php
-	print $this->Form->label('eh_fical','É fiscal?',array('class'=>'required'));
-	print $this->Form->input('eh_fiscal', array(
-		'div'=>false,
-		'label'=>false,
-		'options'=>array('0'=>'Não','1'=>'Sim')
-		));
-	?>
-</div>
-
-<div class="grupo_horizontal">
-	<?php
-	print $this->Form->label('situacao','Situação',array('class'=>'required'));
-	print $this->Form->input('situacao', array(
-		'div'=>false,
-		'label'=>false,
-		'options'=>$opcoes_situacoes
-		));
-	?>
-</div>
-<div class="limpar"></div>
-
-<div class="divs_grupo_2">
-	<div class="div1_2">
-		<div>
+		<fieldset>
+			<legend class="descricao_cabecalho"><?php print __('Editar conta a receber');?></legend>
+			
 			<?php
-			print $this->Form->label('cliente_fornecedor_id','Cliente/fornecedor',array('class'=>'required'));
-			print $this->Form->input('cliente_fornecedor_id', array(
-				'div'=>false,
-				'label'=>false,
-				'type'=>'text',
-				'style' => 'float:left; width: 10%;'
+			$this->Form->defineRow(array(3,3,3));
+			print $this->Form->input('eh_cliente_ou_fornecedor', array(
+				'label'=>__('Cliente ou fornecedor?'),
+				'options'=>array(''=>'','C'=>'Cliente','F'=>'Fornecedor')
+				));
+			print $this->Form->input('eh_fiscal', array(
+				'label'=>__('É fiscal?'),
+				'options'=>array('0'=>'Não','1'=>'Sim')
+				));
+			print $this->Form->input('situacao', array(
+				'label'=>__('Situação'),
+				'options'=>$opcoes_situacoes
 				));
 			?>
-			<input style="margin-left: 1%; width: 80%" type="text" name="pesquisar_cliente_fornecedor" id="pesquisar_cliente_fornecedor" />
-		</div>
-		<?php
-		print $this->Form->input('tipo_documento_id',array('label'=>'Tipo documento','options'=>$opcoes_tipo_documento));
-		print $this->Form->input('numero_documento',array('label'=>'Número documento'));
-		print $this->Form->input('valor',array('label'=>'Valor'));
-		?>
-	</div>
-	<div class="div2_2">
-		<?php
-		print $this->Form->input('conta_origem',array('label'=>'Conta de origem','options'=>$opcoes_conta_origem));
-		print $this->Form->input('plano_conta_id',array('label'=>'Plano de contas','options'=>$opcoes_plano_contas));
-		print $this->Form->input('data_vencimento',array('label'=>'Data do vencimento','type'=>'text','class'=>'datepicker mascara_data'));
-		?>
-	</div>
-</div>
-<div class="limpar">&nbsp;</div>
+				
+			<div class="row-fluid">
+				
+				<div class="span6">
+					<?php
+					$this->Form->defineRow(array(2,10));
+					print $this->Form->input('cliente_fornecedor_id', array(
+						'label'=>__('Código'),
+						'type'=>'text',
+						));
+					print $this->Form->input('pesquisar_cliente_fornecedor',array(
+						'label'=>__('Nome'),
+						'id'=>'pesquisar_cliente_fornecedor',
+						'type'=>'text',
+						));
 
-<?php
-print $this->Form->input('observacao',array('label'=>'Observação'));
-print $this->Form->end('Gravar');
-?>
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('tipo_documento_id',array('label'=>'Tipo documento','options'=>$opcoes_tipo_documento));
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('numero_documento',array('label'=>'Número documento'));
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('valor',array('label'=>'Valor'));
+					?>
+				</div>
+			
+				<div class="span6">
+					<?php
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('conta_origem',array('label'=>'Conta de origem','options'=>$opcoes_conta_origem));
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('plano_conta_id',array('label'=>'Plano de contas','options'=>$opcoes_plano_contas));
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('data_vencimento',array(
+						'label'=>'Data do vencimento',
+						'type'=>'text',
+						'class'=>'datepicker mascara_data'
+					));
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('observacao',array('label'=>'Observação'));
+					?>
+				</div>
+				
+			</div>
+				
+		</fieldset>
+
+		<?php print $this->Form->end(__('Gravar')); ?>
+
+	</div>
+	
+</div>

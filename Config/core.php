@@ -175,6 +175,7 @@
 	Configure::write('Session', array(
 		'defaults' => 'php',
 		'cookie' => 'Liber',
+		'timeout' => '720' // tempo em minutos, 1440 = 1 dia
 	));
 
 /**
@@ -252,7 +253,7 @@ if (Configure::read('debug') >= 1) {
 }
 
 // Prefix each application on the same server with a different string, to avoid Memcache and APC conflicts.
-$prefix = 'myapp_';
+$prefix = 'liber_';
 
 /**
  * Configure the cache used for general framework caching.  Path information,

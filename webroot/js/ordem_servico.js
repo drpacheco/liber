@@ -1,39 +1,42 @@
 jQuery(document).ready(function() {
 
-	$(".datepicker").datetimepicker({
-		showOn: "button",
-		buttonImage: site_raiz+"/img/calendario_icone.gif",
-		buttonImageOnly: true
-	});
-		
+	$(".datepicker").datetimepicker();
+	
 	$('#servico_ordem_abas').tabs();
 	
 	$('#ServicoValor').priceFormat();
 	$('#ServicoOrdemCustoOutros').priceFormat();
 	$('#ServicoOrdemDesconto').priceFormat();
 	
+	$('#botao_adicionar_servico').bind('click',function(){
+		adicionar_servico();
+	})
+	$('#botao_limpar_pesquisa').bind('click',function(){
+		limpar_pesquisa();
+	});
+	
 	//pesquisa cliente
 	//autocomplete
-	$("#pesquisar_cliente").autocomplete({
+	$("#ServicoOrdemClienteNome").autocomplete({
 		source: ajaxPesqCliente + "nome",
 		minLength: 3,
 		select: function(event, ui) {
 			if (ui.item.bloqueado) {
 				alert ('Cliente está bloqueado!');
-				$('#pesquisar_cliente').val('');
+				$('#ServicoOrdemClienteNome').val('');
 				$("#ServicoOrdemClienteId").val('');
 				event.preventDefault();
 				return null;
 			}
 			if (ui.item.inativo) {
 				alert ('Cliente está inativo!');
-				$('#pesquisar_cliente').val('');
+				$('#ServicoOrdemClienteNome').val('');
 				$("#ServicoOrdemClienteId").val('');
 				event.preventDefault();
 				return null;
 			}
 			$("#ServicoOrdemClienteId").val(ui.item.id);
-			$('#pesquisar_cliente').val(ui.item.nome);
+			$('#ServicoOrdemClienteNome').val(ui.item.nome);
 		}
 	});
 	// ao digitar o codigo
@@ -43,7 +46,7 @@ jQuery(document).ready(function() {
 		$.getJSON(ajaxPesqCliente + 'codigo', {'term': codigo}, function(data) {
 			if (data == null) {
 				alert ('Cliente com o código '+codigo+' não foi encontrado!');
-				$('#pesquisar_cliente').val('');
+				$('#ServicoOrdemClienteNome').val('');
 				$("#ServicoOrdemClienteId")
 					.val('')
 					.focus();
@@ -52,18 +55,18 @@ jQuery(document).ready(function() {
 				data = data[0];
 				if (data.bloqueado) {
 					alert ('Cliente está bloqueado!');
-					$('#pesquisar_cliente').val('');
+					$('#ServicoOrdemClienteNome').val('');
 					$("#ServicoOrdemClienteId").val('')
 					return null;
 				}
 				if (data.inativo) {
 					alert ('Cliente está inativo!');
-					$('#pesquisar_cliente').val('');
+					$('#ServicoOrdemClienteNome').val('');
 					$("#ServicoOrdemClienteId").val('')
 					return null;
 				}
 				$("#ServicoOrdemClienteId").val(data.id);
-				$('#pesquisar_cliente').val(data.nome);
+				$('#ServicoOrdemClienteNome').val(data.nome);
 			}
 		});
 	});

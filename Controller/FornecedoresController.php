@@ -159,6 +159,7 @@ class FornecedoresController extends AppController {
 		}
 		else {
 			$this->Session->setFlash('Nenhum fornecedor informado.','flash_erro');
+			$this->redirect(array('controller'=>'Fornecedores'));
 		}
 	}
 

@@ -1,19 +1,20 @@
-<h2 class="descricao_cabecalho">Editar grupo</h2>
+<div class="row-fluid">
+	
+	<div class="span12">
+		<fieldset>
+			<legend class="descricao_cabecalho"><?php print __('Cadastrar grupo'); ?></legend>
 
-<?php
-if ($this->Ajax->isAjax()) {
-	print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'Grupo','update'=>'conteudo_ajax'));
+			<?php
+			if ($this->Ajax->isAjax()) {
+				print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'Grupo','update'=>'conteudo_ajax'));
+			}
+			else {
+				print $this->Form->create('Grupo',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+			}
 
-}
-else {
-	print $this->Form->create('Grupo',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
-}
-?>
-<div class="divs_grupo_2">
-	<div class="div1_2">
-		<?php
-		print $this->Form->input('nome',array('label'=>'Nome'));
-		?>
+			print $this->Form->input('nome',array('label'=>__('Nome')));
+			print $this->Form->end(__('Gravar')); ?>
+		</fieldset>
 	</div>
+
 </div>
-<?php print $this->Form->end('Gravar'); ?>

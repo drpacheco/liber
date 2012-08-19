@@ -1,15 +1,11 @@
 jQuery(document).ready(function() {
 	
-	$(".datepicker").datepicker({
-		showOn: "button",
-		buttonImage: site_raiz+"/img/calendario_icone.gif",
-		buttonImageOnly: true
-	});
+	$(".datepicker").datepicker();
 	
 	$('#ReceberContaValor').priceFormat();
 	
 	function valor_padrao() {
-		$('label[for=ReceberContaClienteFornecedorId]').html('Cliente/Fornecedor');
+		$('label[for=ReceberContaClienteFornecedorId]').html('Cód.');
 		$('#pesquisar_cliente_fornecedor')
 			.attr('disabled','disabled')
 			.val('Selecione uma opção no menu acima.');
@@ -115,7 +111,7 @@ jQuery(document).ready(function() {
 		$('label[for=ReceberContaClienteFornecedorId]').html('Cliente');
 		definir_pesquisa('cliente');
 	}
-	else {
+	else if ($('#ReceberContaEhClienteOuFornecedor').val() == 'F') {
 		$('label[for=ReceberContaClienteFornecedorId]').html('Fornecedor');
 		definir_pesquisa('fornecedor');
 	}

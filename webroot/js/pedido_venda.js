@@ -5,11 +5,7 @@ jQuery(document).ready(function() {
 	/*******************
 	 * Aba informações 
 	 ******************/
-	$(".datepicker").datepicker({
-		showOn: "button",
-		buttonImage: site_raiz+"/img/calendario_icone.gif",
-		buttonImageOnly: true
-	});
+	$(".datepicker").datepicker();
 	$('#PedidoVendaDesconto').priceFormat();
 	$('#ProdutoPrecoVenda').priceFormat();
 	data = new Date();

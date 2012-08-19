@@ -40,17 +40,14 @@
 			<div id="flash">
 				<?php
 				print $this->Session->flash();
-				print $this->Session->flash('auth', array(
-					'element' => 'alert',
-					'params' => array('plugin' => 'TwitterBootstrap'),
-				));
+				print $this->Session->flash('auth', array('element' => 'flash_notificacao'));
 				?>
 			</div>
 			
 			<?php print $this->fetch('content') ?>
 		</div>
 		
-		<div id="rodape">
+		<div id="rodape" class="container-fluid">
 			<span class="texto_label">Usuário</span>: <?php print AuthComponent::user('nome'); ?> &nbsp;&nbsp;&nbsp;&nbsp;
 			<span class="texto_label">Empresa</span>: <?php print AuthComponent::user('empresa_nome');  ?>
 

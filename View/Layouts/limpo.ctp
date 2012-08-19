@@ -23,7 +23,7 @@
 			<div id="flash">
 				<?php
 				//print $this->Session->flash();
-				print $this->Session->flash('auth');
+				print $this->Session->flash('auth', array('element' => 'flash_notificacao'));
 				?>
 			</div>
 			

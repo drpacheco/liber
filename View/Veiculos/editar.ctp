@@ -1,23 +1,42 @@
-<h2 class="descricao_cabecalho">Editar veículo</h2>
+<div class="row-fluid">
+	
+	<div class="span12">
+		<fieldset>
+			<legend class="descricao_cabecalho"><?php print __('Editar veículo'); ?></legend>
 
-<?php
-if ($this->Ajax->isAjax()) {
-	print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'Veiculo','update'=>'conteudo_ajax'));
+			<?php
+			if ($this->Ajax->isAjax()) {
+				print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'Veiculo','update'=>'conteudo_ajax'));
 
-}
-else {
-	print $this->Form->create('Veiculo',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
-}
-?>
+			}
+			else {
+				print $this->Form->create('Veiculo',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
+			}
+			?>
 
-<div class="divs_grupo_2">
-	<div class="div1_2">
-		<?php
-		print $this->Form->input('modelo',array('label'=>'Modelo'));
-		print $this->Form->input('placa',array('label'=>'Placa'));
-		print $this->Form->input('fabricante',array('label'=>'Fabricante'));
-		print $this->Form->input('ano',array('label'=>'Ano','type'=>'text'));
-		?>
+			<div class="row-fluid">
+				
+				<div class="span6">
+					<?php
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('modelo',array('label'=>__('Modelo')));
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('placa',array('label'=>__('Placa')));
+					?>
+				</div>
+				<div class="span6">
+					<?php
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('fabricante',array('label'=>__('Fabricante')));
+					$this->Form->defineRow(array(12));
+					print $this->Form->input('ano',array('label'=>__('Ano'),'type'=>'text'));
+					?>
+				</div>
+				
+			</div>
+			
+			<?php print $this->Form->end(__('Gravar')); ?>
+		</fieldset>
 	</div>
+
 </div>
-<?php print $this->Form->end('Gravar'); ?>
