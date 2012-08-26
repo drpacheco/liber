@@ -5,8 +5,8 @@
 </script>
 
 <?php
-print $this->Html->script('conta_pagar');
 print $this->Html->script('formatar_moeda');
+print $this->Html->script('conta_pagar');
 ?>
 
 <div class="row-fluid">
@@ -157,7 +157,7 @@ print $this->Html->script('formatar_moeda');
 				
 		</fieldset>
 
-		<?php print $this->Form->end(__('Gravar')); ?>
+		<?php print $this->Form->end(array('label'=>__('Gravar'),'class'=>'btn btn-primary','div'=>array('class'=>'form-actions'))); ?>
 
 	</div>
 	

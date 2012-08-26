@@ -97,10 +97,15 @@ class FornecedoresController extends AppController {
 		if (! empty($this->request->data)) {
 			//usuario enviou os dados da pesquisa
 			$url = array('controller'=>'Fornecedores','action'=>'pesquisar');
-			//convertendo caracteres especiais
+			//convertendo alguns caracteres
 			if( is_array($this->request->data['Fornecedor']) ) {
-				foreach($this->request->data['Fornecedor'] as &$fornecedor) {
-					$fornecedor = urlencode($fornecedor);
+				foreach($this->request->data['Fornecedor'] as $chave => &$item) {
+					if (empty($item)) {
+						unset($this->request->data['Fornecedor'][$chave]);
+						continue;
+					}
+					// urlencode duas vezes para nao haver problema com / e \
+					$item = htmlentities(urlencode(urlencode($item)));
 				}
 			}
 			$params = array_merge($url,$this->request->data['Fornecedor']);
@@ -109,16 +114,19 @@ class FornecedoresController extends AppController {
 		
 		if (! empty($this->request->params['named'])) {
 			//a instrucao acima redirecionou para cá
+			foreach ($this->request->params['named'] as &$valor) {
+				$valor = html_entity_decode(urldecode(urldecode($valor)));
+			}
 			$dados = $this->request->params['named'];
 			$condicoes=array();
-			if (! empty($dados['nome'])) $condicoes[] = array('Fornecedor.nome LIKE'=>'%'.$dados['nome'].'%');
-			if (! empty($dados['nome_fantasia'])) $condicoes[] = array('Fornecedor.nome_fantasia LIKE'=>'%'.$dados['nome_fantasia'].'%');
-			if (! empty($dados['bairro'])) $condicoes[] = array('Fornecedor.bairro'=>$dados['bairro']);
-			if (! empty($dados['cidade'])) $condicoes[] = array('Fornecedor.cidade'=>$dados['cidade']);
-			if (! empty($dados['cnpj'])) $condicoes[] = array('Fornecedor.cnpj'=>$dados['cnpj']);
-			if (! empty($dados['inscricao_estadual'])) $condicoes[] = array('Fornecedor.inscricao_estadual'=>$dados['inscricao_estadual']);
-			if (! empty($dados['cpf'])) $condicoes[] = array('Fornecedor.cpf'=>$dados['cpf']);
-			if (! empty($dados['rg'])) $condicoes[] = array('Fornecedor.rg'=>$dados['rg']);
+			if (! empty($dados['nome'])) $condicoes = array_merge($condicoes, array('Fornecedor.nome LIKE'=>'%'.$dados['nome'].'%'));
+			if (! empty($dados['nome_fantasia'])) $condicoes = array_merge($condicoes, array('Fornecedor.nome_fantasia LIKE'=>'%'.$dados['nome_fantasia'].'%'));
+			if (! empty($dados['bairro'])) $condicoes = array_merge($condicoes, array('Fornecedor.bairro'=>$dados['bairro']));
+			if (! empty($dados['cidade'])) $condicoes = array_merge($condicoes, array('Fornecedor.cidade'=>$dados['cidade']));
+			if (! empty($dados['cnpj'])) $condicoes = array_merge($condicoes, array('Fornecedor.cnpj'=>$dados['cnpj']));
+			if (! empty($dados['inscricao_estadual'])) $condicoes = array_merge($condicoes, array('Fornecedor.inscricao_estadual'=>$dados['inscricao_estadual']));
+			if (! empty($dados['cpf'])) $condicoes = array_merge($condicoes, array('Fornecedor.cpf'=>$dados['cpf']));
+			if (! empty($dados['rg'])) $condicoes = array_merge($condicoes, array('Fornecedor.rg'=>$dados['rg']));
 			if (! empty ($condicoes)) {
 				$this->paginate = array (
 					'limit' => 10,
@@ -132,7 +140,7 @@ class FornecedoresController extends AppController {
 					$num_encontrados = count($resultados);
 					$this->set('resultados',$resultados);
 					$this->set('num_resultados',$num_encontrados);
-					$this->Session->setFlash("$num_encontrados Fornecedor(s) encontrado(s)",'flash_sucesso');
+					$this->Session->setFlash("Exibindo $num_encontrados fornecedor(s)",'flash_sucesso');
 				}
 				else $this->Session->setFlash("Nenhum fornecedor encontrado",'flash_erro');
 			}

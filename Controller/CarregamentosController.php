@@ -152,47 +152,41 @@ class CarregamentosController extends AppController {
 		if (! empty($this->request->data)) {
 			//usuario enviou os dados da pesquisa
 			$url = array('controller'=>'Carregamentos','action'=>'pesquisar');
-			//convertendo caracteres especiais
-			if( isset($this->request->data['Carregamento']) && is_array($this->request->data['Carregamento']) ) {
-				foreach($this->request->data['Carregamento'] as &$carregamento) {
-					$carregamento = urlencode($carregamento);
+			//convertendo alguns caracteres
+			if( is_array($this->request->data['Carregamento']) ) {
+				foreach($this->request->data['Carregamento'] as $chave => &$item) {
+					if (empty($item)) {
+						unset($this->request->data['Carregamento'][$chave]);
+						continue;
+					}
+					// urlencode duas vezes para nao haver problema com / e \
+					$item = htmlentities(urlencode(urlencode($item)));
 				}
 				$params = array_merge($url,$this->request->data['Carregamento']);
 			}
-			if(isset($this->request->data['Motorista']) && is_array($this->request->data['Motorista']) ) {
-				foreach($this->request->data['Motorista'] as &$motorista) {
-					$motorista = urlencode($motorista);
-				}
-				$params = array_merge($params,$this->request->data['Motorista']);
-			}
-			if( isset($this->request->data['Veiculo']) && is_array($this->request->data['Veiculo']) ) {
-				foreach($this->request->data['Veiculo'] as &$veiculo) {
-					$veiculo = urlencode($veiculo);
-				}
-				$params = array_merge($params,$this->request->data['Veiculo']);
-			}
-			if (! isset($params) ) $params = $url;
-			
 			$this->redirect($params);
 		}
 		
 		if (! empty($this->request->params['named'])) {
 			//a instrucao acima redirecionou para cá
+			foreach ($this->request->params['named'] as &$valor) {
+				$valor = html_entity_decode(urldecode(urldecode($valor)));
+			}
 			$dados = $this->request->params['named'];
 			$condicoes=array();
-			if (! empty($dados['data_inicial'])) $condicoes[] = array('Carregamento.data_hora_criado LIKE'=>'%'.$dados['data_inicial'].'%');
-			if (! empty($dados['data_final'])) $condicoes[] = array('Carregamento.data_hora_criado LIKE'=>'%'.$dados['data_final'].'%');
-			if (! empty($dados['situacao'])) $condicoes[] = array('Carregamento.situacao'=>$dados['situacao']);
-			if (! empty($dados['descricao'])) $condicoes[] = array('Carregamento.descricao'=>$dados['descricao']);
-			if (! empty($dados['motorista'])) $condicoes[] = array('Motorista.id'=>$dados['motorista']);
-			if (! empty($dados['veiculo'])) $condicoes[] = array('Veiculo.id'=>$dados['veiculo']);
+			if (! empty($dados['data_inicial'])) $condicoes = array_merge($condicoes, array('Carregamento.data_hora_criado >='=>$dados['data_inicial'].' 00:00:00'));
+			if (! empty($dados['data_final']))	$condicoes = array_merge($condicoes, array('Carregamento.data_hora_criado <='=>$dados['data_final'].' 00:00:00'));
+			if (! empty($dados['situacao'])) $condicoes = array_merge($condicoes, array('Carregamento.situacao'=>$dados['situacao']));
+			if (! empty($dados['descricao'])) $condicoes = array_merge($condicoes, array('Carregamento.descricao'=>$dados['descricao']));
+			if (! empty($dados['motorista'])) $condicoes = array_merge($condicoes, array('Motorista.id'=>$dados['motorista']));
+			if (! empty($dados['veiculo'])) $condicoes = array_merge($condicoes, array('Veiculo.id'=>$dados['veiculo']));
 			if (! empty ($condicoes)) {
 				$resultados = $this->paginate('Carregamento',$condicoes);
 				if (! empty($resultados)) {
 					$num_encontrados = count($resultados);
 					$this->set('resultados',$resultados);
 					$this->set('num_resultados',$num_encontrados);
-					$this->Session->setFlash("$num_encontrados carregamento(s) encontrado(s)",'flash_sucesso');
+					$this->Session->setFlash("Exibindo $num_encontrados carregamento(s)",'flash_sucesso');
 				}
 				else $this->Session->setFlash("Nenhum carregamento encontrado",'flash_erro');
 			}

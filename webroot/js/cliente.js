@@ -1,86 +1,98 @@
 jQuery(document).ready(function() {
-		
-	//Para situações onde o formulario será carregado já populado
-	if ($('[name="data[Cliente][tipo_pessoa]"]').val() == 'F' ) {
-		$('#ClienteCpf')
-			.removeAttr('disabled')
-			.parent('div').addClass('required');
-		$('#ClienteRg')
-			.removeAttr('disabled')
-			.parent('div').addClass('required');
-
-	}
-	else if ($('[name="data[Cliente][tipo_pessoa]"]').val() == 'J' ) {
-		$('#ClienteCnpj')
-			.removeAttr('disabled')
-			.parent('div').addClass('required');
-		$('#ClienteInscricaoEstadual')
-			.removeAttr('disabled')
-			.parent('div').addClass('required');
-	}
-
-	$('#ClienteNome').focusout(function() {
-		if ($('#ClienteNomeFantasia').val() == '') {
-			$('#ClienteNomeFantasia').val($('#ClienteNome').val());
+	
+	selectTipoPessoa = $('#ClienteTipoPessoa');
+	inputCnpj = $('#ClienteCnpj');
+	inputIe = $('#ClienteInscricaoEstadual');
+	inputCpf = $('#ClienteCpf');
+	inputRg = $('#ClienteRg');
+	inputNome = $('#ClienteNome');
+	inputNomeFantasia = $('#ClienteNomeFantasia');
+	divCnpj = inputCnpj.parent('div').parent('div');
+	divIe = inputIe.parent('div').parent('div');
+	divCpf = inputCpf.parent('div').parent('div');
+	divRg = inputRg.parent('div').parent('div');
+	
+	inputNome.focusout(function() {
+		if (inputNomeFantasia.val() == '') {
+			inputNomeFantasia.val(inputNome.val());
 		}
 	});
+	
+	divIe.removeClass('required');
+	divCnpj.removeClass('required');
+	divRg.removeClass('required');
+	divCpf.removeClass('required');
+	
+	//Para situações onde o formulario será carregado já populado
+	if (selectTipoPessoa.val() == 'F' ) {
+		inputCpf.removeAttr('disabled');
+		divCpf.addClass('required');
+		inputRg.removeAttr('disabled');
+		divRg.addClass('required');
+	}
+	else if (selectTipoPessoa.val() == 'J' ) {
+		inputCnpj.removeAttr('disabled');
+		divCnpj.addClass('required');
+		inputIe.removeAttr('disabled')
+		divIe.addClass('required');
+	}
 
 	//Ao ser setado, manualmente, o tipo do cliente
-	$('[name="data[Cliente][tipo_pessoa]"]').change(function(){
+	selectTipoPessoa.change(function(){
 		if ($(this).val() == 'F' ) {
-			$('#ClienteCnpj')
+			inputCnpj
+				.val("")
+				.attr("disabled", "disabled");
+			divCnpj.removeClass('required');
+			inputIe
 				.val("")
 				.attr("disabled", "disabled")
-				.parent('div').removeClass('required');
-			$('#ClienteInscricaoEstadual')
-				.val("")
-				.attr("disabled", "disabled")
-				.parent('div').removeClass('required');
+			divIe.removeClass('required');
 
-			$('#ClienteCpf')
+			inputCpf
 				.removeAttr('disabled')
-				.effect("highlight", {}, 3000)
-				.parent('div').addClass('required');
-			$('#ClienteRg')
+				.effect("highlight", {}, 3000);
+			divCpf.addClass('required');
+			inputRg
 				.removeAttr('disabled')
-				.effect("highlight", {}, 3000)
-				.parent('div').addClass('required');
+				.effect("highlight", {}, 3000);
+			divRg.addClass('required');
 		}
 		else if ($(this).val() == 'J' ) {
-			$('#ClienteCpf')
+			inputCpf
 				.val("")
-				.attr("disabled", "disabled")
-				.parent('div').removeClass('required');
-			$('#ClienteRg')
+				.attr("disabled", "disabled");
+			divCpf.removeClass('required');
+			inputRg
 				.val("")
-				.attr("disabled", "disabled")
-				.parent('div').removeClass('required');
+				.attr("disabled", "disabled");
+			divRg.removeClass('required');
 
-			$('#ClienteCnpj')
+			inputCnpj
 				.removeAttr('disabled')
-				.effect("highlight", {}, 3000)
-				.parent('div').addClass('required');
-			$('#ClienteInscricaoEstadual')
+				.effect("highlight", {}, 3000);
+			divCnpj.addClass('required');
+			inputIe
 				.removeAttr('disabled')
-				.effect("highlight", {}, 3000)
-				.parent('div').addClass('required');
+				.effect("highlight", {}, 3000);
+			divIe.addClass('required');
 		}
 	});
 
-	$('input[value="Gravar"]').click(function () {
-		if ($('[name="data[Cliente][tipo_pessoa]"]').val() == 'J' ){
-			if ( ($('#ClienteCnpj').val() == "") ) {
+	/*$('input[value="Gravar"]').click(function () {
+		if (selectTipoPessoa.val() == 'J' ){
+			if ( inputCnpj.val() == "")  {
 				alert ("Para pessoa jurídica o campo CNPJ é obrigatório.");
 				return false;
 			}
 		}
-		else if ($('[name="data[Cliente][tipo_pessoa]"]').val() == 'F' ) {
-			if ( ($('#ClienteCpf').val() == "") || ( $('#ClienteRg').val() == "") ) {
+		else if (selectTipoPessoa.val() == 'F' ) {
+			if ( (inputCpf.val() == "") || ( inputRg.val() == "") ) {
 				alert ("Para pessoa física os campos CPF e RG são obrigatórios.");
 				return false;
 			} 
 		}
 
-	});
+	});*/
 	
 }); // fim document ready

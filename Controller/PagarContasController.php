@@ -13,15 +13,15 @@ class PagarContasController extends AppController {
 		
 		$this->PagarConta->TipoDocumento->recursive = -1;
 		$consulta1 = $this->PagarConta->TipoDocumento->find('list',array('fields'=>array('TipoDocumento.id','TipoDocumento.nome')));
-		$this->set('opcoes_tipo_documento',array_merge(array(0=>''),$consulta1));
+		$this->set('opcoes_tipo_documento',$consulta1);
 		
 		$this->PagarConta->Conta->recursive = -1;
 		$consulta2 = $this->PagarConta->Conta->find('list',array('fields'=>array('Conta.id','Conta.apelido')));
-		$this->set('opcoes_conta_origem',array_merge(array(0=>''),$consulta2));
+		$this->set('opcoes_conta_origem',$consulta2);
 		
 		$this->PagarConta->PlanoConta->recursive = -1;
 		$consulta3 = $this->PagarConta->PlanoConta->find('list',array('fields'=>array('PlanoConta.id','PlanoConta.nome')));
-		$this->set('opcoes_plano_contas',array_merge(array(0=>''),$consulta3));
+		$this->set('opcoes_plano_contas',$consulta3);
 		
 		$this->PagarConta->Empresa->recursive = -1;
 		$consulta4 = $this->PagarConta->Empresa->findEmpresa();
@@ -161,41 +161,43 @@ class PagarContasController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'ajax';
 		}
-		//#FIXME pesquisa por valor nao funciona se informar valor em notação brasileira ou valor contiver .
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
 			//usuario enviou os dados da pesquisa
 			$url = array('controller'=>'pagarContas','action'=>'pesquisar');
-			// as / das datas sao trocas por - para nao interferir no padrao de url do CAKE
-			if ( ! empty($this->request->data['PagarConta']['data_inicio']) ) $this->request->data['PagarConta']['data_inicio'] = preg_replace ('/\//', '-', $this->request->data['PagarConta']['data_inicio']);
-			if ( ! empty($this->request->data['PagarConta']['data_fim']) ) $this->request->data['PagarConta']['data_fim'] = preg_replace ('/\//', '-', $this->request->data['PagarConta']['data_fim']);
+			// codificando os parametros
+			if( is_array($this->request->data['PagarConta']) ) {
+				foreach($this->request->data['PagarConta'] as $chave => &$item) {
+					if (empty($item)) {
+						unset($this->request->data['PagarConta'][$chave]);
+						continue;
+					}
+					// urlencode duas vezes para nao haver problema com / e \
+					$item = htmlentities(urlencode(urlencode($item)));
+				}
+			}
 			$params = array_merge($url,$this->request->data['PagarConta']);
 			$this->redirect($params);
 		}
 		
 		if (! empty($this->request->params['named'])) {
 			//a instrucao acima redirecionou para cá
+			foreach ($this->request->params['named'] as &$valor) {
+				$valor = html_entity_decode(urldecode(urldecode($valor)));
+			}
 			$dados = $this->request->params['named'];
 			$condicoes=array();
-			if (! empty($dados['numero_documento'])) $condicoes[] = array('PagarConta.numero_documento'=>$dados['numero_documento']);
-			if (! empty($dados['valor'])) $condicoes[] = array('PagarConta.valor'=>$dados['valor']);
-			if (! empty($dados['eh_cliente_ou_fornecedor'])) $condicoes[] = array('PagarConta.eh_cliente_ou_fornecedor'=>$dados['eh_cliente_ou_fornecedor']);
-			if (! empty($dados['cliente_fornecedor_id'])) $condicoes[] = array('PagarConta.cliente_fornecedor_id'=>$dados['cliente_fornecedor_id']);
-			if (! empty($dados['id'])) $condicoes[] = array('PagarConta.id'=>$dados['id']);
-			if (! empty($dados['tipo_documento'])) $condicoes[] = array('PagarConta.tipo_documento'=>$dados['tipo_documento']);
-			if (! empty($dados['conta_origem'])) $condicoes[] = array('PagarConta.conta_origem'=>$dados['conta_origem']);
-			if (! empty($dados['plano_conta_id'])) $condicoes[] = array('PagarConta.id'=>$dados['plano_conta_id']);
-			if (! empty($dados['situacao'])) $condicoes[] = array('PagarConta.situacao'=>$dados['situacao']);
-			if (! empty($dados['data_inicio'])) {
-				$data = explode('-',$dados['data_inicio']);
-				$data = "${data[2]}-${data[1]}-${data[0]}";
-				$condicoes[] = array('PagarConta.data_hora_cadastrada <='=> $data);
-			}
-			if (! empty($dados['data_fim'])) {
-				$data = explode('-',$dados['data_fim']);
-				$data = "${data[2]}-${data[1]}-${data[0]}";
-				$condicoes[] = array('PagarConta.data_hora_cadastrada >='=> $data);
-			}
+			if (! empty($dados['numero_documento'])) $condicoes = array_merge($condicoes, array('PagarConta.numero_documento'=>$dados['numero_documento']));
+			if (! empty($dados['valor'])) $condicoes = array_merge($condicoes, array('PagarConta.valor'=>$dados['valor']));
+			if (! empty($dados['eh_cliente_ou_fornecedor'])) $condicoes = array_merge($condicoes, array('PagarConta.eh_cliente_ou_fornecedor'=>$dados['eh_cliente_ou_fornecedor']));
+			if (! empty($dados['cliente_fornecedor_id'])) $condicoes = array_merge($condicoes, array('PagarConta.cliente_fornecedor_id'=>$dados['cliente_fornecedor_id']));
+			if (! empty($dados['id'])) $condicoes = array_merge($condicoes, array('PagarConta.id'=>$dados['id']));
+			if (! empty($dados['tipo_documento'])) $condicoes = array_merge($condicoes, array('PagarConta.tipo_documento'=>$dados['tipo_documento']));
+			if (! empty($dados['conta_origem'])) $condicoes = array_merge($condicoes, array('PagarConta.conta_origem'=>$dados['conta_origem']));
+			if (! empty($dados['plano_conta_id'])) $condicoes = array_merge($condicoes, array('PagarConta.id'=>$dados['plano_conta_id']));
+			if (! empty($dados['situacao'])) $condicoes = array_merge($condicoes, array('PagarConta.situacao'=>$dados['situacao']));
+			if (! empty($dados['data_inicio'])) $condicoes = array_merge($condicoes, array('PagarConta.data_hora_cadastrada >='=> $dados['data_inicio'].' 00:00:00'));
+			if (! empty($dados['data_fim'])) $condicoes = array_merge($condicoes, array('PagarConta.data_hora_cadastrada <='=> $dados['data_fim'].' 00:00:00')); 
 			if (! empty ($condicoes)) {
 				$this->paginate = array (
 				'limit' => 10,
@@ -209,7 +211,7 @@ class PagarContasController extends AppController {
 					$num_encontrados = count($resultados);
 					$this->set('resultados',$resultados);
 					$this->set('num_resultados',$num_encontrados);
-					$this->Session->setFlash("$num_encontrados conta(s) a pagar encontrada(s)",'flash_sucesso');
+					$this->Session->setFlash("Exibindo $num_encontrados conta(s) a pagar",'flash_sucesso');
 				}
 				else $this->Session->setFlash("Nenhuma conta a pagar encontrada",'flash_erro'); 
 			}

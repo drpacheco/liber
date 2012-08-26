@@ -1,9 +1,9 @@
-[submodule "Plugin/Localized"]
-	path = Plugin/Localized
-	url = git://github.com/cakephp/localized.git
 [submodule "Plugin/DebugKit"]
 	path = Plugin/DebugKit
 	url = git://github.com/cakephp/debug_kit.git
 [submodule "Plugin/TwitterBootstrap"]
 	path = Plugin/TwitterBootstrap
 	url = git://github.com/radig/TwitterBootstrap.git
+[submodule "Plugin/Localized"]
+	path = Plugin/Localized
+	url = git://github.com/cakephp/localized.git

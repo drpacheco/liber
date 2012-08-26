@@ -26,6 +26,7 @@ class ProdutoCategoriasController extends AppController {
 		if (! empty($this->request->data)) {
 			
 			if ($this->ProdutoCategoria->save($this->request->data)) {
+				unset($this->request->data);
 				$this->Session->setFlash('Categoria de produto cadastrada com sucesso.','flash_sucesso');
 				if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect($this->referer(array('action' => 'index')));
@@ -56,6 +57,7 @@ class ProdutoCategoriasController extends AppController {
 			$this->request->data['ProdutoCategoria']['id'] = $id;
 			
 			if ($this->ProdutoCategoria->save($this->request->data)) {
+				unset($this->request->data);
 				$this->Session->setFlash('Categoria de produto atualizada com sucesso.','flash_sucesso');
 				if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect(array('action'=>'index'));

@@ -115,10 +115,15 @@ class ClientesController extends AppController {
 		if (! empty($this->request->data)) {
 			//usuario enviou os dados da pesquisa
 			$url = array('controller'=>'Clientes','action'=>'pesquisar');
-			//convertendo caracteres especiais
+			//convertendo alguns caracteres
 			if( is_array($this->request->data['Cliente']) ) {
-				foreach($this->request->data['Cliente'] as &$cliente) {
-					$cliente = urlencode($cliente);
+				foreach($this->request->data['Cliente'] as $chave => &$item) {
+					if (empty($item)) {
+						unset($this->request->data['Cliente'][$chave]);
+						continue;
+					}
+					// urlencode duas vezes para nao haver problema com / e \
+					$item = htmlentities(urlencode(urlencode($item)));
 				}
 			}
 			$params = array_merge($url,$this->request->data['Cliente']);
@@ -127,17 +132,20 @@ class ClientesController extends AppController {
 		
 		if (! empty($this->request->params['named'])) {
 			//a instrucao acima redirecionou para cá
+			foreach ($this->request->params['named'] as &$valor) {
+				$valor = html_entity_decode(urldecode(urldecode($valor)));
+			}
 			$dados = $this->request->params['named'];
 			$condicoes=array();
-			if (! empty($dados['id'])) $condicoes[] = array('Cliente.id'=>$dados['id']);
-			if (! empty($dados['nome'])) $condicoes[] = array('Cliente.nome LIKE'=>'%'.$dados['nome'].'%');
-			if (! empty($dados['nome_fantasia'])) $condicoes[] = array('Cliente.nome_fantasia LIKE'=>'%'.$dados['nome_fantasia'].'%');
-			if (! empty($dados['bairro'])) $condicoes[] = array('Cliente.bairro'=>$dados['bairro']);
-			if (! empty($dados['cidade'])) $condicoes[] = array('Cliente.cidade'=>$dados['cidade']);
-			if (! empty($dados['cnpj'])) $condicoes[] = array('Cliente.cnpj'=>$dados['cnpj']);
-			if (! empty($dados['inscricao_estadual'])) $condicoes[] = array('Cliente.inscricao_estadual'=>$dados['inscricao_estadual']);
-			if (! empty($dados['cpf'])) $condicoes[] = array('Cliente.cpf'=>$dados['cpf']);
-			if (! empty($dados['rg'])) $condicoes[] = array('Cliente.rg'=>$dados['rg']);
+			if (! empty($dados['id'])) $condicoes = array_merge($condicoes, array('Cliente.id'=>$dados['id']));
+			if (! empty($dados['nome'])) $condicoes = array_merge($condicoes, array('Cliente.nome LIKE'=>'%'.$dados['nome'].'%'));
+			if (! empty($dados['nome_fantasia'])) $condicoes = array_merge($condicoes, array('Cliente.nome_fantasia LIKE'=>'%'.$dados['nome_fantasia'].'%'));
+			if (! empty($dados['bairro'])) $condicoes = array_merge($condicoes, array('Cliente.bairro'=>$dados['bairro']));
+			if (! empty($dados['cidade'])) $condicoes = array_merge($condicoes, array('Cliente.cidade'=>$dados['cidade']));
+			if (! empty($dados['cnpj'])) $condicoes = array_merge($condicoes, array('Cliente.cnpj'=>$dados['cnpj']));
+			if (! empty($dados['inscricao_estadual'])) $condicoes = array_merge($condicoes, array('Cliente.inscricao_estadual'=>$dados['inscricao_estadual']));
+			if (! empty($dados['cpf'])) $condicoes = array_merge($condicoes, array('Cliente.cpf'=>$dados['cpf']));
+			if (! empty($dados['rg'])) $condicoes = array_merge($condicoes, array('Cliente.rg'=>$dados['rg']));
 			if (! empty ($condicoes)) {
 				$this->paginate = array (
 					'limit' => 10,
@@ -151,7 +159,7 @@ class ClientesController extends AppController {
 					$num_encontrados = count($resultados);
 					$this->set('resultados',$resultados);
 					$this->set('num_resultados',$num_encontrados);
-					$this->Session->setFlash("$num_encontrados cliente(s) encontrado(s)",'flash_sucesso');
+					$this->Session->setFlash("Exibindo $num_encontrados cliente(s)",'flash_sucesso');
 				}
 				else $this->Session->setFlash("Nenhum cliente encontrado",'flash_erro');
 			}

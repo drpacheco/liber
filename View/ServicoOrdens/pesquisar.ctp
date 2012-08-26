@@ -9,7 +9,7 @@
 		//pesquisa cliente
 		//autocomplete
 		$("#ServicoOrdemClienteNome").autocomplete({
-			source: "<?php print $this->Html->url('/',true); ?>/Clientes/pesquisaAjaxCliente/nome",
+			source: site_raiz+"/Clientes/pesquisaAjaxCliente/nome",
 			minLength: 3,
 			select: function(event, ui) {
 				$("#ServicoOrdemClienteId").val(ui.item.id);
@@ -20,7 +20,7 @@
 		$('#ServicoOrdemClienteId').blur(function(){
 			codigo = $(this).val();
 			if (codigo == null || codigo == '') return null;
-			$.getJSON('<?php print $this->Html->url('/',true); ?>/Clientes/pesquisaAjaxCliente/codigo', {'term': codigo}, function(data) {
+			$.getJSON(site_raiz+'/Clientes/pesquisaAjaxCliente/codigo', {'term': codigo}, function(data) {
 				if (data == null) {
 					alert ('Cliente com o código '+codigo+' não foi encontrado!');
 					$('#ServicoOrdemClienteNome').val('');
@@ -89,17 +89,17 @@ label.required:after {
 					print $this->Form->input('cliente_id',array('label'=>__('Cód.'),'type'=>'text'));
 					print $this->Form->input('cliente_nome',array('label'=>__('Nome cliente')));
 					$this->Form->defineRow(array(4));
-					print $this->Form->input('tecnico',array('label'=>__('Nome cliente'),'options'=>$opcoes_tecnico));
+					print $this->Form->input('tecnico',array('label'=>__('Técnico'),'options'=>$opcoes_tecnico,'empty'=>'Selecione'));
 					$this->Form->defineRow(array(4));
-					print $this->Form->input('tecnico',array('label'=>__('Nome cliente'),'options'=>$opcoes_situacao));
+					print $this->Form->input('situacao',array('label'=>__('Situação'),'options'=>$opcoes_situacao,'empty'=>'Selecione'));
 					$this->Form->defineRow(array(4));
-					print $this->Form->input('usuario_cadastrou',array('label'=>__('Nome cliente'),'options'=>$opcoes_usuarios));
+					print $this->Form->input('usuario_cadastrou',array('label'=>__('Usuário que cadastrou'),'options'=>$opcoes_usuarios,'empty'=>'Selecione'));
 					?>
 				</div>
 				
 			</div>
 			
-			<?php print $this->Form->end('Pesquisar'); ?>
+			<?php print $this->Form->end(array('label'=>__('Pesquisar'))); ?>
 
 				<?php if (isset($num_resultados) && $num_resultados > 0) : ?>
 					<table class="table table-striped">

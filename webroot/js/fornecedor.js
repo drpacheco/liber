@@ -1,86 +1,98 @@
 jQuery(document).ready(function() {
-		
-	//Para situações onde o formulario será carregado já populado
-	if ($('[name="data[Fornecedor][tipo_pessoa]"]').val() == 'F' ) {
-		$('#FornecedorCpf')
-			.removeAttr('disabled')
-			.parent('div').addClass('required');
-		$('#FornecedorRg')
-			.removeAttr('disabled')
-			.parent('div').addClass('required');
-
-	}
-	else if ($('[name="data[Fornecedor][tipo_pessoa]"]').val() == 'J' ) {
-		$('#FornecedorCnpj')
-			.removeAttr('disabled')
-			.parent('div').addClass('required');
-		$('#FornecedorInscricaoEstadual')
-			.removeAttr('disabled')
-			.parent('div').addClass('required');
-	}
-
-	$('#FornecedorNome').focusout(function() {
-		if ($('#FornecedorNomeFantasia').val() == '') {
-			$('#FornecedorNomeFantasia').val($('#FornecedorNome').val());
+	
+	selectTipoPessoa = $('#FornecedorTipoPessoa');
+	inputCnpj = $('#FornecedorCnpj');
+	inputIe = $('#FornecedorInscricaoEstadual');
+	inputCpf = $('#FornecedorCpf');
+	inputRg = $('#FornecedorRg');
+	inputNome = $('#FornecedorNome');
+	inputNomeFantasia = $('#FornecedorNomeFantasia');
+	divCnpj = inputCnpj.parent('div').parent('div');
+	divIe = inputIe.parent('div').parent('div');
+	divCpf = inputCpf.parent('div').parent('div');
+	divRg = inputRg.parent('div').parent('div');
+	
+	inputNome.focusout(function() {
+		if (inputNomeFantasia.val() == '') {
+			inputNomeFantasia.val(inputNome.val());
 		}
 	});
+	
+	divIe.removeClass('required');
+	divCnpj.removeClass('required');
+	divRg.removeClass('required');
+	divCpf.removeClass('required');
+	
+	//Para situações onde o formulario será carregado já populado
+	if (selectTipoPessoa.val() == 'F' ) {
+		inputCpf.removeAttr('disabled');
+		divCpf.addClass('required');
+		inputRg.removeAttr('disabled');
+		divRg.addClass('required');
+	}
+	else if (selectTipoPessoa.val() == 'J' ) {
+		inputCnpj.removeAttr('disabled');
+		divCnpj.addClass('required');
+		inputIe.removeAttr('disabled')
+		divIe.addClass('required');
+	}
 
-	//Ao ser setado, manualmente, o tipo do cliente
-	$('[name="data[Fornecedor][tipo_pessoa]"]').change(function(){
+	//Ao ser setado, manualmente, o tipo do fornecedor
+	selectTipoPessoa.change(function(){
 		if ($(this).val() == 'F' ) {
-			$('#FornecedorCnpj')
+			inputCnpj
+				.val("")
+				.attr("disabled", "disabled");
+			divCnpj.removeClass('required');
+			inputIe
 				.val("")
 				.attr("disabled", "disabled")
-				.parent('div').removeClass('required');
-			$('#FornecedorInscricaoEstadual')
-				.val("")
-				.attr("disabled", "disabled")
-				.parent('div').removeClass('required');
+			divIe.removeClass('required');
 
-			$('#FornecedorCpf')
+			inputCpf
 				.removeAttr('disabled')
-				.effect("highlight", {}, 3000)
-				.parent('div').addClass('required');
-			$('#FornecedorRg')
+				.effect("highlight", {}, 3000);
+			divCpf.addClass('required');
+			inputRg
 				.removeAttr('disabled')
-				.effect("highlight", {}, 3000)
-				.parent('div').addClass('required');
+				.effect("highlight", {}, 3000);
+			divRg.addClass('required');
 		}
 		else if ($(this).val() == 'J' ) {
-			$('#FornecedorCpf')
+			inputCpf
 				.val("")
-				.attr("disabled", "disabled")
-				.parent('div').removeClass('required');
-			$('#FornecedorRg')
+				.attr("disabled", "disabled");
+			divCpf.removeClass('required');
+			inputRg
 				.val("")
-				.attr("disabled", "disabled")
-				.parent('div').removeClass('required');
+				.attr("disabled", "disabled");
+			divRg.removeClass('required');
 
-			$('#FornecedorCnpj')
+			inputCnpj
 				.removeAttr('disabled')
-				.effect("highlight", {}, 3000)
-				.parent('div').addClass('required');
-			$('#FornecedorInscricaoEstadual')
+				.effect("highlight", {}, 3000);
+			divCnpj.addClass('required');
+			inputIe
 				.removeAttr('disabled')
-				.effect("highlight", {}, 3000)
-				.parent('div').addClass('required');
+				.effect("highlight", {}, 3000);
+			divIe.addClass('required');
 		}
 	});
 
-	$('input[value="Gravar"]').click(function () {
-		if ($('[name="data[Fornecedor][tipo_pessoa]"]').val() == 'J' ){
-			if ( ($('#FornecedorCnpj').val() == "") ) {
+	/*$('input[value="Gravar"]').click(function () {
+		if (selectTipoPessoa.val() == 'J' ){
+			if ( inputCnpj.val() == "")  {
 				alert ("Para pessoa jurídica o campo CNPJ é obrigatório.");
 				return false;
 			}
 		}
-		else if ($('[name="data[Fornecedor][tipo_pessoa]"]').val() == 'F' ) {
-			if ( ($('#FornecedorCpf').val() == "") || ( $('#FornecedorRg').val() == "") ) {
+		else if (selectTipoPessoa.val() == 'F' ) {
+			if ( (inputCpf.val() == "") || ( inputRg.val() == "") ) {
 				alert ("Para pessoa física os campos CPF e RG são obrigatórios.");
 				return false;
 			} 
 		}
 
-	});
-				
+	});*/
+	
 }); // fim document ready

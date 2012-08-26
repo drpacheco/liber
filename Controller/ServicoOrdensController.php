@@ -38,11 +38,11 @@ class ServicoOrdensController extends AppController {
 		$this->ServicoOrdem->Usuario->recursive = -1;
 		$consulta1 = $this->ServicoOrdem->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
 		'conditions'=>array('Usuario.eh_tecnico'=>'1','Usuario.ativo'=>'1')));
-		$this->set('opcoes_tecnico',array_merge(array(0=>''),$consulta1));
+		$this->set('opcoes_tecnico',$consulta1);
 		
 		$consulta2 = $this->ServicoOrdem->Usuario->find('list',array('fields'=>array('Usuario.id','Usuario.nome'),
 		'conditions'=>array('Usuario.ativo'=>'1')));
-		$this->set('opcoes_usuarios',array_merge(array(0=>''),$consulta2));
+		$this->set('opcoes_usuarios',$consulta2);
 		
 		$situacoes = array (
 			'O' => 'Orçamento',
@@ -345,14 +345,15 @@ class ServicoOrdensController extends AppController {
 		if (! empty($this->request->data)) {
 			//usuario enviou os dados da pesquisa
 			$url = array('controller'=>'ServicoOrdens','action'=>'pesquisar');
-			//trocandos as barras dos campos de data, pois estes parametros, caso existam, vou para a url
-			if (!empty($this->request->data['ServicoOrdem']['data_hora_cadastrada'])) $this->request->data['ServicoOrdem']['data_hora_cadastrada'] = preg_replace('/\//', '-', $this->request->data['ServicoOrdem']['data_hora_cadastrada']);
-			if (!empty($this->request->data['ServicoOrdem']['data_hora_inicio'])) $this->request->data['ServicoOrdem']['data_hora_inicio'] = preg_replace('/\//', '-', $this->request->data['ServicoOrdem']['data_hora_inicio']);
-			if (!empty($this->request->data['ServicoOrdem']['data_hora_fim'])) $this->request->data['ServicoOrdem']['data_hora_fim'] = preg_replace('/\//', '-', $this->request->data['ServicoOrdem']['data_hora_fim']);
 			// codificando os parametros
 			if( is_array($this->request->data['ServicoOrdem']) ) {
-				foreach($this->request->data['ServicoOrdem'] as &$servico_ordem) {
-					$servico_ordem = urlencode($servico_ordem);
+				foreach($this->request->data['ServicoOrdem'] as $chave => &$item) {
+					if (empty($item)) {
+						unset($this->request->data['ServicoOrdem'][$chave]);
+						continue;
+					}
+					// urlencode duas vezes para nao haver problema com / e \
+					$item = htmlentities(urlencode(urlencode($item)));
 				}
 			}
 			$params = array_merge($url,$this->request->data['ServicoOrdem']);
@@ -361,33 +362,24 @@ class ServicoOrdensController extends AppController {
 		
 		if (! empty($this->request->params['named'])) {
 			//a instrucao acima redirecionou para cá
+			foreach ($this->request->params['named'] as &$valor) {
+				$valor = html_entity_decode(urldecode(urldecode($valor)));
+			}
 			$dados = $this->request->params['named'];
 			$condicoes=array();
-			if (! empty($dados['id'])) $condicoes[] = array('ServicoOrdem.id'=>$dados['id']);
-			if (! empty($dados['cliente_id'])) $condicoes[] = array('ServicoOrdem.cliente_id'=>$dados['cliente_id']);
-			if (! empty($dados['cliente_nome'])) $condicoes[] = array('Cliente.nome LIKE'=>'%'.$dados['cliente_nome'].'%');
-			if (! empty($dados['tecnico'])) $condicoes[] = array('ServicoOrdem.usuario_id'=>$dados['tecnico']);
-			if (! empty($dados['situacao'])) $condicoes[] = array('ServicoOrdem.situacao'=>$dados['situacao']);
-			if (! empty($dados['valor_total'])) $condicoes[] = array('ServicoOrdem.valor_liquido'=>$dados['valor_total']);
-			if (! empty($dados['usuario_cadastrou'])) $condicoes[] = array('ServicoOrdem.usuario_cadastrou'=>$dados['usuario_cadastrou']);
-			if (! empty($dados['data_hora_cadastrada'])) {
-				$ret = explode('-', $dados['data_hora_cadastrada']);
-				$dados['data_hora_cadastrada'] = $ret[2].'-'.$ret[1].'-'.$ret[0];
-				// pesquiso todos os registros cadastrados entre o intervalo do dia informado pelo usuario
-				$condicoes[] = array('ServicoOrdem.data_hora_cadastrada BETWEEN ? AND ?'=>array($dados['data_hora_cadastrada'].' 00:00:00',$dados['data_hora_cadastrada'].' 23:59:59'));
-			}
-			if (! empty($dados['data_hora_inicio'])) {
-				$ret = explode('-', $dados['data_hora_inicio']);
-				$dados['data_hora_inicio'] = $ret[2].'-'.$ret[1].'-'.$ret[0];
-				// pesquiso todos os registros cadastrados entre o intervalo do dia informado pelo usuario
-				$condicoes[] = array('ServicoOrdem.data_hora_inicio BETWEEN ? AND ?'=>array($dados['data_hora_inicio'].' 00:00:00',$dados['data_hora_inicio'].' 23:59:59'));
-			}
-			if (! empty($dados['data_hora_fim'])) {
-				 $ret = explode('-', $dados['data_hora_fim']);
-				$dados['data_hora_fim'] = $ret[2].'-'.$ret[1].'-'.$ret[0];
-				// pesquiso todos os registros cadastrados entre o intervalo do dia informado pelo usuario
-				$condicoes[] = array('ServicoOrdem.data_hora_fim BETWEEN ? AND ?'=>array($dados['data_hora_fim'].' 00:00:00',$dados['data_hora_fim'].' 23:59:59'));
-			}
+			if (! empty($dados['id'])) $condicoes = array_merge($condicoes, array('ServicoOrdem.id'=>$dados['id']));
+			if (! empty($dados['cliente_id'])) $condicoes = array_merge($condicoes, array('ServicoOrdem.cliente_id'=>$dados['cliente_id']));
+			if (! empty($dados['cliente_nome'])) $condicoes = array_merge($condicoes, array('Cliente.nome LIKE'=>'%'.$dados['cliente_nome'].'%'));
+			if (! empty($dados['tecnico'])) $condicoes = array_merge($condicoes, array('ServicoOrdem.usuario_id'=>$dados['tecnico']));
+			if (! empty($dados['situacao'])) $condicoes = array_merge($condicoes, array('ServicoOrdem.situacao'=>$dados['situacao']));
+			if (! empty($dados['valor_total'])) $condicoes = array_merge($condicoes, array('ServicoOrdem.valor_liquido'=>$dados['valor_total']));
+			if (! empty($dados['usuario_cadastrou'])) $condicoes = array_merge($condicoes, array('ServicoOrdem.usuario_cadastrou'=>$dados['usuario_cadastrou']));
+			// pesquiso todos os registros cadastrados entre o intervalo do dia informado pelo usuario
+			if (! empty($dados['data_hora_cadastrada'])) $condicoes = array_merge($condicoes, array('ServicoOrdem.data_hora_cadastrada BETWEEN ? AND ?'=>array($dados['data_hora_cadastrada'].' 00:00:00',$dados['data_hora_cadastrada'].' 23:59:59')));
+			// pesquiso todos os registros cadastrados entre o intervalo do dia informado pelo usuario
+			if (! empty($dados['data_hora_inicio'])) $condicoes = array_merge($condicoes, array('ServicoOrdem.data_hora_inicio BETWEEN ? AND ?'=>array($dados['data_hora_inicio'].' 00:00:00',$dados['data_hora_inicio'].' 23:59:59')));
+			// pesquiso todos os registros cadastrados entre o intervalo do dia informado pelo usuario
+			if (! empty($dados['data_hora_fim'])) $condicoes = array_merge($condicoes, array('ServicoOrdem.data_hora_fim BETWEEN ? AND ?'=>array($dados['data_hora_fim'].' 00:00:00',$dados['data_hora_fim'].' 23:59:59')));
 			if (! empty ($condicoes)) {
 				$this->paginate = array(
 				    'limit' => 10,
@@ -401,7 +393,7 @@ class ServicoOrdensController extends AppController {
 					$num_encontrados = count($resultados);
 					$this->set('resultados',$resultados);
 					$this->set('num_resultados',$num_encontrados);
-					$this->Session->setFlash("$num_encontrados ordem(ns) de serviço(s) encontradas",'flash_sucesso');
+					$this->Session->setFlash("Exibindo $num_encontrados ordem(ns) de serviço(s)",'flash_sucesso');
 				}
 				else $this->Session->setFlash("Nenhuma ordem de serviço encontrada",'flash_erro');
 			}

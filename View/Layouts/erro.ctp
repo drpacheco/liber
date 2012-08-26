@@ -8,7 +8,11 @@
 		</title>
 		<?php
 		print $this->Html->meta('icon');
+		print $this->Html->css('bootstrap.min');
+		print $this->Html->css('bootstrap-responsive.min');
 		print $this->Html->css('erro.css');
+		print $this->Html->script('jquery');
+		print $this->Html->script('bootstrap.min');
 		?>
 	</head>
 	

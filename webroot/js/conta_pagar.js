@@ -5,7 +5,7 @@ jQuery(document).ready(function() {
 	$('#PagarContaValor').priceFormat();
 	
 	function valor_padrao() {
-		$('label[for=PagarContaClienteFornecedorId]').html('Cliente/Fornecedor');
+		$('label[for=PagarContaClienteFornecedorId]').html('Código');
 		$('#pesquisar_cliente_fornecedor')
 			.attr('disabled','disabled')
 			.val('Selecione uma opção no menu acima.');
@@ -111,7 +111,7 @@ jQuery(document).ready(function() {
 		$('label[for=PagarContaClienteFornecedorId]').html('Cliente');
 		definir_pesquisa('cliente');
 	}
-	else {
+	else if ( $('#PagarContaEhClienteOuFornecedor').val() == 'F' )  {
 		$('label[for=PagarContaClienteFornecedorId]').html('Fornecedor');
 		definir_pesquisa('fornecedor');
 	}

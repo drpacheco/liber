@@ -13,7 +13,7 @@
 			}
 
 			print $this->Form->input('nome',array('label'=>__('Nome')));
-			print $this->Form->end(__('Gravar')); ?>
+			print $this->Form->end(array('label'=>__('Gravar'),'class'=>'btn btn-primary','div'=>array('class'=>'form-actions'))); ?>
 		</fieldset>
 	</div>
 

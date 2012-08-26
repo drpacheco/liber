@@ -106,22 +106,36 @@ class ProdutosController extends AppController {
 		if (! empty($this->request->data)) {
 			//usuario enviou os dados da pesquisa
 			$url = array('action'=>'pesquisar');
+			// codificando os parametros
+			if( is_array($this->request->data['Produto']) ) {
+				foreach($this->request->data['Produto'] as $chave => &$item) {
+					if (empty($item)) {
+						unset($this->request->data['Produto'][$chave]);
+						continue;
+					}
+					// urlencode duas vezes para nao haver problema com / e \
+					$item = htmlentities(urlencode(urlencode($item)));
+				}
+			}
 			$params = array_merge($url,$this->request->data['Produto']);
 			$this->redirect($params);
 		}
 		
 		if (! empty($this->request->params['named'])) {
 			//a instrucao acima redirecionou para cá
+			foreach ($this->request->params['named'] as &$valor) {
+				$valor = html_entity_decode(urldecode(urldecode($valor)));
+			}
 			$dados = $this->request->params['named'];
 			$condicoes=array();
-			if (! empty($dados['nome'])) $condicoes[] = array('Produto.nome LIKE'=>'%'.$dados['nome'].'%');
-			if (! empty($dados['produto_categoria_id'])) $condicoes[] = array('Produto.produto_categoria_id'=>$dados['produto_categoria_id']);
-			if (! empty($dados['tipo_produto'])) $condicoes[] = array('Produto.tipo_produto'=>$dados['tipo_produto']);
-			if (! empty($dados['codigo_ean'])) $condicoes[] = array('Produto.codigo_ean'=>$dados['codigo_ean']);
-			if (! empty($dados['codigo_dun'])) $condicoes[] = array('Produto.codigo_dun'=>$dados['codigo_dun']);
-			if (! empty($dados['unidade'])) $condicoes[] = array('Produto.unidade'=>$dados['unidade']);
-			if (! empty($dados['quantidade_estoque_fiscal'])) $condicoes[] = array('Produto.quantidade_estoque_fiscal'=>$dados['quantidade_estoque_fiscal']);
-			if (! empty($dados['situacao'])) $condicoes[] = array('Produto.situacao'=>$dados['situacao']);
+			if (! empty($dados['nome'])) $condicoes = array_merge($condicoes, array('Produto.nome LIKE'=>'%'.$dados['nome'].'%'));
+			if (! empty($dados['produto_categoria_id'])) $condicoes = array_merge($condicoes, array('Produto.produto_categoria_id'=>$dados['produto_categoria_id']));
+			if (! empty($dados['tipo_produto'])) $condicoes = array_merge($condicoes, array('Produto.tipo_produto'=>$dados['tipo_produto']));
+			if (! empty($dados['codigo_ean'])) $condicoes = array_merge($condicoes, array('Produto.codigo_ean'=>$dados['codigo_ean']));
+			if (! empty($dados['codigo_dun'])) $condicoes = array_merge($condicoes, array('Produto.codigo_dun'=>$dados['codigo_dun']));
+			if (! empty($dados['unidade'])) $condicoes = array_merge($condicoes, array('Produto.unidade'=>$dados['unidade']));
+			if (! empty($dados['quantidade_estoque_fiscal'])) $condicoes = array_merge($condicoes, array('Produto.quantidade_estoque_fiscal'=>$dados['quantidade_estoque_fiscal']));
+			if (! empty($dados['situacao'])) $condicoes = array_merge($condicoes, array('Produto.situacao'=>$dados['situacao']));
 			if (! empty ($condicoes)) {
 				$this->paginate = array (
 					'limit' => 10,
@@ -135,7 +149,7 @@ class ProdutosController extends AppController {
 					$num_encontrados = count($resultados);
 					$this->set('resultados',$resultados);
 					$this->set('num_resultados',$num_encontrados);
-					$this->Session->setFlash("$num_encontrados produto(s) encontrado(s)",'flash_sucesso');
+					$this->Session->setFlash("Exibindo $num_encontrados produto(s)",'flash_sucesso');
 				}
 				else $this->Session->setFlash("Nenhum produto encontrado",'flash_erro');
 			}

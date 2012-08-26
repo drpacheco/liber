@@ -435,8 +435,13 @@ class PedidoVendasController extends AppController {
 			if (!empty($this->request->data['PedidoVenda']['data_hora_cadastrado'])) $this->request->data['PedidoVenda']['data_hora_cadastrado'] = preg_replace('/\//', '-', $this->request->data['PedidoVenda']['data_hora_cadastrado']);
 			// codificando os parametros
 			if( is_array($this->request->data['PedidoVenda']) ) {
-				foreach($this->request->data['PedidoVenda'] as &$produto) {
-					$produto = urlencode($produto);
+				foreach($this->request->data['PedidoVenda'] as $chave => &$item) {
+					if (empty($item)) {
+						unset($this->request->data['PedidoVenda'][$chave]);
+						continue;
+					}
+					// urlencode duas vezes para nao haver problema com / e \
+					$item = htmlentities(urlencode(urlencode($item)));
 				}
 			}
 			$params = array_merge($url,$this->request->data['PedidoVenda']);
@@ -445,24 +450,24 @@ class PedidoVendasController extends AppController {
 		
 		if (! empty($this->request->params['named'])) {
 			//a instrucao acima redirecionou para cá
+			foreach ($this->request->params['named'] as &$valor) {
+				$valor = html_entity_decode(urldecode(urldecode($valor)));
+			}
 			$dados = $this->request->params['named'];
 			$condicoes=array();
-			if (! empty($dados['id'])) $condicoes[] = array('PedidoVenda.id'=>$dados['id']);
-			if (! empty($dados['cliente_id'])) $condicoes[] = array('PedidoVenda.cliente_id'=>$dados['cliente_id']);
-			if (! empty($dados['cliente_nome'])) $condicoes[] = array('Cliente.nome LIKE'=>'%'.$dados['cliente_nome'].'%');
-			if (! empty($dados['situacao'])) $condicoes[] = array('PedidoVenda.situacao'=>$dados['situacao']);
-			if (! empty($dados['valor_total'])) $condicoes[] = array('PedidoVenda.valor_liquido'=>$dados['valor_total']);
-			if (! empty($dados['usuario_cadastrou'])) $condicoes[] = array('PedidoVenda.usuario_cadastrou'=>$dados['usuario_cadastrou']);
-			if (! empty($dados['data_hora_cadastrado'])) {
-				$ret = explode('-', $dados['data_hora_cadastrado']);
-				$dados['data_hora_cadastrado'] = $ret[2].'-'.$ret[1].'-'.$ret[0];
-				// pesquiso todos os registros cadastrados entre o intervalo do dia informado pelo usuario
-				$condicoes[] = array('PedidoVenda.data_hora_cadastrada BETWEEN ? AND ?'=>array($dados['data_hora_cadastrada'].' 00:00:00',$dados['data_hora_cadastrada'].' 23:59:59'));
-			}
+			if (! empty($dados['id'])) $condicoes = array_merge($condicoes,array('PedidoVenda.id'=>$dados['id']));
+			if (! empty($dados['cliente_id'])) $condicoes = array_merge($condicoes, array('PedidoVenda.cliente_id'=>$dados['cliente_id']));
+			if (! empty($dados['cliente_nome'])) $condicoes = array_merge($condicoes,array('Cliente.nome LIKE'=>'%'.$dados['cliente_nome'].'%'));
+			if (! empty($dados['situacao'])) $condicoes = array_merge($condicoes,array('PedidoVenda.situacao'=>$dados['situacao']));
+			if (! empty($dados['valor_total'])) $condicoes = array_merge($condicoes,array('PedidoVenda.valor_liquido'=>$dados['valor_total']));
+			if (! empty($dados['usuario_cadastrou'])) $condicoes = array_merge($condicoes,array('PedidoVenda.usuario_cadastrou'=>$dados['usuario_cadastrou']));
+			// pesquiso todos os registros cadastrados entre o intervalo do dia informado pelo usuario
+			if (! empty($dados['data_hora_cadastrado'])) $condicoes[] = array('PedidoVenda.data_hora_cadastrado BETWEEN ? AND ?'=>array($dados['data_hora_cadastrado'].' 00:00:00',$dados['data_hora_cadastrado'].' 23:59:59'));
+			
 			if (! empty ($condicoes)) {
 				$this->paginate = array(
 				    'limit' => 10,
-				    'order' => 'PedidoVenda.id DESC',
+				    'order' => 'PedidoVenda.id ASC',
 				    'contain' => array ('Cliente.nome'),
 				);
 				$resultados = $this->paginate('PedidoVenda',$condicoes);
@@ -470,7 +475,7 @@ class PedidoVendasController extends AppController {
 					$num_encontrados = count($resultados);
 					$this->set('resultados',$resultados);
 					$this->set('num_resultados',$num_encontrados);
-					$this->Session->setFlash("$num_encontrados pedido(s) de venda encontrados",'flash_sucesso');
+					$this->Session->setFlash("Exibindo $num_encontrados pedido(s) de venda",'flash_sucesso');
 				}
 				else $this->Session->setFlash("Nenhum pedido de venda encontrado",'flash_erro');
 			}

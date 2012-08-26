@@ -1,3 +1,5 @@
+@charset "utf-8";
+
 #cabecalho {
 	width: 100%;
 	height: 30px;
@@ -104,15 +106,36 @@ div .grafico {
 	background-repeat:no-repeat;
 }
 
+.listagem_itens {
+	_height: expression( this.scrollHeight > 332 ? "500px" : "auto" ); /* sets max-height for IE6 */
+	max-height: 500px; /* sets max-height value for all standards-compliant browsers */
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
 /** Jquery **/
-.ui-autocomplete-loading { background: white url('../img/carregando.gif') right center no-repeat; }
+
+/** Autocomplete **/
+.ui-autocomplete-loading {
+	background: #EEEEEE url('../img/carregando.gif') right center no-repeat !important;
+}
+.ui-autocomplete {
+	max-height: 200px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
+	padding-right: 20px;
+}
+.ui-autocomplete-input,
+.ui-autocomplete-input-dinamico {
+	background-image: url("../img/autocomplete2.png") !important;
+	background-position: left !important;
+	background-repeat: no-repeat !important;
+	padding-left: 27px !important;
+}
 .ui-autocomplete-input { background: #DBDBDB; }
 .carregando { background: url('../img/carregando.gif') center no-repeat !important}
-.ui-datepicker-trigger { float:left; margin-right: 2px; }
-.datepicker {
-	/* para o icone do jquery ui datepicker */
-	width: 95%;
-}
 
 /*---------------------------------- 
  * MENU

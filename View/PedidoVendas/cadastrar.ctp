@@ -5,8 +5,8 @@
 </script>
 
 <?php
-print $this->Html->script('pedido_venda');
 print $this->Html->script('formatar_moeda');
+print $this->Html->script('pedido_venda');
 if ($this->Ajax->isAjax()) {
 	print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'PedidoVenda','update'=>'conteudo_ajax'));
 }
@@ -117,9 +117,9 @@ else {
 								</div>
 								<div class="span6">
 									<?php
-									print $this->Form->input('data_venda',array('label'=>__('Data da venda'),'type'=>'text','class'=>'mascara_data datepicker','class'=>'span12'));
-									print $this->Form->input('data_saida',array('label'=>__('Data da saída'),'type'=>'text','class'=>'mascara_data datepicker','class'=>'span12'));
-									print $this->Form->input('data_entrega',array('label'=>__('Data entrega'),'type'=>'text','class'=>'mascara_data datepicker','class'=>'span12'));
+									print $this->Form->input('data_venda',array('label'=>__('Data da venda'),'type'=>'text','class'=>'datepicker span12'));
+									print $this->Form->input('data_saida',array('label'=>__('Data da saída'),'type'=>'text','class'=>'mascara_data datepicker span12'));
+									print $this->Form->input('data_entrega',array('label'=>__('Data entrega'),'type'=>'text','class'=>'mascara_data datepicker span12'));
 									print $this->Form->input('desconto',array('label'=>__('Desconto'),'type'=>'text','class'=>'span12'));
 									?>
 								</div>
@@ -147,7 +147,7 @@ else {
 								</fieldset>
 								<br/>
 
-								<fieldset id="fieldset_produtos_incluidos">
+								<fieldset id="fieldset_produtos_incluidos" class="listagem_itens">
 									<legend>Produtos incluídos</legend>
 									
 									<table class="table table-striped">
@@ -197,7 +197,7 @@ else {
 					</div>
 					
 					<br/>
-					<?php print $this->Form->end('Gravar'); ?>
+					<?php print $this->Form->end(array('label'=>__('Gravar'),'class'=>'btn btn-primary','div'=>array('class'=>'form-actions'))); ?>
 					
 				</div>
 				

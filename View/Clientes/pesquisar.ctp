@@ -81,56 +81,58 @@ label.required:after {
 				
 			</div>
 			
-			<?php print $this->Form->end(__('Pesquisar')); ?>
+			<?php print $this->Form->end(array('label'=>__('Pesquisar'))); ?>
 
 			<?php if (isset($num_resultados) && $num_resultados > 0) : ?>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
-							<th><?php print $this->Paginator->sort('tipo_pessoa','Pessoa'); ?></th>
-							<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
-							<th><?php print $this->Paginator->sort('nome_fantasia','Nome fantasia'); ?></th>
-							<th><?php print $this->Paginator->sort('cidade','Cidade'); ?></th>
-							<th>CPF/CNPJ</th>
-							<th>RG/IE</th>
-							<th><?php print $this->Paginator->sort('usuario_cadastrou','Usuário cadastrou'); ?></th>
-							<th colspan="2">Ações</th>
-						</tr>
-					</thead>
-
-					<tbody>
-						<?php foreach ($resultados as $r) : ?>
+				<fieldset>
+					<legend><?php print __('Resultados'); ?></legend>
+					
+					<table class="table table-striped">
+						<thead>
 							<tr>
-								<td><?php print $r['Cliente']['id']; ?></td>
-								<td><?php print $r['Cliente']['tipo_pessoa']; ?></td>
-								<td><?php print $this->Html->link($r['Cliente']['nome'],'editar/' . $r['Cliente']['id']) ;?></td>
-								<td><?php print $r['Cliente']['nome_fantasia']; ?></td>
-								<td><?php print $r['Cliente']['cidade']; ?></td>
-								<td><?php print $r['Cliente']['cpf'].$r['Cliente']['cnpj']; ?></td>
-								<td><?php print $r['Cliente']['rg'].$r['Cliente']['inscricao_estadual']; ?></td>
-								<td><?php print $r['Usuario']['login']; ?></td>
-								<td>
-									<?php print $this->element('painel_detalhar',array('id'=>$r['Cliente']['id'])) ;?>
-								</td>
-								<td>
-									<?php print $this->element('painel_editar',array('id'=>$r['Cliente']['id'])) ;?>
-								</td>
+								<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
+								<th><?php print $this->Paginator->sort('tipo_pessoa','Pessoa'); ?></th>
+								<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
+								<th><?php print $this->Paginator->sort('nome_fantasia','Nome fantasia'); ?></th>
+								<th><?php print $this->Paginator->sort('cidade','Cidade'); ?></th>
+								<th>CPF/CNPJ</th>
+								<th>RG/IE</th>
+								<th><?php print $this->Paginator->sort('usuario_cadastrou','Usuário cadastrou'); ?></th>
+								<th colspan="2">Ações</th>
 							</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
+						</thead>
 
-				<?php
-				$this->Paginator->options (array (
-					'update' => '#conteudo',
-					'before' => $this->Js->get('.indicador_carregando')->effect('fadeIn', array('buffer' => false)),
-					'complete' => $this->Js->get('.indicador_carregando')->effect('fadeOut', array('buffer' => false)),
-				));
-				print $this->Paginator->pagination();
+						<tbody>
+							<?php foreach ($resultados as $r) : ?>
+								<tr>
+									<td><?php print $r['Cliente']['id']; ?></td>
+									<td><?php print $r['Cliente']['tipo_pessoa']; ?></td>
+									<td><?php print $this->Html->link($r['Cliente']['nome'],'editar/' . $r['Cliente']['id']) ;?></td>
+									<td><?php print $r['Cliente']['nome_fantasia']; ?></td>
+									<td><?php print $r['Cliente']['cidade']; ?></td>
+									<td><?php print $r['Cliente']['cpf'].$r['Cliente']['cnpj']; ?></td>
+									<td><?php print $r['Cliente']['rg'].$r['Cliente']['inscricao_estadual']; ?></td>
+									<td><?php print $r['Usuario']['login']; ?></td>
+									<td>
+										<?php print $this->element('painel_detalhar',array('id'=>$r['Cliente']['id'])) ;?>
+									</td>
+									<td>
+										<?php print $this->element('painel_editar',array('id'=>$r['Cliente']['id'])) ;?>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
 
-			endif;
-			?>
+					<?php
+					$this->Paginator->options (array (
+						'update' => '#conteudo',
+						'before' => $this->Js->get('.indicador_carregando')->effect('fadeIn', array('buffer' => false)),
+						'complete' => $this->Js->get('.indicador_carregando')->effect('fadeOut', array('buffer' => false)),
+					));
+					print $this->Paginator->pagination(); ?>
+				</fieldset>
+			<?php endif; ?>
 		</fieldset>
 	
 	</div>

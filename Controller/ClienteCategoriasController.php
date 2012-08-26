@@ -29,6 +29,7 @@ class ClienteCategoriasController extends AppController {
 			
 			if ($this->ClienteCategoria->save($this->request->data)) {
 				$this->Session->setFlash('Categoria de cliente cadastrada com sucesso.','flash_sucesso');
+				unset($this->request->data);
 				if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect($this->referer(array('action' => 'index')));
 				}
@@ -58,6 +59,7 @@ class ClienteCategoriasController extends AppController {
 			$this->request->data['ClienteCategoria']['id'] = $id;
 			
 			if ($this->ClienteCategoria->save($this->request->data)) {
+				unset($this->request->data);
 				$this->Session->setFlash('Categoria de cliente atualizada com sucesso.','flash_sucesso');
 				if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect(array('action'=>'index'));

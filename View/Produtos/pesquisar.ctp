@@ -32,7 +32,7 @@ label.required:after {
 			print $this->Form->input('situacao',array('label'=>__('Situação'),'options'=>$opcoes_situacoes));
 			?>
 			
-			<?php print $this->Form->end(__('Pesquisar')); ?>
+			<?php print $this->Form->end(array('label'=>__('Pesquisar'))); ?>
 
 			<?php if (isset($num_resultados) && $num_resultados > 0) : ?>
 				<table class="table table-striped">

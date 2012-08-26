@@ -5,10 +5,10 @@
 </script>
 
 <?php
-print $this->Html->script('pedido_venda');
 print $this->Html->script('formatar_moeda');
+print $this->Html->script('pedido_venda');
 if ($this->Ajax->isAjax()) {
-	print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'PedidoVenda','update'=>'conteudo_ajax'));
+	print $this->Ajax->form('editar','post',array('autocomplete'=>'off','model'=>'PedidoVenda','update'=>'conteudo_ajax'));
 }
 else {
 	print $this->Form->create('PedidoVenda',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));
@@ -20,7 +20,7 @@ else {
 	<div class="span12">
 		
 		<fieldset>
-			<legend class="descricao_cabecalho"><?php print __('Cadastrar pedido de venda'); ?></legend>
+			<legend class="descricao_cabecalho"><?php print __('Editar pedido de venda'); ?></legend>
 
 			<div class="row-fluid">
 				
@@ -32,67 +32,62 @@ else {
 							Ações
 						</li>
 						<li>
-							<a href="<?php print $this->Html->url(array('controller'=>'ServicoOrdens','action'=>'index'));?>" onclick="formulario_cancelar(); return false;">
+							<a href="<?php print $this->Html->url(array('controller'=>'PedidoVendas','action'=>'index'));?>" onclick="return(confirm('Cancelar edição?'));">
 								<i class="icon-remove"></i>
 								Cancelar
 							</a>
 						</li>
 
 						<li class="nav-header">
-							Ordens de serviço
+							Pedidos de venda
 						</li>
-						<li class="active">
-							<a href="<?php print $this->Html->url(array('controller'=>'ServicoOrdens','action'=>'cadastrar'));?>">
+						<li>
+							<a href="<?php print $this->Html->url(array('controller'=>'PedidoVendas','action'=>'cadastrar'));?>">
 								<i class="icon-file"></i>
 								Cadastrar
 							</a>
 						</li>
-						<li>
-							<a href="<?php print $this->Html->url(array('controller'=>'ServicoOrdens','action'=>'editar'));?>">
+						<li class="active">
+							<a href="<?php print $this->Html->url(array('controller'=>'PedidoVendas','action'=>'editar'));?>">
 								<i class="icon-edit"></i>
 								Editar
 							</a>
 						</li>
 						<li>
-							<a href="<?php print $this->Html->url(array('controller'=>'ServicoOrdens','action'=>'pesquisar'));?>">
+							<a href="<?php print $this->Html->url(array('controller'=>'PedidoVendas','action'=>'pesquisar'));?>">
 								<i class="icon-filter"></i>
 								Pesquisar
 							</a>
 						</li>
 						<li>
-							<a href="<?php print $this->Html->url(array('controller'=>'ServicoOrdens','action'=>'index'));?>">
+							<a href="<?php print $this->Html->url(array('controller'=>'PedidoVendas','action'=>'index'));?>">
 								<i class="icon-list"></i>
 								Listar
 							</a>
 						</li>
 
 						<li class="nav-header">
-							Serviços
+							Produtos
 						</li>
 						<li>
-							<a href="<?php print $this->Html->url(array('controller'=>'Servicos','action'=>'cadastrar'));?>">
+							<a href="<?php print $this->Html->url(array('controller'=>'Produtos','action'=>'cadastrar'));?>">
 								<i class="icon-file"></i>
 								Cadastrar
 							</a>
-							<a href="<?php print $this->Html->url(array('controller'=>'Servicos','action'=>'index'));?>">
+							<a href="<?php print $this->Html->url(array('controller'=>'Produtos','action'=>'editar'));?>">
+								<i class="icon-edit"></i>
+								Editar
+							</a>
+							<a href="<?php print $this->Html->url(array('controller'=>'Produtos','action'=>'pesquisar'));?>">
+								<i class="icon-filter"></i>
+								Pesquisar
+							</a>
+							<a href="<?php print $this->Html->url(array('controller'=>'Produtos','action'=>'index'));?>">
 								<i class="icon-list"></i>
 								Listar
 							</a>
 						</li>
 
-						<li class="nav-header">
-							Categorias de serviço
-						</li>
-						<li>
-							<a href="<?php print $this->Html->url(array('controller'=>'ServicoCategorias','action'=>'cadastrar'));?>">
-								<i class="icon-file"></i>
-								Cadastrar
-							</a>
-							<a href="<?php print $this->Html->url(array('controller'=>'ServicoCategorias','action'=>'index'));?>">
-								<i class="icon-list"></i>
-								Listar
-							</a>
-						</li>
 					</ul>
 
 				</div>
@@ -122,9 +117,9 @@ else {
 								</div>
 								<div class="span6">
 									<?php
-									print $this->Form->input('data_venda',array('label'=>__('Data da venda'),'type'=>'text','class'=>'mascara_data datepicker','class'=>'span12'));
-									print $this->Form->input('data_saida',array('label'=>__('Data da saída'),'type'=>'text','class'=>'mascara_data datepicker','class'=>'span12'));
-									print $this->Form->input('data_entrega',array('label'=>__('Data entrega'),'type'=>'text','class'=>'mascara_data datepicker','class'=>'span12'));
+									print $this->Form->input('data_venda',array('label'=>__('Data da venda'),'type'=>'text','class'=>'datepicker span12'));
+									print $this->Form->input('data_saida',array('label'=>__('Data da saída'),'type'=>'text','class'=>'mascara_data datepicker span12'));
+									print $this->Form->input('data_entrega',array('label'=>__('Data entrega'),'type'=>'text','class'=>'mascara_data datepicker span12'));
 									print $this->Form->input('desconto',array('label'=>__('Desconto'),'type'=>'text','class'=>'span12'));
 									?>
 								</div>
@@ -152,7 +147,7 @@ else {
 								</fieldset>
 								<br/>
 
-								<fieldset id="fieldset_produtos_incluidos">
+								<fieldset id="fieldset_produtos_incluidos" class="listagem_itens">
 									<legend>Produtos incluídos</legend>
 									
 									<table class="table table-striped">
@@ -202,7 +197,7 @@ else {
 					</div>
 					
 					<br/>
-					<?php print $this->Form->end('Gravar'); ?>
+					<?php print $this->Form->end(array('label'=>__('Gravar'),'class'=>'btn btn-primary','div'=>array('class'=>'form-actions'))); ?>
 					
 				</div>
 				

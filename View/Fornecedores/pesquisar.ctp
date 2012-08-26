@@ -47,7 +47,12 @@ label.required:after {
 			<legend class="descricao_cabecalho">Pesquisar fornecedor</legend>
 
 			<?php
-			print $this->Form->create(null,array('controller'=>'fornecedores','action'=>'pesquisar','autocomplete'=>'off'));
+			if ($this->Ajax->isAjax()) {
+				print $this->Ajax->form('pesquisar','post',array('autocomplete'=>'off','model'=>'Fornecedor','update'=>'conteudo_ajax'));
+			}
+			else {
+				print $this->Form->create(null,array('controller'=>'fornecedores','action'=>'pesquisar','autocomplete'=>'off'));
+			}
 			?>
 
 			<div class="row-fluid">
@@ -82,56 +87,57 @@ label.required:after {
 			</div>
 			
 			
-			<?php print $this->Form->end(__('Pesquisar')); ?>
+			<?php print $this->Form->end(array('label'=>__('Pesquisar'))); ?>
 
 			<?php if (isset($num_resultados) && $num_resultados > 0) : ?>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
-							<th><?php print $this->Paginator->sort('tipo_pessoa','Pessoa'); ?></th>
-							<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
-							<th><?php print $this->Paginator->sort('nome_fantasia','Nome fantasia'); ?></th>
-							<th><?php print $this->Paginator->sort('cidade','Cidade'); ?></th>
-							<th>CPF/CNPJ</th>
-							<th>RG/IE</th>
-							<th><?php print $this->Paginator->sort('usuario_cadastrou','Usuário cadastrou'); ?></th>
-							<th colspan="2">Ações</th>
-						</tr>
-					</thead>
-
-					<tbody>
-						<?php foreach ($resultados as $r) : ?>
+				<fieldset>
+					<legend><?php print __('Resultados'); ?></legend>
+					<table class="table table-striped">
+						<thead>
 							<tr>
-								<td><?php print $r['Fornecedor']['id']; ?></td>
-								<td><?php print $r['Fornecedor']['tipo_pessoa']; ?></td>
-								<td><?php print $this->Html->link($r['Fornecedor']['nome'],'editar/' . $r['Fornecedor']['id']) ;?></td>
-								<td><?php print $r['Fornecedor']['nome_fantasia']; ?></td>
-								<td><?php print $r['Fornecedor']['cidade']; ?></td>
-								<td><?php print $r['Fornecedor']['cpf'].$r['Fornecedor']['cnpj']; ?></td>
-								<td><?php print $r['Fornecedor']['rg'].$r['Fornecedor']['inscricao_estadual']; ?></td>
-								<td><?php print $r['Usuario']['login']; ?></td>
-								<td>
-									<?php print $this->element('painel_detalhar',array('id'=>$r['Fornecedor']['id'])) ;?>
-								</td>
-								<td>
-									<?php print $this->element('painel_editar',array('id'=>$r['Fornecedor']['id'])) ;?>
-								</td>
+								<th><?php print $this->Paginator->sort('id','Cód'); ?></th>
+								<th><?php print $this->Paginator->sort('tipo_pessoa','Pessoa'); ?></th>
+								<th><?php print $this->Paginator->sort('nome','Nome'); ?></th>
+								<th><?php print $this->Paginator->sort('nome_fantasia','Nome fantasia'); ?></th>
+								<th><?php print $this->Paginator->sort('cidade','Cidade'); ?></th>
+								<th>CPF/CNPJ</th>
+								<th>RG/IE</th>
+								<th><?php print $this->Paginator->sort('usuario_cadastrou','Usuário cadastrou'); ?></th>
+								<th colspan="2">Ações</th>
 							</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
+						</thead>
 
-				<?php
-				$this->Paginator->options (array (
-					'update' => '#conteudo',
-					'before' => $this->Js->get('.indicador_carregando')->effect('fadeIn', array('buffer' => false)),
-					'complete' => $this->Js->get('.indicador_carregando')->effect('fadeOut', array('buffer' => false)),
-				));
-				print $this->Paginator->pagination();
+						<tbody>
+							<?php foreach ($resultados as $r) : ?>
+								<tr>
+									<td><?php print $r['Fornecedor']['id']; ?></td>
+									<td><?php print $r['Fornecedor']['tipo_pessoa']; ?></td>
+									<td><?php print $this->Html->link($r['Fornecedor']['nome'],'editar/' . $r['Fornecedor']['id']) ;?></td>
+									<td><?php print $r['Fornecedor']['nome_fantasia']; ?></td>
+									<td><?php print $r['Fornecedor']['cidade']; ?></td>
+									<td><?php print $r['Fornecedor']['cpf'].$r['Fornecedor']['cnpj']; ?></td>
+									<td><?php print $r['Fornecedor']['rg'].$r['Fornecedor']['inscricao_estadual']; ?></td>
+									<td><?php print $r['Usuario']['login']; ?></td>
+									<td>
+										<?php print $this->element('painel_detalhar',array('id'=>$r['Fornecedor']['id'])) ;?>
+									</td>
+									<td>
+										<?php print $this->element('painel_editar',array('id'=>$r['Fornecedor']['id'])) ;?>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
 
-			endif;
-			?>
+					<?php
+					$this->Paginator->options (array (
+						'update' => '#conteudo',
+						'before' => $this->Js->get('.indicador_carregando')->effect('fadeIn', array('buffer' => false)),
+						'complete' => $this->Js->get('.indicador_carregando')->effect('fadeOut', array('buffer' => false)),
+					));
+					print $this->Paginator->pagination(); ?>
+				</fieldset>
+			<?php endif; ?>
 		</fieldset>
 	
 	</div>

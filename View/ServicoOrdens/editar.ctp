@@ -31,7 +31,7 @@ else {
 				Ações
 			</li>
 			<li>
-				<a href="<?php print $this->Html->url(array('controller'=>'ServicoOrdens','action'=>'index'));?>" onclick="formulario_cancelar(); return false;">
+				<a href="<?php print $this->Html->url(array('controller'=>'ServicoOrdens','action'=>'index'));?>" onclick="return(confirm('Cancelar edição?'));">
 					<i class="icon-remove"></i>
 					Cancelar
 				</a>
@@ -226,7 +226,7 @@ else {
 		
 		<div class="clearfix">&nbsp;</div>
 		
-		<?php print $this->Form->end('Gravar'); ?>
+		<?php print $this->Form->end(array('label'=>__('Gravar'),'class'=>'btn btn-primary','div'=>array('class'=>'form-actions'))); ?>
 		
 	</div> <!-- span10 -->
 </div> <!-- row-fluid -->

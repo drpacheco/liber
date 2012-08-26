@@ -216,7 +216,7 @@ function abrir_dialogo_ajax (url, largura, altura, titulo) {
 		height: altura,
 		title: titulo
 	});
-
+	
 	// carrega conteudo remoto
 	dialog.load (
 		url,

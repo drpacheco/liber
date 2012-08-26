@@ -1,4 +1,4 @@
-<?php print $this->Html->script('Cliente'); ?>
+<?php print $this->Html->script('cliente'); ?>
 
 <div class="row-fluid">
 	
@@ -9,7 +9,7 @@
 				Ações
 			</li>
 			<li>
-				<a href="<?php print $this->Html->url(array('controller'=>'Clientes','action'=>'index'));?>" onclick="formulario_cancelar(); return false;">
+				<a href="<?php print $this->Html->url(array('controller'=>'Clientes','action'=>'index'));?>" onclick="return(confirm('Cancelar edição?'));">
 					<i class="icon-remove"></i>
 					Cancelar
 				</a>
@@ -127,7 +127,7 @@
 			
 		</fieldset>
 
-		<?php print $this->Form->end(__('Gravar')); ?>
+		<?php print $this->Form->end(array('label'=>__('Gravar'),'class'=>'btn btn-primary','div'=>array('class'=>'form-actions'))); ?>
 
 	</div>
 	

@@ -27,6 +27,7 @@ class FornecedorCategoriasController extends AppController {
 			
 			if ($this->FornecedorCategoria->save($this->request->data)) {
 				$this->Session->setFlash('Categoria de fornecedor cadastrada com sucesso.','flash_sucesso');
+				unset($this->request->data);
 				if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect($this->referer(array('action' => 'index')));
 				}
@@ -56,6 +57,7 @@ class FornecedorCategoriasController extends AppController {
 			$this->request->data['FornecedorCategoria']['id'] = $id;
 			
 			if ($this->FornecedorCategoria->save($this->request->data)) {
+				unset($this->request->data);
 				$this->Session->setFlash('Categoria de fornecedor atualizada com sucesso.','flash_sucesso');
 				if ( ! $this->RequestHandler->isAjax() ) {
 					$this->redirect(array('action'=>'index'));

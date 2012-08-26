@@ -292,7 +292,7 @@
 			<li><?php print $this->Html-> link('Opções', "/sistemaOpcoes/",array('class' => 'ajax_link'));?></li>
 			<li>
 				<?php print $this->Html-> link('Ajuda', "/sistema/ajuda",
-					   array('class' => 'ajax_link_dialog',
+					   array('class' => '-ajax_link_dialog',
 						  'data-ajax_link_dialog_altura'=>'500',
 						  'data-ajax_link_dialog_largura'=>'500',
 						  'data-ajax_link_dialog_titulo'=>'Ajuda'));
@@ -300,13 +300,13 @@
 			</li>
 			<li>
 				<?php print $this->Html-> link('Sobre', "/sistema/sobre",
-				   array('class' => 'ajax_link_dialog',
+				   array('class' => '-ajax_link_dialog',
 						  'data-ajax_link_dialog_altura'=>'500',
 						  'data-ajax_link_dialog_largura'=>'500',
 						  'data-ajax_link_dialog_titulo'=>'Sobre'));
 				?>
 			</li>
-			<li><?php print $this->Html-> link('Sair', "/usuarios/logout");?></li>
+			<li><?php print $this->Html-> link('Sair', "/usuarios/logout",array('class'=>'nao-ajax'),'Deseja realmente sair?');?></li>
 		</ul>
 	</li>
 </ul>

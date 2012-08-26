@@ -17,6 +17,7 @@
 			print $this->Html->css('bootstrap-responsive.min');
 			print $this->fetch('css');
 			print $this->fetch('script');;
+			print $this->Js->writeBuffer();
 			print $this->Html->script('jquery');
 		?>
 		

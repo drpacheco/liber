@@ -38,7 +38,7 @@
 			
 		</fieldset>
 		
-		<?php print $this->Form->end('Gravar'); ?>
+		<?php print $this->Form->end(array('label'=>__('Gravar'),'class'=>'btn btn-primary','div'=>array('class'=>'form-actions'))); ?>
 		
 	</div>
 	

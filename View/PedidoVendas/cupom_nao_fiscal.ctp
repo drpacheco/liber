@@ -21,7 +21,7 @@
 	
 	<div id="cabecalho">
 		
-		<h1 class="destaque" style="text-align: center;"> Liber software </h1>
+		<h1 style="font-weight: bold;" style="text-align: center;"> Liber software </h1>
 		<p>
 			<?php print "{$venda['Empresa']['nome']} - {$venda['Empresa']['logradouro']} {$venda['Empresa']['numero']}
 					{$venda['Empresa']['complemento']} {$venda['Empresa']['bairro']}
@@ -67,9 +67,9 @@
 	<br/>
 	
 	<p>
-		<span class="destaque">Valor bruto</span>: R$<?php print $this->Geral->numero2moeda($venda['PedidoVenda']['valor_bruto']); ?>
+		<span style="font-weight: bold;">Valor bruto</span>: R$<?php print $this->Geral->numero2moeda($venda['PedidoVenda']['valor_bruto']); ?>
 		<br/>
-		<span class="destaque">Valor total</span>: R$<?php print $this->Geral->numero2moeda($venda['PedidoVenda']['valor_liquido']); ?>
+		<span style="font-weight: bold;">Valor total</span>: R$<?php print $this->Geral->numero2moeda($venda['PedidoVenda']['valor_liquido']); ?>
 	</p>
 	
 	<p>

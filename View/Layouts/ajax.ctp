@@ -4,12 +4,13 @@
 	print $this->fetch('meta');
 	print $this->fetch('css');
 	print $this->fetch('script');
+	print $this->Js->writeBuffer();
 	?>	
 	
 	<div id="flash_ajax">
 		<?php
 		print $this->Session->flash();
-		print $this->Session->flash('auth');
+		print $this->Session->flash('auth', array('element' => 'flash_notificacao'));
 		?>
 	</div>
 	

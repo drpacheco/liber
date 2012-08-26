@@ -3,7 +3,6 @@ jQuery(document).ready(function() {
 	//   Principais funções Jquery com ajax
 	// ######################################
 	
-	// #XXX submissao nao está funcionando
 	// abre links com a classe "ajax_link_dialog" via ajax e jquery ui
 	$('a.ajax_link_dialog').click(function() {
 		url = this.href;
@@ -36,14 +35,16 @@ jQuery(document).ready(function() {
 	});
 	*/
 	
-	$('a.ajax_link').click(function(objetoEvento) {
+	//$('a.ajax_link').click(function(objetoEvento) {
+	$('a').click(function(objetoEvento) {
+		if ( $(this).attr('class') == 'nao-ajax' ) return true;
 		var objetoLink = $(this);
 		var areaConteudo = $('#conteudo');
 		
 		var requisicaoAjax = $.ajax({
 			url: objetoLink.attr('href'),
 			type: 'GET',
-			cache: false,
+			cache: true,
 			dataType: 'html'
 		});
 		requisicaoAjax
@@ -53,7 +54,13 @@ jQuery(document).ready(function() {
 				document.title = "Liber";
 			})
 			.fail(function(jqXHR, textStatus) {
-				areaConteudo.html('<h1>Erro ao carregar a página.</h1>'+jqXHR.responseText);
+				alert('Erro ao carregar a página.');
+				var mensagemErro = '<div class="alert alert-error">\n\
+									<button class="close" data-dismiss="alert" type="button">×</button>\n\
+									<strong>Erro ao carregar a página, tente novamente.</strong> '+jqXHR.responseText+'\n\
+								</div>';
+				$('#flash').html(mensagemErro);
+				$('#flash_ajax').html(mensagemErro);
 			})
 			/*.always(function(dados, statusTexto, objeto) {
 				// a cada requisicao
@@ -102,14 +109,14 @@ jQuery(document).ready(function() {
 			liber_log.html(liber_log_ajax.html());
 			liber_log_ajax.html('');
 			// cria logs ajax
-			*/if( console ) {
+			if( console ) {
 				console.group('Link ajax');
 				console.log('Status %d (%s). ReadyState: %d',jqXHR.status,jqXHR.statusText,jqXHR.readyState);
 				console.log('Objeto: ',jqXHR);
 				console.groupEnd();
 			}
 		//}
-	});
+	*/});
 	
 	/*
 	 * Este evento é chamado caso alguma requisição Ajax tenha algum erro.
@@ -117,10 +124,13 @@ jQuery(document).ready(function() {
 	$('#conteudo').ajaxError(function(evento, jqxhr, opcoes, excecao) {
 		// Acesso negado
 		if ( jqxhr.status == 403 ) {
-			$('#conteudo').append(' Acesso negado, redirecionando para a página de login.');
-			setTimeout(function(){
-				window.location = site_raiz;
-			},5000);
+			var mensagemErro = '<div class="alert alert-error">\n\
+								<button class="close" data-dismiss="alert" type="button">×</button>\n\
+								<strong>Sessão expirada.</strong>\n\
+								Faça <a href="'+site_raiz+'">login</a> novamente\n\
+							</div>';
+			$('#flash').html(mensagemErro);
+			$('#flash_ajax').html(mensagemErro);
 		}
 	});
 	

@@ -13,6 +13,7 @@
 			print $this->Html->script('jquery');
 			print $this->Html->script('auxiliares');
 			print $this->fetch('script');
+			print $this->Js->writeBuffer();
 		?>
 	</head>
 	
