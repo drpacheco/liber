@@ -50,7 +50,7 @@
 		<div id="rodape" class="container-fluid">
 			<span class="texto_label">Usuário</span>: <?php print AuthComponent::user('nome'); ?> &nbsp;&nbsp;&nbsp;&nbsp;
 			<span class="texto_label">Empresa</span>: <?php print AuthComponent::user('empresa_nome');  ?>
-
+			
 			<span style="float: right;">
 				<a style="text-decoration: none" href="#menu">Topo &uarr;</a>
 			</span>

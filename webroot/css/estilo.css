@@ -132,7 +132,7 @@ div .grafico {
 	background-image: url("../img/autocomplete2.png") !important;
 	background-position: left !important;
 	background-repeat: no-repeat !important;
-	padding-left: 27px !important;
+	padding-left: 31px !important;
 }
 .ui-autocomplete-input { background: #DBDBDB; }
 .carregando { background: url('../img/carregando.gif') center no-repeat !important}

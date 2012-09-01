@@ -133,8 +133,8 @@ class UsuariosController extends AppController {
 			    )
 			);
 			$this->UsuarioAcessoLog->save($dadosAcesso);
-			$this->Session->delete('Usuario.sessao_id'); // caso reste de uma seção anterior
-			$this->Session->write('Usuario.sessao_id', $this->UsuarioAcessoLog->id);
+			$this->Session->delete('Auth.User.sessao_id'); // caso reste de uma seção anterior
+			$this->Session->write('Auth.User.sessao_id', $this->UsuarioAcessoLog->id);
 			return $this->redirect($this->Auth->redirect());
 		}
 		else {
@@ -148,9 +148,9 @@ class UsuariosController extends AppController {
 		if ($this->Auth->user()) {
 			$this->Usuario->id = $this->Auth->user('id');
 			$this->Usuario->save( array('ultimo_logout'=>date('Y-m-d H:i:s')) );
-			if ( $this->Session->read('Usuario.sessao_id') ) {
+			if ( $this->Session->read('Auth.User.sessao_id') ) {
 				$this->loadModel('UsuarioAcessoLog');
-				$this->UsuarioAcessoLog->id = $this->Session->read('Usuario.sessao_id');
+				$this->UsuarioAcessoLog->id = $this->Session->read('Auth.User.sessao_id');
 				$d = array (
 				    'UsuarioAcessoLog' => array (
 					   'data_logout' => date('Y-m-d'),

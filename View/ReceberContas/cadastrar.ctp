@@ -1,7 +1,7 @@
 <script type="text/javascript">
 	// variaveis a serem utilizadas no arquivo conta_receber.js
 	var ajaxPesqCliente = "<?php print $this->Html->url(array('controller'=>'Clientes','action'=>'pesquisaAjaxCliente')); ?>/";
-	var ajaxPesqFornecedor = "<?php print $this->Html->url(array('controller'=>'ReceberContas','action'=>'pesquisaAjaxFornecedor')); ?>/";
+	var ajaxPesqFornecedor = "<?php print $this->Html->url(array('controller'=>'Fornecedores','action'=>'pesquisaAjaxFornecedor')); ?>/";
 </script>
 
 <?php

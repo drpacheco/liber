@@ -4,7 +4,7 @@
 		
 		<fieldset>
 			<legend class="descricao_cabecalho">
-				Exibindo os fornecedores cadastrados
+				Exibindo os serviços cadastrados
 				<?php
 				if ($this->Ajax->isAjax()) {
 					print $this->element('painel_index_ajax');

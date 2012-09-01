@@ -107,7 +107,7 @@ else {
 									<?php
 									$this->Form->defineRow(array(2,10));
 									print $this->Form->input('cliente_id', array('label'=>__('Cliente'),'type'=>'text','class'=>'span12'));
-									print $this->Form->input('pesquisar_cliente', array('label'=>__('Nome'),'id'=>'pesquisar_cliente','class'=>'span12'));
+									print $this->Form->input('pesquisar_nome_cliente', array('label'=>__('Nome'),'class'=>'span12'));
 									$this->Form->restoreDefaults();
 									print $this->Form->input('forma_pagamento_id',array('label'=>__('Forma de pagamento'),'options'=>$opcoes_forma_pamamento,'class'=>'span12'));
 									unset($opcoes_situacoes['C']); unset($opcoes_situacoes['T']);
@@ -136,10 +136,10 @@ else {
 											$this->Form->defineRow(array(2,4,2,2,2));
 											print $this->Form->input('Produto.id',array('label'=>'Cód.','type'=>'text','class'=>'span12'));
 											print $this->Form->input('Produto.nome',array('label'=>'Nome','type'=>'text','class'=>'span12'));
-											print $this->Form->input('Produto.quantidade_estoque',array('label'=>'Cód.','type'=>'text','readonly'=>'readonly','class'=>'span12'));
-											print $this->Form->input('Produto.quantidade',array('label'=>'Cód.','type'=>'text','class'=>'span12'));
-											print $this->Form->input('Produto.preco_venda',array('label'=>'Cód.','type'=>'text','class'=>'span12'));
-											print $this->Form->input('Produto.categoria',array('label'=>'Cód.','type'=>'hidden','class'=>'span12'));
+											print $this->Form->input('Produto.quantidade_estoque',array('label'=>'Em estoque','type'=>'text','readonly'=>'readonly','class'=>'span12'));
+											print $this->Form->input('Produto.quantidade',array('label'=>'Qtd.','type'=>'text','class'=>'span12'));
+											print $this->Form->input('Produto.preco_venda',array('label'=>'Preço','type'=>'text','class'=>'span12'));
+											print $this->Form->input('Produto.categoria',array('type'=>'hidden','class'=>'span12'));
 											?>
 										</div>
 										<input type="button" value="Adicionar" class="btn btn-success" style="float: left; width: 10%;" id="ProdutoAdicionar" />

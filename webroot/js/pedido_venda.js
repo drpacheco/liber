@@ -20,26 +20,26 @@ jQuery(document).ready(function() {
 	
 	//pesquisa cliente
 	//autocomplete
-	$("#pesquisar_cliente").autocomplete({
+	$("#PedidoVendaPesquisarNomeCliente").autocomplete({
 		source: ajaxPesqCliente + "nome",
 		minLength: 3,
 		select: function(event, ui) {
 			if (ui.item.bloqueado) {
 				alert ('Cliente está bloqueado!');
-				$('#pesquisar_cliente').val('');
+				$('#PedidoVendaPesquisarNomeCliente').val('');
 				$("#PedidoVendaClienteId").val('');
 				event.preventDefault();
 				return null;
 			}
 			if (ui.item.inativo) {
 				alert ('Cliente está inativo!');
-				$('#pesquisar_cliente').val('');
+				$('#PedidoVendaPesquisarNomeCliente').val('');
 				$("#PedidoVendaClienteId").val('');
 				event.preventDefault();
 				return null;
 			}
 			$("#PedidoVendaClienteId").val(ui.item.id);
-			$('#pesquisar_cliente').val(ui.item.nome);
+			$('#PedidoVendaPesquisarNomeCliente').val(ui.item.nome);
 		}
 	});
 	// ao digitar o codigo
@@ -49,7 +49,7 @@ jQuery(document).ready(function() {
 		$.getJSON(ajaxPesqCliente + 'codigo', {'term': codigo}, function(data) {
 			if (data == null) {
 				alert ('Cliente com o código '+codigo+' não foi encontrado!');
-				$('#pesquisar_cliente').val('');
+				$('#PedidoVendaPesquisarNomeCliente').val('');
 				$("#PedidoVendaClienteId")
 					.val('')
 					.focus();
@@ -58,18 +58,18 @@ jQuery(document).ready(function() {
 				data = data[0];
 				if (data.bloqueado) {
 					alert ('Cliente está bloqueado!');
-					$('#pesquisar_cliente').val('');
+					$('#PedidoVendaPesquisarNomeCliente').val('');
 					$("#PedidoVendaClienteId").val('')
 					return null;
 				}
 				if (data.inativo) {
 					alert ('Cliente está inativo!');
-					$('#pesquisar_cliente').val('');
+					$('#PedidoVendaPesquisarNomeCliente').val('');
 					$("#PedidoVendaClienteId").val('')
 					return null;
 				}
 				$("#PedidoVendaClienteId").val(data.id);
-				$('#pesquisar_cliente').val(data.nome);
+				$('#PedidoVendaPesquisarNomeCliente').val(data.nome);
 			}
 		});
 	});

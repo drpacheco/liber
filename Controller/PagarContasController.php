@@ -36,6 +36,22 @@ class PagarContasController extends AppController {
 		return null;
 	}
 	
+	function _recuperar_itens_dinamicos() {
+		if ($this->request->data['PagarConta']['cliente_fornecedor_id']) {
+			if (strtoupper($this->request->data['PagarConta']['eh_cliente_ou_fornecedor']) == 'C') {
+				$this->PagarConta->Cliente->recursive = -1;
+				$clienteNome = $this->PagarConta->Cliente->findById($this->request->data['PagarConta']['cliente_fornecedor_id'],array('Cliente.nome'));
+				$clienteFornecedorNome = $clienteNome['Cliente']['nome'];
+			}
+			else if (strtoupper($this->request->data['PagarConta']['eh_cliente_ou_fornecedor']) == 'F') {
+				$this->PagarConta->Fornecedor->recursive = -1;
+				$fornecedorNome = $this->PagarConta->Fornecedor->findById($this->request->data['PagarConta']['cliente_fornecedor_id'],array('Fornecedor.nome'));
+				$clienteFornecedorNome = $fornecedorNome['Fornecedor']['nome'];
+			}
+			$this->request->data['PagarConta'] = array_merge ($this->request->data['PagarConta'], array('pesquisar_cliente_fornecedor'=>$clienteFornecedorNome) );
+		}
+	}
+	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'ajax';
@@ -58,6 +74,7 @@ class PagarContasController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
+			$this->_recuperar_itens_dinamicos();
 			if (strtoupper($this->request->data['PagarConta']['eh_cliente_ou_fornecedor']) == 'C') {
 				$this->PagarConta->Cliente->recursive = -1;
 				$r = $this->PagarConta->Cliente->find('first',
@@ -106,10 +123,12 @@ class PagarContasController extends AppController {
 				$this->redirect(array('action'=>'index'));
 			}
 			else {
+				$this->_recuperar_itens_dinamicos();
 				$this->request->data['PagarConta']['data_vencimento'] = date('d/m/Y', strtotime($this->request->data['PagarConta']['data_vencimento']));
 			}
 		}
 		else {
+			$this->_recuperar_itens_dinamicos();
 			$this->request->data['PagarConta']['id'] = $id;
 			if (strtoupper($this->request->data['PagarConta']['eh_cliente_ou_fornecedor']) == 'C') {
 				$this->PagarConta->Cliente->recursive = -1;

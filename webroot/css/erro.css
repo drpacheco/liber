@@ -1,5 +1,5 @@
 body {
-     background: url('../img/bg_erro.jpg');
+     background: url('../img/bg_honeycomb.png');
 	color: #fff;
 	margin: 0;
 	font-size: 80%;
@@ -19,7 +19,7 @@ a:hover {
 	margin-right: auto;
 }
 #conteudo {
-	background-color: white;
+	background: rgba(255, 255, 255, 0.2);
 	color: #367889;
 	padding-top: 2px;
 	padding-left: 5px;
@@ -42,7 +42,7 @@ a:hover {
 	padding: 5px;
 	font-size: 120%;
 	line-height: 75px;
-	color: #000000;
+	color: #00273A;
 	text-decoration: none;
 }
 .link_botao:hover {

@@ -116,7 +116,7 @@ else {
 							'label'=>__('Código'),
 							'type'=>'text',
 							));
-						print $this->Form->input('Cliente_nome',array('label'=>__('Cliente nome'),'type'=>'text'));
+						print $this->Form->input('cliente_nome',array('label'=>__('Cliente nome'),'type'=>'text'));
 
 						$this->Form->defineRow(array(6,6));
 						print $this->Form->input('forma_pagamento_id',array('label'=>'Forma de pagamento','options'=>$opcoes_forma_pamamento));

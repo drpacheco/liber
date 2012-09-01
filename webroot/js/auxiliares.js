@@ -35,8 +35,8 @@ jQuery(document).ready(function() {
 	});
 	*/
 	
-	//$('a.ajax_link').click(function(objetoEvento) {
-	$('a').click(function(objetoEvento) {
+	$('a.ajax_link').click(function(objetoEvento) {
+	//$('a').click(function(objetoEvento) {
 		if ( $(this).attr('class') == 'nao-ajax' ) return true;
 		var objetoLink = $(this);
 		var areaConteudo = $('#conteudo');
@@ -44,7 +44,7 @@ jQuery(document).ready(function() {
 		var requisicaoAjax = $.ajax({
 			url: objetoLink.attr('href'),
 			type: 'GET',
-			cache: true,
+			cache: false,
 			dataType: 'html'
 		});
 		requisicaoAjax
@@ -127,7 +127,7 @@ jQuery(document).ready(function() {
 			var mensagemErro = '<div class="alert alert-error">\n\
 								<button class="close" data-dismiss="alert" type="button">×</button>\n\
 								<strong>Sessão expirada.</strong>\n\
-								Faça <a href="'+site_raiz+'">login</a> novamente\n\
+								Faça <a href="'+site_raiz+'/usuarios/login/">login</a> novamente\n\
 							</div>';
 			$('#flash').html(mensagemErro);
 			$('#flash_ajax').html(mensagemErro);

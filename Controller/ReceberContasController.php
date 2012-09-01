@@ -34,6 +34,22 @@ class ReceberContasController extends AppController {
 		return null;
 	}
 	
+	function _recuperar_itens_dinamicos() {
+		if ($this->request->data['ReceberConta']['cliente_fornecedor_id']) {
+			if (strtoupper($this->request->data['ReceberConta']['eh_cliente_ou_fornecedor']) == 'C') {
+				$this->ReceberConta->Cliente->recursive = -1;
+				$clienteNome = $this->ReceberConta->Cliente->findById($this->request->data['ReceberConta']['cliente_fornecedor_id'],array('Cliente.nome'));
+				$clienteFornecedorNome = $clienteNome['Cliente']['nome'];
+			}
+			else if (strtoupper($this->request->data['ReceberConta']['eh_cliente_ou_fornecedor']) == 'F') {
+				$this->ReceberConta->Fornecedor->recursive = -1;
+				$fornecedorNome = $this->ReceberConta->Fornecedor->findById($this->request->data['ReceberConta']['cliente_fornecedor_id'],array('Fornecedor.nome'));
+				$clienteFornecedorNome = $fornecedorNome['Fornecedor']['nome'];
+			}
+			$this->request->data['ReceberConta'] = array_merge ($this->request->data['ReceberConta'], array('pesquisar_cliente_fornecedor'=>$clienteFornecedorNome) );
+		}
+	}
+	
 	function index() {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'ajax';
@@ -57,6 +73,7 @@ class ReceberContasController extends AppController {
 		}
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
+			$this->_recuperar_itens_dinamicos();
 			if (strtoupper($this->request->data['ReceberConta']['eh_cliente_ou_fornecedor']) == 'C') {
 				$this->ReceberConta->Cliente->recursive = -1;
 				$r = $this->ReceberConta->Cliente->find('first',
@@ -105,10 +122,12 @@ class ReceberContasController extends AppController {
 				$this->redirect(array('action'=>'index'));
 			}
 			else {
+				$this->_recuperar_itens_dinamicos();
 				$this->request->data['ReceberConta']['data_vencimento'] = date('d/m/Y', strtotime($this->request->data['ReceberConta']['data_vencimento']));
 			}
 		}
 		else {
+			$this->_recuperar_itens_dinamicos();
 			$this->request->data['ReceberConta']['id'] = $id;
 			if (strtoupper($this->request->data['ReceberConta']['eh_cliente_ou_fornecedor']) == 'C') {
 				$this->ReceberConta->Cliente->recursive = -1;

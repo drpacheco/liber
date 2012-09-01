@@ -11,6 +11,8 @@ class ContasReceberComponent extends Component {
 		parent::__construct($collection, $settings);
 	}
 	
+	var $components = array('Session');
+	
 	/**
 	 * Gera conta a receber
 	 * Executar depois de se ter os dados prontos para serem inseridos no banco
@@ -50,7 +52,7 @@ class ContasReceberComponent extends Component {
 		$valor_a_receber = $valor_liquido / $numero_parcelas;
 		$valor_a_receber = number_format($valor_a_receber,2,'.','');
 		if ($valor_a_receber <= 0) {
-			$this->Session->setFlash('Valor da conta a receber é muito baixo!','flash_erro');
+			$this->Session->setFlash('Valor da conta a receber é menor que zero!','flash_erro');
 			return false;
 		}
 		$conta_receber['ReceberConta'] = array();
@@ -71,7 +73,7 @@ class ContasReceberComponent extends Component {
 						'plano_conta_id' => $dados['plano_conta_id'],
 						'data_vencimento' => date("Y-m-d",time()+3600*24*($parcela['dias_intervalo_parcela'])),
 						'situacao' => 'N',
-						'empresa_id' => $dados['empresa_id'],
+						'empresa_id' => AuthComponent::user('empresa_id'),
 					),
 				);
 				$conta_receber['ReceberConta'] = array_merge($conta_receber['ReceberConta'],$conta);

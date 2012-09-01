@@ -56,30 +56,33 @@ class ServicoOrdensController extends AppController {
 	}
 	
 	/**
-	* caso algum item seja enviado (erro na validacao, editando registro, etc),
-	* o insiro na pagina
+	* Recupero itens dinamicos que podem ter sido acrescentados a pagina
 	*/
-	function _recupera_servicos_inseridos() {
+	function _recuperar_itens_dinamicos() {
 		if ($this->request->data['ServicoOrdemItem']) {
 			$itens = $this->request->data['ServicoOrdemItem'];
 			$i = 0;
 			$valor_total = 0;
 			$campos_ja_inseridos = array();
 			foreach ($itens as $item) {
-				$this->loadModel('Servico');
-				$this->Servico->recursive = -1;
-				$ret = $this->Servico->findById($item['servico_id']);
-				$n = $ret['Servico']['nome'];
+				$this->ServicoOrdem->ServicoOrdemItem->Servico->recursive = -1;
+				$ret = $this->ServicoOrdem->ServicoOrdemItem->Servico->findById($item['servico_id'],array('Servico.nome'));
 				$campos_ja_inseridos[$i] = array('servico_id'=>$item['servico_id']);
-				$campos_ja_inseridos[$i] += array('servico_nome'=>$n);
+				$campos_ja_inseridos[$i] += array('servico_nome'=>$ret['Servico']['nome']);
 				$campos_ja_inseridos[$i] += array('quantidade'=>$item['quantidade']);
 				$campos_ja_inseridos[$i] += array('valor'=>$item['valor']);
 				$i++;
 			}
 			$this->set('campos_ja_inseridos',$campos_ja_inseridos);
-			return 1;
 		}
-		return 0;
+		
+		if ($this->request->data['ServicoOrdem']['cliente_id']) {
+			$this->ServicoOrdem->Cliente->recursive = -1;
+			$clienteNome = $this->ServicoOrdem->Cliente->findById($this->request->data['ServicoOrdem']['cliente_id'],array('Cliente.nome'));
+			$this->request->data['ServicoOrdem'] = array_merge($this->request->data['ServicoOrdem'],array('cliente_nome'=>$clienteNome['Cliente']['nome']));
+		}
+		
+		return 1;
 	}
 	
 	function _calcular_valores($data) {
@@ -148,7 +151,7 @@ class ServicoOrdensController extends AppController {
 		$this->set("title_for_layout","Ordem de serviço"); 
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
-			$this->_recupera_servicos_inseridos();
+			$this->_recuperar_itens_dinamicos();
 			$this->ServicoOrdem->Cliente->recursive = -1;
 			$r = $this->ServicoOrdem->Cliente->find('first',
 				array('conditions'=>array(
@@ -199,14 +202,14 @@ class ServicoOrdensController extends AppController {
 		$this->set("title_for_layout","Ordem de serviço"); 
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
-			$this->ServicoOrdem->contain('Cliente.nome','ServicoOrdemItem');
+			$this->ServicoOrdem->contain('ServicoOrdemItem');
 			$this->ServicoOrdem->id = $id;
 			$this->request->data = $this->ServicoOrdem->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Ordem de serviço não encontrada.','flash_erro');
 				$this->redirect(array('action'=>'index'));
 			}
-			else $this->_recupera_servicos_inseridos();
+			else $this->_recuperar_itens_dinamicos();
 		}
 		else {
 			$this->ServicoOrdem->Cliente->recursive = -1;
@@ -225,7 +228,7 @@ class ServicoOrdensController extends AppController {
 				$this->Session->setFlash('A situação desta ordem de serviço impede que seja editada','flash_erro');
 				return false;
 			}
-			$this->_recupera_servicos_inseridos();
+			$this->_recuperar_itens_dinamicos();
 			$this->request->data['ServicoOrdem']['id'] = $id;
 			$this->request->data['ServicoOrdem'] += array ('usuario_alterou' => $this->Auth->user('id'));
 			$valores = $this->_calcular_valores($this->request->data);

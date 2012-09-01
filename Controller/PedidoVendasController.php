@@ -46,29 +46,33 @@ class PedidoVendasController extends AppController {
 	}
 	
 	/**
-	* caso algum produto seja enviado (erro na validacao, editando registro, etc),
-	* o insiro na pagina
+	* Recupero itens dinamicos que podem ter sido acrescentados a pagina
 	*/
-	function _recupera_produtos_inseridos($data) {
+	function _recuperar_itens_dinamicos() {
+		$data = $this->request->data;
 		if (isset($data['PedidoVendaItem'])) {
 			$itens = $data['PedidoVendaItem'];
 			$i = 0;
 			$campos_ja_inseridos = array();
 			foreach ($itens as $item) {
                     $this->PedidoVenda->PedidoVendaItem->Produto->recursive = -1;
-				$n = $this->PedidoVenda->PedidoVendaItem->Produto->findById($item['produto_id']);
-				$n = $n['Produto']['nome'];
+				$n = $this->PedidoVenda->PedidoVendaItem->Produto->findById($item['produto_id'],array('Produto.nome'));
 				$campos_ja_inseridos[$i] = array('produto_id'=>$item['produto_id']);
-				$campos_ja_inseridos[$i] += array('produto_nome'=>$n);
+				$campos_ja_inseridos[$i] += array('produto_nome'=>$n['Produto']['nome']);
 				$campos_ja_inseridos[$i] += array('quantidade'=>$item['quantidade']);
 				$campos_ja_inseridos[$i] += array('preco_venda'=>$item['preco_venda']);
 				$i++;
 			}
 			$this->set('campos_ja_inseridos',$campos_ja_inseridos);
-			return 1;
 		}
 		
-		return 0;
+		if (isset($data['PedidoVenda']['cliente_id'])) {
+			$this->PedidoVenda->Cliente->recursive = -1;
+			$clienteNome = $this->PedidoVenda->Cliente->findById($this->request->data['PedidoVenda']['cliente_id'],array('Cliente.nome'));
+			$this->request->data['PedidoVenda'] = array_merge($this->request->data['PedidoVenda'], array('pesquisar_nome_cliente'=>$clienteNome['Cliente']['nome']));
+		}
+		
+		return 1;
 	}
 	
 	/**
@@ -210,7 +214,7 @@ class PedidoVendasController extends AppController {
 		$this->set("title_for_layout","Pedido de venda"); 
 		$this->_obter_opcoes();
 		if (! empty($this->request->data)) {
-			$this->_recupera_produtos_inseridos($this->request->data);
+			$this->_recuperar_itens_dinamicos();
 			$this->PedidoVenda->Cliente->recursive = -1;
 			$r = $this->PedidoVenda->Cliente->find('first',
 				array('conditions'=>array(
@@ -270,14 +274,14 @@ class PedidoVendasController extends AppController {
 		$this->_obter_opcoes();
 		if (empty ($this->request->data)) {
 			$this->PedidoVenda->id = $id;
-			$this->PedidoVenda->contain('PedidoVendaItem','Cliente.nome');
+			$this->PedidoVenda->contain('PedidoVendaItem');
 			$this->request->data = $this->PedidoVenda->read();
 			if ( ! $this->request->data) {
 				$this->Session->setFlash('Pedido de venda não encontrado.','flash_erro');
 				$this->redirect(array('action'=>'index'));
 			}
 			else {
-				$this->_recupera_produtos_inseridos($this->request->data);
+				$this->_recuperar_itens_dinamicos();
 				
 				if ($this->request->data['PedidoVenda']['data_saida'] == '0000-00-00') $this->request->data['PedidoVenda']['data_saida'] = null;
 				else $this->request->data['PedidoVenda']['data_saida'] = date('d/m/Y', strtotime($this->request->data['PedidoVenda']['data_saida']));
@@ -290,7 +294,7 @@ class PedidoVendasController extends AppController {
 			}
 		}
 		else {
-			$this->_recupera_produtos_inseridos($this->request->data);
+			$this->_recuperar_itens_dinamicos();
 			$this->PedidoVenda->Cliente->recursive = -1;
 			$r = $this->PedidoVenda->Cliente->find('first',
 				array('conditions'=>array(
@@ -348,7 +352,7 @@ class PedidoVendasController extends AppController {
 				else {
 					$this->PedidoVenda->commit();
 					$this->Session->setFlash("Pedido de venda alterado com sucesso.<br/>"
-					."<a href='#' onclick=popup('cupomNaoFiscal/{$this->PedidoVenda->id}','300','300') > Imprimir cupom não fiscal</a>"."
+					."<a href='#' onclick=popup(site_raiz+'/pedidoVendas/cupomNaoFiscal/{$this->PedidoVenda->id}','300','300') > Imprimir cupom não fiscal</a>"."
 					",'flash_sucesso');
 					$this->redirect(array('action'=>'index'));
 				}
