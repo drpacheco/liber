@@ -47,7 +47,7 @@ class Usuario extends AppModel {
 			'className' => 'ServicoOrdem',
 			'foreignKey' => 'usuario_alterou'
 		),
-	    'UsuarioAcessoLog_usuario' => array(
+		 'UsuarioAcessoLog_usuario' => array(
 			'className' => 'UsuarioAcessoLog',
 			'foreignKey' => 'usuario_id'
 		),
@@ -57,7 +57,7 @@ class Usuario extends AppModel {
 		'Grupo' => array(
 			'className' => 'Grupo'
 		),
-	    'Empresa' => array(
+		 'Empresa' => array(
 			'className' => 'Empresa'
 		),
 	);
@@ -80,13 +80,13 @@ class Usuario extends AppModel {
 			)
 		),
 		'senha' => array(
-		    'on' => 'create',
+			 'on' => 'create',
 			'allowEmpty' => false,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
 		),
 		'senha_confirma' => array(
-		    'on' => 'create',
+			 'on' => 'create',
 			'allowEmpty' => false,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
@@ -106,7 +106,7 @@ class Usuario extends AppModel {
 			'rule' => array('boolean'),
 			'message' => 'Valor incorreto.'
 		),
-	    'empresa_id' => array(
+		 'empresa_id' => array(
 			'allowEmpty' => false,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'
@@ -123,34 +123,41 @@ class Usuario extends AppModel {
 			$this->data[$this->alias]['senha'] = AuthComponent::password($this->data[$this->alias]['senha']);
 		}
 	return true;
-    }*/
-    
-    function findAtivo($tipo='list',$opcoes=array()) {
-	    $opcoesPadrao = array (
-		   'fields' => array('Usuario.id','Usuario.nome'),
-		   'conditions' => array('Usuario.ativo'=>'1'),
-	    );
-	    $opcoes = array_merge($opcoesPadrao,$opcoes);
-	    return $this->find($tipo,$opcoes);
-    }
-    
-    function findTecnico($tipo='list',$opcoes=array()) {
-	    $opcoesPadrao = array (
-		   'fields' => array('Usuario.id','Usuario.nome'),
-		   'conditions' => array('Usuario.ativo'=>'1','Usuario.eh_tecnico'=>'1'),
-	    );
-	    $opcoes = array_merge($opcoesPadrao,$opcoes);
-	    return $this->find($tipo,$opcoes);
-    }
-    
-    function findVendedor($tipo='list',$opcoes=array()) {
-	    $opcoesPadrao = array (
-		   'fields' => array('Usuario.id','Usuario.nome'),
-		   'conditions' => array('Usuario.ativo'=>'1','Usuario.eh_vendedor'=>'1'),
-	    );
-	    $opcoes = array_merge($opcoesPadrao,$opcoes);
-	    return $this->find($tipo,$opcoes);
-    }
+	 }*/
+	 
+	 function findAtivo($tipo='list',$opcoes=array()) {
+		$opcoesPadrao = array (
+			'fields' => array('Usuario.id','Usuario.nome'),
+			'conditions' => array('Usuario.ativo'=>'1'),
+			'recursive' => -1,
+		);
+		$opcoes = array_merge($opcoesPadrao,$opcoes);
+		return $this->find($tipo,$opcoes);
+	 }
+	 
+	 function findTecnico($tipo='list',$opcoes=array()) {
+		$opcoesPadrao = array (
+			'fields' => array('Usuario.id','Usuario.nome'),
+			'conditions' => array('Usuario.ativo'=>'1','Usuario.eh_tecnico'=>'1'),
+			'recursive' => -1,
+		);
+		$opcoes = array_merge($opcoesPadrao,$opcoes);
+		return $this->find($tipo,$opcoes);
+	 }
+	 
+	 function findVendedor($tipo='list',$opcoes=array()) {
+		$opcoesPadrao = array (
+			'fields' => array('Usuario.id','Usuario.nome'),
+			'conditions' => array('Usuario.ativo'=>'1','Usuario.eh_vendedor'=>'1'),
+			'recursive' => -1,
+		);
+		$opcoes = array_merge($opcoesPadrao,$opcoes);
+		return $this->find($tipo,$opcoes);
+	 }
+	 
+	 function findComprador($tipo='list',$opcoes=array()) {
+		 return $this->findAtivo($tipo, $opcoes);
+	 }
 }
 
 ?>

@@ -48,6 +48,14 @@
 					</li>
 				</ul>
 			</li>
+			<li>
+				<?php print $this->Html-> link('Pedidos', "/compraPedidos/",array('class' => 'ajax_link'));?>
+				<ul>
+					<li><?php print $this->Html-> link('Cadastrar', "/compraPedidos/cadastrar",array('class' => 'ajax_link'));?></li>
+					<li><?php print $this->Html-> link('Pesquisar', "/compraPedidos/pesquisar");?></li>
+					<li><?php print $this->Html-> link('Listar', "/compraPedidos/",array('class' => 'ajax_link'));?></li>
+				</ul>
+			</li>
 		</ul>
 	</li>
 	
