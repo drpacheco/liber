@@ -12,35 +12,35 @@
 						Ações
 					</li>
 					<li>
-						<a href="<?php print $this->Html->url(array('controller'=>'PedidoVendas','action'=>'index'));?>" onclick="formulario_cancelar(); return false;">
+						<a href="<?php print $this->Html->url(array('controller'=>'CompraPedidos','action'=>'index'));?>" onclick="formulario_cancelar(); return false;">
 							<i class="icon-remove"></i>
 							Cancelar
 						</a>
 					</li>
 
 					<li class="nav-header">
-						Pedidos de venda
+						Pedidos de compra
 					</li>
 					<li>
-						<a href="<?php print $this->Html->url(array('controller'=>'PedidoVendas','action'=>'cadastrar'));?>">
+						<a href="<?php print $this->Html->url(array('controller'=>'CompraPedidos','action'=>'cadastrar'));?>">
 							<i class="icon-file"></i>
 							Cadastrar
 						</a>
 					</li>
 					<li>
-						<a href="<?php print $this->Html->url(array('controller'=>'PedidoVendas','action'=>'editar'));?>">
+						<a href="<?php print $this->Html->url(array('controller'=>'CompraPedidos','action'=>'editar'));?>">
 							<i class="icon-edit"></i>
 							Editar
 						</a>
 					</li>
 					<li>
-						<a href="<?php print $this->Html->url(array('controller'=>'PedidoVendas','action'=>'pesquisar'));?>">
+						<a href="<?php print $this->Html->url(array('controller'=>'CompraPedidos','action'=>'pesquisar'));?>">
 							<i class="icon-filter"></i>
 							Pesquisar
 						</a>
 					</li>
 					<li class="active">
-						<a href="<?php print $this->Html->url(array('controller'=>'PedidoVendas','action'=>'index'));?>">
+						<a href="<?php print $this->Html->url(array('controller'=>'CompraPedidos','action'=>'index'));?>">
 							<i class="icon-list"></i>
 							Listar
 						</a>
@@ -76,14 +76,10 @@
 				
 				<fieldset>
 					<legend class="descricao_cabecalho">
-						Exibindo os pedidos de venda
+						Exibindo os pedidos de compra
 						<?php
-						if ($this->Ajax->isAjax()) {
-							print $this->element('painel_index_ajax');
-						}
-						else {
-							print $this->element('painel_index');
-						}
+						if ($this->Ajax->isAjax()) print $this->element('painel_index_ajax');
+						else print $this->element('painel_index');
 						?>
 					</legend>
 
@@ -91,9 +87,9 @@
 						<thead>
 							<tr>
 								<th><?php print $this->Paginator->sort('id','Código'); ?></th>
-								<th><?php print $this->Paginator->sort('cliente_id','Cliente'); ?></th>
+								<th><?php print $this->Paginator->sort('fornecedor_id','Fornecedor'); ?></th>
 								<th><?php print $this->Paginator->sort('forma_pagamento_id','Forma de pagamento'); ?></th>
-								<th><?php print $this->Paginator->sort('data_venda','Data venda'); ?></th>
+								<th><?php print $this->Paginator->sort('data_compra','Data compra'); ?></th>
 								<th><?php print $this->Paginator->sort('valor_bruto','Valor bruto'); ?></th>
 								<th><?php print $this->Paginator->sort('valor_liquido','Valor líquido'); ?></th>
 								<th><?php print $this->Paginator->sort('situacao','Situação'); ?></th>
@@ -107,24 +103,24 @@
 							foreach ($consulta as $c): ?>
 
 									<tr>
-										<td><?php print $c['PedidoVenda']['id'];?></td>
-										<td><?php print $c['PedidoVenda']['cliente_id'].' '.$c['Cliente']['nome']; ?></td>
-										<td><?php print $c['PedidoVenda']['forma_pagamento_id'].' '.$c['FormaPagamento']['nome']; ?></td>
-										<td><?php if(isset($c['PedidoVenda']['data_venda']) && ($c['PedidoVenda']['data_venda'] != '0000-00-00') ) print $this->Formatacao->data($c['PedidoVenda']['data_venda']); ?></td>
-										<td><?php print $c['PedidoVenda']['valor_bruto']; ?></td>
-										<td><?php print $c['PedidoVenda']['valor_liquido']; ?></td>
-										<td><?php print $opcoes_situacoes[$c['PedidoVenda']['situacao']]; ?></td>
+										<td><?php print $c['CompraPedido']['id'];?></td>
+										<td><?php print $c['CompraPedido']['fornecedor_id'].' '.$c['Fornecedor']['nome']; ?></td>
+										<td><?php print $c['CompraPedido']['forma_pagamento_id'].' '.$c['FormaPagamento']['nome']; ?></td>
+										<td><?php if(isset($c['CompraPedido']['data_compra']) && ($c['CompraPedido']['data_compra'] != '0000-00-00') ) print $this->Formatacao->data($c['CompraPedido']['data_compra']); ?></td>
+										<td><?php print $c['CompraPedido']['valor_bruto']; ?></td>
+										<td><?php print $c['CompraPedido']['valor_liquido']; ?></td>
+										<td><?php print $opcoes_situacoes[$c['CompraPedido']['situacao']]; ?></td>
 
 										<td>
-											<?php print $this->element('painel_editar',array('id'=>$c['PedidoVenda']['id'])) ;?>
+											<?php print $this->element('painel_editar',array('id'=>$c['CompraPedido']['id'])) ;?>
 										</td>
 
 										<td>
-											<?php print $this->element('painel_detalhar',array('id'=>$c['PedidoVenda']['id'])) ;?>
+											<?php print $this->element('painel_detalhar',array('id'=>$c['CompraPedido']['id'])) ;?>
 										</td>
 
 										<td>
-											<?php print $this->element('painel_excluir',array('id'=>$c['PedidoVenda']['id'])) ;?>
+											<?php print $this->element('painel_excluir',array('id'=>$c['CompraPedido']['id'])) ;?>
 										</td>
 									</tr>
 

@@ -77,6 +77,16 @@ class Produto extends AppModel {
 			'message' => 'Campo obrigatório.'
 		),
 	);
+	
+	function findAtivo($tipo='list',$opcoes=array()) {
+	    $opcoesPadrao = array (
+			'fields' => array('Produto.id','Produto.nome'),
+			'conditions' => array('Fornecedor.situacao'=>'L'),
+			'recursive' => -1
+	    );
+		$opcoes = array_merge($opcoesPadrao,$opcoes);
+		return $this->find($tipo,$opcoes);
+	}
 }
 
 ?>

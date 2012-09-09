@@ -1,0 +1,83 @@
+<?php
+
+class CompraPedido extends AppModel {
+	var $name = 'CompraPedido';
+	var $actsAs = array('CakePtbr.AjusteFloat','CakePtbr.AjusteData','Containable','Empresa');
+	
+	var $belongsTo = array(
+		'Fornecedor' => array(
+			'className' => 'Fornecedor',
+			'foreignKey' => 'fornecedor_id'
+		),
+		'FormaPagamento' => array(
+			'className' => 'FormaPagamento',
+			'foreignKey' => 'forma_pagamento_id'
+		),
+		'Comprador' => array(
+			'className' => 'Usuario',
+			'foreignKey' => 'comprador_id'
+		),
+		'Usuario' => array(
+			'className' => 'Usuario',
+			'foreignKey' => 'usuario_cadastrou'
+		),
+		'UsuarioAlterou' => array(
+			'className' => 'Usuario',
+			'foreignKey' => 'usuario_alterou'
+		),
+		'Empresa' => array(
+			'className' => 'Empresa',
+		),
+	);
+	
+	var $hasMany = array(
+		'CompraPedidoItem' => array(
+			'className' => 'CompraPedidoItem',
+			'foreignKey' => 'compra_pedido_id'
+		),
+	);
+	
+	var $validate = array(
+		'situacao' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
+		'fornecedor_id'  => array(
+			'allowEmpty' => false,
+			'rule' => 'numeric',
+			'message' => 'Campo obrigatório. Somente números.'
+		),
+		'forma_pagamento_id' => array(
+			'required' => true,
+			'allowEmpty' => false,
+			'rule' => 'numeric',
+			'message' => 'Campo obrigatório.'
+		),
+		'comprador_id' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
+		'data_compra' => array(
+			'allowEmpty' => false,
+			'rule' => 'date',
+			'message' => 'Data inválida.'
+		),
+		'data_saida' => array(
+			'allowEmpty' => true,
+			'rule' => 'date',
+			'message' => 'Data inválida.'
+		),
+		'data_entrega' => array(
+			'allowEmpty' => true,
+			'rule' => 'date',
+			'message' => 'Data inválida.'
+		),
+		'empresa_id' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Campo obrigatório.'
+		),
+	);
+	
+	
+}
+

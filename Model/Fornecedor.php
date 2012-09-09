@@ -183,6 +183,15 @@ class Fornecedor extends AppModel {
 		
 	);
 	
+	function findAtivo($tipo='list',$opcoes=array()) {
+	    $opcoesPadrao = array (
+			'fields' => array('Fornecedor.id','Fornecedor.nome'),
+			'conditions' => array('Fornecedor.situacao'=>'A'),
+			'recursive' => -1
+	    );
+		$opcoes = array_merge($opcoesPadrao,$opcoes);
+		return $this->find($tipo,$opcoes);
+	}
 	
 }
 

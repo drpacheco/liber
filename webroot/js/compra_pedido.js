@@ -1,75 +1,75 @@
 jQuery(document).ready(function() {
 
-	$('#pedido_venda_abas').tabs();
+	$('#pedido_compra_abas').tabs();
 	
 	/*******************
 	 * Aba informações 
 	 ******************/
 	$(".datepicker").datepicker();
-	$('#PedidoVendaDesconto').priceFormat();
-	$('#ProdutoPrecoVenda').priceFormat();
+	$('#CompraPedidoDesconto').priceFormat();
+	$('#ProdutoPrecoCompra').priceFormat();
 	data = new Date();
 	data_fim = data.getDate()+'/'+(data.getMonth()+1)+'/'+data.getFullYear();
-	if ($('#PedidoVendaDataVenda').val() == '') {
-		$('#PedidoVendaDataVenda').val(data_fim);
+	if ($('#CompraPedidoDataCompra').val() == '') {
+		$('#CompraPedidoDataCompra').val(data_fim);
 	}
 	
 	/****************
-	 * Aba cliente
+	 * Aba fornecedor
 	 ****************/
 	
-	//pesquisa cliente
+	//pesquisa fornecedor
 	//autocomplete
-	$("#PedidoVendaPesquisarNomeCliente").autocomplete({
-		source: ajaxPesqCliente + "nome",
+	$("#CompraPedidoPesquisarNomeFornecedor").autocomplete({
+		source: ajaxPesqFornecedor + "nome",
 		minLength: 3,
 		select: function(event, ui) {
 			if (ui.item.bloqueado) {
-				alert ('Cliente está bloqueado!');
-				$('#PedidoVendaPesquisarNomeCliente').val('');
-				$("#PedidoVendaClienteId").val('');
+				alert ('Fornecedor está bloqueado!');
+				$('#CompraPedidoPesquisarNomeFornecedor').val('');
+				$("#CompraPedidoFornecedorId").val('');
 				event.preventDefault();
 				return null;
 			}
 			if (ui.item.inativo) {
-				alert ('Cliente está inativo!');
-				$('#PedidoVendaPesquisarNomeCliente').val('');
-				$("#PedidoVendaClienteId").val('');
+				alert ('Fornecedor está inativo!');
+				$('#CompraPedidoPesquisarNomeFornecedor').val('');
+				$("#CompraPedidoFornecedorId").val('');
 				event.preventDefault();
 				return null;
 			}
-			$("#PedidoVendaClienteId").val(ui.item.id);
-			$('#PedidoVendaPesquisarNomeCliente').val(ui.item.nome);
+			$("#CompraPedidoFornecedorId").val(ui.item.id);
+			$('#CompraPedidoPesquisarNomeFornecedor').val(ui.item.nome);
 		}
 	});
 	// ao digitar o codigo
-	$('#PedidoVendaClienteId').blur(function(){
+	$('#CompraPedidoFornecedorId').blur(function(){
 		codigo = $(this).val();
 		if (codigo == null || codigo == '') return null;
-		$.getJSON(ajaxPesqCliente + 'codigo', {'term': codigo}, function(data) {
+		$.getJSON(ajaxPesqFornecedor + 'codigo', {'term': codigo}, function(data) {
 			if (data == null) {
-				alert ('Cliente com o código '+codigo+' não foi encontrado!');
-				$('#PedidoVendaPesquisarNomeCliente').val('');
-				$("#PedidoVendaClienteId")
+				alert ('Fornecedor com o código '+codigo+' não foi encontrado!');
+				$('#CompraPedidoPesquisarNomeFornecedor').val('');
+				$("#CompraPedidoFornecedorId")
 					.val('')
 					.focus();
 			}
 			else { //encontrou resultados
 				data = data[0];
 				if (data.bloqueado) {
-					alert ('Cliente está bloqueado!');
-					$('#PedidoVendaPesquisarNomeCliente').val('');
-					$("#PedidoVendaClienteId").val('')
+					alert ('Fornecedor está bloqueado!');
+					$('#CompraPedidoPesquisarNomeFornecedor').val('');
+					$("#CompraPedidoFornecedorId").val('')
 					return null;
 				}
 				if (data.inativo) {
-					alert ('Cliente está inativo!');
-					$('#PedidoVendaPesquisarNomeCliente').val('');
-					$("#PedidoVendaClienteId").val('')
+					alert ('Fornecedor está inativo!');
+					$('#CompraPedidoPesquisarNomeFornecedor').val('');
+					$("#CompraPedidoFornecedorId").val('')
 					return null;
 				}
-				$("#PedidoVendaClienteId").val(data.id);
-				$('#PedidoVendaPesquisarNomeCliente').val(data.nome);
+				$("#CompraPedidoFornecedorId").val(data.id);
+				$('#CompraPedidoPesquisarNomeFornecedor').val(data.nome);
 			}
 		});
 	});
@@ -85,9 +85,8 @@ jQuery(document).ready(function() {
 			if (ui.item.fora_de_linha) {
 				alert ('Produto '+ui.item.id+' está fora de linha!');
 				$('#ProdutoNome').val('');
-				$('#ProdutoPrecoVenda').val('');
+				$('#ProdutoPrecoCompra').val('');
 				$('#ProdutoQuantidade').val('');
-				$('#ProdutoQuantidadeEstoque').val('');
 				$('#ProdutoId')
 					.val('')
 					.focus();
@@ -96,32 +95,15 @@ jQuery(document).ready(function() {
 			if (! ui.item.eh_vendido) {
 				alert ('O tipo do produto '+ui.item.id+' impede que seja vendido!');
 				$('#ProdutoNome').val('');
-				$('#ProdutoPrecoVenda').val('');
+				$('#ProdutoPrecoCompra').val('');
 				$('#ProdutoQuantidade').val('');
-				$('#ProdutoQuantidadeEstoque').val('');
 				$('#ProdutoId')
 					.val('')
 					.focus();
 				return false;
 			}
-			if (ui.item.tem_estoque_ilimitado == 0) {
-				if (ui.item.estoque_disponivel <= 0) {
-					alert ('Produto '+ui.item.id+' não está disponível em estoque!');
-					$('#ProdutoNome').val('');
-					$('#ProdutoPrecoVenda').val('');
-					$('#ProdutoQuantidade').val('');
-					$('#ProdutoQuantidadeEstoque').val('');
-					$('#ProdutoId')
-						.val('')
-						.focus();
-					return false;
-				}
-				else $('#ProdutoQuantidadeEstoque').val(ui.item.estoque_disponivel);
-			}
-			else $('#ProdutoQuantidadeEstoque').val('ilimitado');
 			$("#ProdutoId").val(ui.item.id);
-			$('#ProdutoPrecoVenda').val(ui.item.preco_venda);
-			$('#preco_custo').val(ui.item.preco_custo);
+			$('#ProdutoPrecoCompra').val(ui.item.preco_compra);
 			$('#ProdutoQuantidade').focus();
 		}
 	});
@@ -145,7 +127,7 @@ jQuery(document).ready(function() {
 	$('#produtos_incluidos tr').live('click',function() {
 		procurar_por_codigo( $(this).find('.item_id').val() );
 		$('#produtos_pesquisar #ProdutoQuantidade').val( $(this).find('.item_qtd').val() );
-		$('#produtos_pesquisar #ProdutoPrecoVenda').val( $(this).find('.item_val').val() );
+		$('#produtos_pesquisar #ProdutoPrecoCompra').val( $(this).find('.item_val').val() );
 	});
 	
 	function procurar_por_codigo(codigo) {
@@ -154,9 +136,8 @@ jQuery(document).ready(function() {
 			if (data == null) {
 				alert ('Produto com o código '+codigo+' não foi encontrado!');
 				$('#ProdutoNome').val('');
-				$('#ProdutoPrecoVenda').val('');
+				$('#ProdutoPrecoCompra').val('');
 				$('#ProdutoQuantidade').val('');
-				$('#ProdutoQuantidadeEstoque').val('');
 				$('#ProdutoId')
 					.val('')
 					.focus();
@@ -167,9 +148,8 @@ jQuery(document).ready(function() {
 				if (data.fora_de_linha) {
 					alert ('Produto '+codigo+' está fora de linha!');
 					$('#ProdutoNome').val('');
-					$('#ProdutoPrecoVenda').val('');
+					$('#ProdutoPrecoCompra').val('');
 					$('#ProdutoQuantidade').val('');
-					$('#ProdutoQuantidadeEstoque').val('');
 					$('#ProdutoId')
 					.val('')
 					.focus();
@@ -178,35 +158,16 @@ jQuery(document).ready(function() {
 				if (! data.eh_vendido) {
 					alert ('O tipo do produto '+codigo+' impede que seja vendido!');
 					$('#ProdutoNome').val('');
-					$('#ProdutoPrecoVenda').val('');
+					$('#ProdutoPrecoCompra').val('');
 					$('#ProdutoQuantidade').val('');
-					$('#ProdutoQuantidadeEstoque').val('');
 					$('#ProdutoId')
 					.val('')
 					.focus();
 					return false;
 				}
-				if (data.tem_estoque_ilimitado == 0) {
-					if (data.estoque_disponivel <= 0) {
-						alert ('Produto '+codigo+' não está disponível em estoque!');
-						$('#ProdutoNome').val('');
-						$('#ProdutoPrecoVenda').val('');
-						$('#ProdutoQuantidade').val('');
-						$('#ProdutoQuantidadeEstoque').val('');
-						$('#ProdutoId')
-							.val('')
-							.focus();
-						return false;
-					}
-					else $('#ProdutoQuantidadeEstoque').val(data.estoque_disponivel);
-				}
-				else $('#ProdutoQuantidadeEstoque').val('ilimitado');
-
 
 				$('#ProdutoId').val(data.id);
 				$('#ProdutoNome').val(data.label);
-				$('#ProdutoPrecoVenda').val(data.preco_venda);
-				$('#preco_custo').val(data.preco_custo);
 				$('#ProdutoQuantidade').focus();
 			}
 		});
@@ -216,9 +177,7 @@ jQuery(document).ready(function() {
 		id = $('#ProdutoId').val();
 		nome = $('#ProdutoNome').val();
 		quantidade = $('#ProdutoQuantidade').val();
-		valor = $('#ProdutoPrecoVenda').val();
-		quantidade_estoque = $('#ProdutoQuantidadeEstoque').val();
-		preco_custo = $('#preco_custo').val();
+		valor = $('#ProdutoPrecoCompra').val();
 
 		if ( (id == '') || (nome == '') || (quantidade == '') || (valor == '') ) {
 			alert ('Há campos não preenchidos!');
@@ -232,20 +191,6 @@ jQuery(document).ready(function() {
 
 		if ( ! eh_numero(moeda2numero(quantidade)) ) {
 			alert ('A quantidade informada é inválida!');
-			return false;
-		}
-
-		if (quantidade_estoque != 'ilimitado') {
-			q = parseFloat(moeda2numero(quantidade));
-			q2 = parseFloat(number_format(quantidade_estoque,2,'.',''));
-			if ( q > q2) {
-				alert ('A quantidade disponível do produto é menor do que a inserida!');
-				return false;
-			}
-		}
-
-		if (valor < preco_custo) {
-			alert ('O preço de venda é menor que o preço de custo!');
 			return false;
 		}
 
@@ -266,10 +211,10 @@ jQuery(document).ready(function() {
 
 		novo_campo =
 		'<tr>'+
-			'<td> <input type="text" name="data[PedidoVendaItem]['+numero_campo+'][produto_id]" value="'+id+'" class="noinput item_id" /> </td>'+
-			'<td> <input type="text" name="data[PedidoVendaItem]['+numero_campo+'][produto_nome]" value="'+nome+'" class="noinput item_nome" /> </td>'+
-			'<td> <input type="text" name="data[PedidoVendaItem]['+numero_campo+'][quantidade]" value="'+quantidade+'" class="noinput item_qtd" /> </td>'+
-			'<td> <input type="text" name="data[PedidoVendaItem]['+numero_campo+'][preco_venda]" value="'+valor+'" class="noinput item_val" /> </td>'+
+			'<td> <input type="text" name="data[CompraPedidoItem]['+numero_campo+'][produto_id]" value="'+id+'" class="noinput item_id" /> </td>'+
+			'<td> <input type="text" name="data[CompraPedidoItem]['+numero_campo+'][produto_nome]" value="'+nome+'" class="noinput item_nome" /> </td>'+
+			'<td> <input type="text" name="data[CompraPedidoItem]['+numero_campo+'][quantidade]" value="'+quantidade+'" class="noinput item_qtd" /> </td>'+
+			'<td> <input type="text" name="data[CompraPedidoItem]['+numero_campo+'][preco_compra]" value="'+valor+'" class="noinput item_val" /> </td>'+
 			'<td> <img src="'+site_raiz+'/img/del24x24.png" class="remover_linha"/> </td>'+
 		'</tr>'+"\n";
 
@@ -283,7 +228,6 @@ jQuery(document).ready(function() {
 		$('#valor_total').html(numero2moeda(valor_total));
 
 		limpar_pesquisa();
-		$('#preco_custo').val('0');
 		$('#ProdutoId').focus();
 	}
 
@@ -322,9 +266,9 @@ jQuery(document).ready(function() {
 	/***************
 	 * Aba Outros
 	 ***************/
-	$('#PedidoVendaCustoFrete').priceFormat();
-	$('#PedidoVendaCustoSeguro').priceFormat();
-	$('#PedidoVendaCustoOutros').priceFormat();
+	$('#CompraPedidoCustoFrete').priceFormat();
+	$('#CompraPedidoCustoSeguro').priceFormat();
+	$('#CompraPedidoCustoOutros').priceFormat();
 	
 	//#TODO exibir valor total, considerando todos os custos e desconto
 	function calculaValortotal () {
