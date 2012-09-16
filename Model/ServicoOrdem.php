@@ -11,9 +11,9 @@ class ServicoOrdem extends AppModel {
 			'className' => 'Usuario',
 			'foreignKey' => 'usuario_id'
 		),
-		'FormaPagamento' => array(
-			'className' => 'FormaPagamento',
-			'foreignKey' => 'forma_pagamento_id',
+		'PagamentoTipo' => array(
+			'className' => 'PagamentoTipo',
+			'foreignKey' => 'pagamento_tipo_id',
 		),
 		'usuario_cadastrou' => array(
 			'className' => 'Usuario',
@@ -47,7 +47,7 @@ class ServicoOrdem extends AppModel {
 			'rule' => 'numeric',
 			'message' => 'Campo obrigatório.'
 		),
-		'forma_pagamento_id' => array(
+		'pagamento_tipo_id' => array(
 			'required' => true,
 			'rule' => 'notEmpty',
 			'message' => 'Campo obrigatório.'

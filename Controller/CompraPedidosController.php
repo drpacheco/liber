@@ -34,9 +34,9 @@ class CompraPedidosController extends AppController {
 	 * Os dados sao setados em variaveis a serem utilizadas nas views 
 	 */
 	function _obter_opcoes() {
-		$this->CompraPedido->FormaPagamento->recursive = -1;
-		$opcoes_forma_pagamento = $this->CompraPedido->FormaPagamento->find('list',array('fields'=>array('FormaPagamento.id','FormaPagamento.nome')));
-		$this->set('opcoes_forma_pamamento',$opcoes_forma_pagamento);
+		$this->CompraPedido->PagamentoTipo->recursive = -1;
+		$opcoes_pagamento_tipo = $this->CompraPedido->PagamentoTipo->find('list',array('fields'=>array('PagamentoTipo.id','PagamentoTipo.nome')));
+		$this->set('opcoes_forma_pamamento',$opcoes_pagamento_tipo);
 		
 		$opcoes_situacoes = array(
 			'A'=>'Aberto',
@@ -93,7 +93,7 @@ class CompraPedidosController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) $this->layout = 'ajax';
 		$this->_obter_opcoes();
 		$dados = $this->paginate = array(
-		    'contain' => array('Fornecedor.nome','FormaPagamento.nome'),
+		    'contain' => array('Fornecedor.nome','PagamentoTipo.nome'),
 		    'order' => 'CompraPedido.id DESC',
 		    'limit' => 10,
 		);
@@ -253,7 +253,7 @@ class CompraPedidosController extends AppController {
 	function detalhar($id = null) {
 		if ( $this->RequestHandler->isAjax() ) $this->layout = 'ajax';
 		$this->set("title_for_layout","Pedido de compra");
-		$this->CompraPedido->contain('CompraPedidoItem','Fornecedor.nome','FormaPagamento.nome');
+		$this->CompraPedido->contain('CompraPedidoItem','Fornecedor.nome','PagamentoTipo.nome');
 		$this->CompraPedido->id = $id;
 		$this->request->data = $this->CompraPedido->read();
 		if ( ! $this->request->data ) {

@@ -2,14 +2,14 @@ jQuery(document).ready(function() {
 	
 	$(".datepicker").datepicker();
 	
-	$('#PagarContaValor').priceFormat();
+	$('#ContaPagarValor').priceFormat();
 	
 	function valor_padrao() {
-		$('label[for=PagarContaClienteFornecedorId]').html('Código');
+		$('label[for=ContaPagarClienteFornecedorId]').html('Código');
 		$('#pesquisar_cliente_fornecedor')
 			.attr('disabled','disabled')
 			.val('Selecione uma opção no menu acima.');
-		$("#PagarContaClienteFornecedorId")
+		$("#ContaPagarClienteFornecedorId")
 			.attr('disabled','disabled')
 			.val('');
 	}
@@ -30,23 +30,23 @@ jQuery(document).ready(function() {
 				if (ui.item.bloqueado) {
 					alert (cliente_ou_fornecedor+' está bloqueado!');
 					$('#pesquisar_cliente_fornecedor').val('');
-					$("#PagarContaClienteFornecedorId").val('');
+					$("#ContaPagarClienteFornecedorId").val('');
 					event.preventDefault();
 					return null;
 				}
 				if (ui.item.inativo) {
 					alert (cliente_ou_fornecedor+' está inativo!');
 					$('#pesquisar_cliente_fornecedor').val('');
-					$("#PagarContaClienteFornecedorId").val('');
+					$("#ContaPagarClienteFornecedorId").val('');
 					event.preventDefault();
 					return null;
 				}
-				$("#PagarContaClienteFornecedorId").val(ui.item.id);
+				$("#ContaPagarClienteFornecedorId").val(ui.item.id);
 				$('#pesquisar_cliente_fornecedor').val(ui.item.nome);
 			}
 		});
 		// ao digitar o codigo
-		$('#PagarContaClienteFornecedorId')
+		$('#ContaPagarClienteFornecedorId')
 		.off()
 		.on('blur',function(){
 			codigo = $(this).val();
@@ -55,7 +55,7 @@ jQuery(document).ready(function() {
 				if (data == null) {
 					alert (cliente_ou_fornecedor+' com o código '+codigo+' não foi encontrado!');
 					$('#pesquisar_cliente_fornecedor').val('');
-					$("#PagarContaClienteFornecedorId")
+					$("#ContaPagarClienteFornecedorId")
 						.val('')
 						.focus();
 				}
@@ -64,16 +64,16 @@ jQuery(document).ready(function() {
 					if (data.bloqueado) {
 						alert (cliente_ou_fornecedor+' está bloqueado!');
 						$('#pesquisar_cliente_fornecedor').val('');
-						$("#PagarContaClienteFornecedorId").val('');
+						$("#ContaPagarClienteFornecedorId").val('');
 						return null;
 					}
 					if (data.inativo) {
 						alert (cliente_ou_fornecedor+' está inativo!');
 						$('#pesquisar_cliente_fornecedor').val('');
-						$("#PagarContaClienteFornecedorId").val('');
+						$("#ContaPagarClienteFornecedorId").val('');
 						return null;
 					}
-					$("#PagarContaClienteFornecedorId").val(data.id);
+					$("#ContaPagarClienteFornecedorId").val(data.id);
 					$('#pesquisar_cliente_fornecedor').val(data.nome);
 				}
 			});
@@ -81,21 +81,21 @@ jQuery(document).ready(function() {
 	}
 	
 	// de acordo com o selecionado, defino o que será pesquisado
-	$('#PagarContaEhClienteOuFornecedor').change(function(){
+	$('#ContaPagarEhClienteOuFornecedor').change(function(){
 		
 		$('#pesquisar_cliente_fornecedor')
 			.removeAttr('disabled')
 			.val('');
-		$("#PagarContaClienteFornecedorId")
+		$("#ContaPagarClienteFornecedorId")
 			.removeAttr('disabled')
 			.val('');
 		
 		if ($(this).val() == 'C') {
-			$('label[for=PagarContaClienteFornecedorId]').html('Cliente');
+			$('label[for=ContaPagarClienteFornecedorId]').html('Cliente');
 			definir_pesquisa('cliente');
 		}
 		else if ($(this).val() == 'F') {
-			$('label[for=PagarContaClienteFornecedorId]').html('Fornecedor');
+			$('label[for=ContaPagarClienteFornecedorId]').html('Fornecedor');
 			definir_pesquisa('fornecedor');
 		}
 		else {
@@ -105,14 +105,14 @@ jQuery(document).ready(function() {
 	});
 	
 	// para situações onde a página é carrega ja com as informacoes
-	if ($("#PagarContaClienteFornecedorId").val() == '') valor_padrao();
+	if ($("#ContaPagarClienteFornecedorId").val() == '') valor_padrao();
 	
-	if ( $('#PagarContaEhClienteOuFornecedor').val() == 'C' )  {
-		$('label[for=PagarContaClienteFornecedorId]').html('Cliente');
+	if ( $('#ContaPagarEhClienteOuFornecedor').val() == 'C' )  {
+		$('label[for=ContaPagarClienteFornecedorId]').html('Cliente');
 		definir_pesquisa('cliente');
 	}
-	else if ( $('#PagarContaEhClienteOuFornecedor').val() == 'F' )  {
-		$('label[for=PagarContaClienteFornecedorId]').html('Fornecedor');
+	else if ( $('#ContaPagarEhClienteOuFornecedor').val() == 'F' )  {
+		$('label[for=ContaPagarClienteFornecedorId]').html('Fornecedor');
 		definir_pesquisa('fornecedor');
 	}
 	

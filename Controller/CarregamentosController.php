@@ -54,16 +54,16 @@ class CarregamentosController extends AppController {
 			if ($this->Carregamento->saveAll($this->request->data,array('validate'=>'first'))) {
 				// atualiza a situacao dos pedidos para Travado
 				foreach ($this->request->data['CarregamentoItem'] as $item) {
-					$this->Carregamento->CarregamentoItem->PedidoVenda->id = $item['pedido_venda_id'];
-					$situacao_pedido_venda = $this->Carregamento->CarregamentoItem->PedidoVenda->field('situacao');
-					if (strtoupper($situacao_pedido_venda) != 'A') {
-						$this->Session->setFlash("O pedido de venda ".$item['pedido_venda_id']." está sendo adicionado ao 
+					$this->Carregamento->CarregamentoItem->VendaPedido->id = $item['venda_pedido_id'];
+					$situacao_venda_pedido = $this->Carregamento->CarregamentoItem->VendaPedido->field('situacao');
+					if (strtoupper($situacao_venda_pedido) != 'A') {
+						$this->Session->setFlash("O pedido de venda ".$item['venda_pedido_id']." está sendo adicionado ao 
 						carregamento mas sua situação não é 'Aberto'. Outro usuário pode ter editado o pedido de venda a
 						pouco tempo.",'flash_erro');
 						$this->Carregamento->rollback();
 						break;
 					}
-					$r = $this->Carregamento->CarregamentoItem->PedidoVenda->save(array('PedidoVenda'=>array('situacao'=>'T')));
+					$r = $this->Carregamento->CarregamentoItem->VendaPedido->save(array('VendaPedido'=>array('situacao'=>'T')));
 					if (! $r) {
 						$this->Session->setFlash('Erro ao atualizar os itens do carregamento','flash_erro');
 						$this->Carregamento->rollback();
@@ -82,7 +82,7 @@ class CarregamentosController extends AppController {
 		}
 		else {
 			// O carregamento será montado com os pedidos que estao em aberto
-			$consulta = $this->Carregamento->CarregamentoItem->PedidoVenda->find('all',array('conditions'=>array('PedidoVenda.situacao'=>'A')));
+			$consulta = $this->Carregamento->CarregamentoItem->VendaPedido->find('all',array('conditions'=>array('VendaPedido.situacao'=>'A')));
 			$this->set('consulta_pedidos',$consulta);
 			$this->_obter_opcoes();
 		}
@@ -118,8 +118,8 @@ class CarregamentosController extends AppController {
 			$this->Carregamento->begin();
 			// atualiza a situacao dos pedidos para Aberto
 			foreach ($carregamento['CarregamentoItem'] as $item) {
-				$this->Carregamento->CarregamentoItem->PedidoVenda->id = $item['id'];
-				$r = $this->Carregamento->CarregamentoItem->PedidoVenda->save(array('PedidoVenda'=>array('situacao'=>'A')));
+				$this->Carregamento->CarregamentoItem->VendaPedido->id = $item['id'];
+				$r = $this->Carregamento->CarregamentoItem->VendaPedido->save(array('VendaPedido'=>array('situacao'=>'A')));
 				if (! $r) {
 					$this->Session->setFlash('Erro ao atualizar os itens do carregamento','flash_erro');
 					$this->Carregamento->rollback();
@@ -241,7 +241,7 @@ class CarregamentosController extends AppController {
 			// futuramente, quando houver faturamento, os pedidos serao marcados
 			// apenas depois de faturados
 			$dados = array(
-				'PedidoVenda' => array(
+				'VendaPedido' => array(
 					'situacao' => 'V'
 				)
 			);
@@ -250,24 +250,24 @@ class CarregamentosController extends AppController {
 			foreach ($carregamento['CarregamentoItem'] as $c) {
 				
 				// gera conta a receber
-				$pedido_venda = $this->Carregamento->CarregamentoItem->PedidoVenda->find('first',
-					array('conditions'=>array('PedidoVenda.id'=>$c['pedido_venda_id']),'recursive'=>'-1' ) );
+				$venda_pedido = $this->Carregamento->CarregamentoItem->VendaPedido->find('first',
+					array('conditions'=>array('VendaPedido.id'=>$c['venda_pedido_id']),'recursive'=>'-1' ) );
 				$dados_conta_receber = array_merge (
 					// quando o valor é recuperado do banco ele vem em formato pt-br. Converto para formato americano
-					array('valor_total'=>$this->Geral->moeda2numero($pedido_venda['PedidoVenda']['valor_liquido'])),
-					array('numero_documento'=>$c['pedido_venda_id']),
-					$pedido_venda['PedidoVenda']
+					array('valor_total'=>$this->Geral->moeda2numero($venda_pedido['VendaPedido']['valor_liquido'])),
+					array('numero_documento'=>$c['venda_pedido_id']),
+					$venda_pedido['VendaPedido']
 				);
 				if ($this->ContasReceber->gerarContaReceber($dados_conta_receber) !== true) {
-					$this->Session->setFlash("Erro ao gerar a conta a receber para o pedido ".$c['pedido_venda_id'].". Operação abortada",'flash_erro');
+					$this->Session->setFlash("Erro ao gerar a conta a receber para o pedido ".$c['venda_pedido_id'].". Operação abortada",'flash_erro');
 					$this->Carregamento->rollback();
 					break;
 				}
 				
 				// atualiza a situacao do pedido de venda
-				$this->Carregamento->CarregamentoItem->PedidoVenda->id = $c	['pedido_venda_id'];
-				if (! $this->Carregamento->CarregamentoItem->PedidoVenda->save($dados) ) {
-					$this->Session->setFlash("Erro ao atualizar a situação do pedido de venda ".$c['pedido_venda_id'],'flash_erro');
+				$this->Carregamento->CarregamentoItem->VendaPedido->id = $c	['venda_pedido_id'];
+				if (! $this->Carregamento->CarregamentoItem->VendaPedido->save($dados) ) {
+					$this->Session->setFlash("Erro ao atualizar a situação do pedido de venda ".$c['venda_pedido_id'],'flash_erro');
 					$this->Carregamento->rollback();
 					break;
 				}

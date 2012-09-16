@@ -3,13 +3,13 @@
 class SistemaOpcao extends AppModel {
 	var $name = 'SistemaOpcao';
 	var $belongsTo = array (
-	    'PlanoContaPedidoVenda' => array (
-		   'className' => 'PlanoConta',
-		   'foreignKey' => 'item_plano_contas_pedido_vendas',
+	    'ContaPlanoVendaPedido' => array (
+		   'className' => 'ContaPlano',
+		   'foreignKey' => 'item_conta_planos_venda_pedidos',
 	    ),
-	    'PlanoContaOrdemServico' => array (
-		   'className' => 'PlanoConta',
-		   'foreignKey' => 'item_plano_contas_ordem_servicos',
+	    'ContaPlanoOrdemServico' => array (
+		   'className' => 'ContaPlano',
+		   'foreignKey' => 'item_conta_planos_ordem_servicos',
 	    ),
 	);
 	var $validate = array (

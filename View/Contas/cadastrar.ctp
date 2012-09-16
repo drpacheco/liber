@@ -5,7 +5,7 @@
 			<legend class="descricao_cabecalho"><?php print __('Cadastrar conta'); ?></legend>
 			<?php
 			if ($this->Ajax->isAjax()) {
-				print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'TipoDocumento','update'=>'conteudo_ajax'));
+				print $this->Ajax->form('cadastrar','post',array('autocomplete'=>'off','model'=>'DocumentoTipo','update'=>'conteudo_ajax'));
 			}
 			else {
 				print $this->Form->create('Conta',array('autocomplete'=>'off','onsubmit'=>'submissaoFormulario(this); return false;'));

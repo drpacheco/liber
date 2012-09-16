@@ -48,26 +48,26 @@ class SistemaController extends AppController {
 		if ( $this->RequestHandler->isAjax() ) {
 			$this->layout = 'ajax';
 		}
-		$this->loadModel('PagarConta');
-		$this->PagarConta->contain('Cliente.nome');
-		$dadosContasPagar = $this->PagarConta->find('all',array('conditions'=>array('data_vencimento'=>date('Y-m-d')),'limit'=>10,'recursive'=>'1'));
+		$this->loadModel('ContaPagar');
+		$this->ContaPagar->contain('Cliente.nome');
+		$dadosContasPagar = $this->ContaPagar->find('all',array('conditions'=>array('data_vencimento'=>date('Y-m-d')),'limit'=>10,'recursive'=>'1'));
 		if (empty($dadosContasPagar)) $contasPagar = 'Não há contas a pagar que vencem hoje.';
 		else {
 			$contasPagar = '';
 			foreach ($dadosContasPagar as $conta) {
-				$contasPagar .= "<a href='pagarContas/editar/{$conta['PagarConta']['id']}'>{$conta['Cliente']['nome']} (R\${$conta['PagarConta']['valor']})</a> / ";
+				$contasPagar .= "<a href='contaPagar/editar/{$conta['ContaPagar']['id']}'>{$conta['Cliente']['nome']} (R\${$conta['ContaPagar']['valor']})</a> / ";
 			}
 		}
 		$this->set('contasPagar',$contasPagar);
 		
-		$this->loadModel('ReceberConta');
-		$this->ReceberConta->contain('Cliente.nome');
-		$dadosContasReceber = $this->ReceberConta->find('all',array('conditions'=>array('data_vencimento'=>date('Y-m-d')),'limit'=>10,'recursive'=>'1'));
+		$this->loadModel('ContaReceber');
+		$this->ContaReceber->contain('Cliente.nome');
+		$dadosContasReceber = $this->ContaReceber->find('all',array('conditions'=>array('data_vencimento'=>date('Y-m-d')),'limit'=>10,'recursive'=>'1'));
 		if (empty($dadosContasReceber)) $contasReceber = 'Não há contas a receber que vencem hoje.';
 		else {
 			$contasReceber = '';
 			foreach ($dadosContasReceber as $conta) {
-				$contasReceber .= "<a href='receberContas/editar/{$conta['ReceberConta']['id']}'>{$conta['Cliente']['nome']} (R\${$conta['ReceberConta']['valor']})</a> / ";
+				$contasReceber .= "<a href='contaReceber/editar/{$conta['ContaReceber']['id']}'>{$conta['Cliente']['nome']} (R\${$conta['ContaReceber']['valor']})</a> / ";
 			}
 		}
 		$this->set('contasReceber',$contasReceber);

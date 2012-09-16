@@ -25,8 +25,8 @@ class Cliente extends AppModel {
 		'ServicoOrdem' => array(
 			'className' => 'ServicoOrdem'
 		),
-		'PedidoVenda' => array(
-			'className' => 'PedidoVenda'
+		'VendaPedido' => array(
+			'className' => 'VendaPedido'
 		)
 	);
 	var $validate = array(

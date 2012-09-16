@@ -9,9 +9,9 @@ class CompraPedido extends AppModel {
 			'className' => 'Fornecedor',
 			'foreignKey' => 'fornecedor_id'
 		),
-		'FormaPagamento' => array(
-			'className' => 'FormaPagamento',
-			'foreignKey' => 'forma_pagamento_id'
+		'PagamentoTipo' => array(
+			'className' => 'PagamentoTipo',
+			'foreignKey' => 'pagamento_tipo_id'
 		),
 		'Comprador' => array(
 			'className' => 'Usuario',
@@ -47,7 +47,7 @@ class CompraPedido extends AppModel {
 			'rule' => 'numeric',
 			'message' => 'Campo obrigatório. Somente números.'
 		),
-		'forma_pagamento_id' => array(
+		'pagamento_tipo_id' => array(
 			'required' => true,
 			'allowEmpty' => false,
 			'rule' => 'numeric',

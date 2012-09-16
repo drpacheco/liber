@@ -11,7 +11,7 @@
 					<dl class="dl-horizontal">
 						<dt>Registro:</dt> <dd><?php print $this->Formatacao->dataHora($c['ServicoOrdem']['data_hora_cadastrada']);?></dd>
 						<dt>Cliente:</dt> <dd><?php print $c['ServicoOrdem']['cliente_id'].' '.$c['Cliente']['nome'];?></dd>
-						<dt>Pagamento:</dt> <dd> <?php print $c['ServicoOrdem']['forma_pagamento_id'].' '.$c['FormaPagamento']['nome'] ;?> </dd>
+						<dt>Pagamento:</dt> <dd> <?php print $c['ServicoOrdem']['pagamento_tipo_id'].' '.$c['PagamentoTipo']['nome'] ;?> </dd>
 						<dt>Situação:</dt> <dd> <?php print $opcoes_situacao[$c['ServicoOrdem']['situacao']] ;?></dd>
 
 						<dt>Iniciado em:</dt> <dd><?php print $this->Formatacao->dataHora($c['ServicoOrdem']['data_hora_inicio']) ;?></dd>

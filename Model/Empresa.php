@@ -5,7 +5,7 @@ class Empresa extends AppModel {
 	var $actsAs = array('Containable');
 	var $hasMany = array(
 	    'Usuario','Grupo',
-	    'PlanoConta','FormaPagamento','Conta','TipoDocumento','PagarConta','ReceberConta',
+	    'ContaPlano','PagamentoTipo','Conta','DocumentoTipo','ContaPagar','ContaReceber',
 	    'Cliente','ClienteCategoria',
 	    'Fornecedor','FornecedorCategoria','Produto','ProdutoCategoria',
 	    'ServicoOrdem','Servico','ServicoCategoria',

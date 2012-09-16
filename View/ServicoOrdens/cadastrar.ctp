@@ -2,7 +2,7 @@
 	// variaveis a serem utilizadas no arquivo ordem_servico.js
 	var ajaxPesqCliente = "<?php print $this->Html->url(array('controller'=>'Clientes','action'=>'pesquisaAjaxCliente')); ?>/";
 	var ajaxPesqServico = "<?php print $this->Html->url(array('controller'=>'Servicos','action'=>'pesquisaAjaxServico')); ?>/";
-	var ajaxPesqFormaPagamento = "<?php print $this->Html->url(array('controller'=>'FormaPagamentos','action'=>'pesquisaAjaxNumeroMaximoParcelas')); ?>/";
+	var ajaxPesqPagamentoTipo = "<?php print $this->Html->url(array('controller'=>'PagamentoTipos','action'=>'pesquisaAjaxNumeroMaximoParcelas')); ?>/";
 </script>
 
 <?php
@@ -119,7 +119,7 @@ else {
 						print $this->Form->input('cliente_nome',array('label'=>__('Cliente nome'),'type'=>'text'));
 
 						$this->Form->defineRow(array(6,6));
-						print $this->Form->input('forma_pagamento_id',array('label'=>'Forma de pagamento','options'=>$opcoes_forma_pamamento));
+						print $this->Form->input('pagamento_tipo_id',array('label'=>'Forma de pagamento','options'=>$opcoes_forma_pamamento));
 						print $this->Form->input('dias_garantia',array('label'=>'Dias de garantia'));
 						?>
 					</div>

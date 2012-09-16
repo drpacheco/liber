@@ -26,7 +26,7 @@
 						<tbody>
 							<? foreach ($carregamento['CarregamentoItem'] as $item) : ?> 
 								<tr>
-									<td><?php print $this->Html->link($item['pedido_venda_id'],'/pedidoVendas/detalhar/'.$item['pedido_venda_id']) ;?></td>
+									<td><?php print $this->Html->link($item['venda_pedido_id'],'/vendaPedidos/detalhar/'.$item['venda_pedido_id']) ;?></td>
 								</tr>
 							<? endforeach; ?>
 						</tbody>

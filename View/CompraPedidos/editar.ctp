@@ -109,7 +109,7 @@ else {
 									print $this->Form->input('fornecedor_id', array('label'=>__('Fornecedor'),'type'=>'text','class'=>'span12'));
 									print $this->Form->input('pesquisar_nome_fornecedor', array('label'=>__('Nome'),'class'=>'span12'));
 									$this->Form->restoreDefaults();
-									print $this->Form->input('forma_pagamento_id',array('label'=>__('Forma de pagamento'),'options'=>$opcoes_forma_pamamento,'class'=>'span12'));
+									print $this->Form->input('pagamento_tipo_id',array('label'=>__('Forma de pagamento'),'options'=>$opcoes_forma_pamamento,'class'=>'span12'));
 									unset($opcoes_situacoes['C']); unset($opcoes_situacoes['T']);
 									print $this->Form->input('situacao',array('label'=>__('Situação'),'options'=>$opcoes_situacoes,'class'=>'span12'));
 									print $this->Form->input('comprador_id',array('label'=>__('Comprador'),'options'=>$opcoes_compradores,'class'=>'span12'));
