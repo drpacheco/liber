@@ -29,14 +29,14 @@
 
 				<div id="opcoes_sistema_financeiro">
 					<?php
-					print $this->Form->input('item_plano_contas_pedido_vendas',array(
+					print $this->Form->input('item_conta_planos_venda_pedidos',array(
 						'label'=>__('Item do plano de contas utilizado nas contas a receber geradas por pedidos de venda.'),
-						'options' => $opcoes_plano_contas,
+						'options' => $opcoes_conta_planos,
 						)
 					);
-					print $this->Form->input('item_plano_contas_ordem_servicos',array(
+					print $this->Form->input('item_conta_planos_ordem_servicos',array(
 						'label'=>__('Item do plano de contas utilizado nas contas a receber geradas por ordens de serviço.'),
-						'options' => $opcoes_plano_contas,
+						'options' => $opcoes_conta_planos,
 						)
 					);
 					?>

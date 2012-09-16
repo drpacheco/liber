@@ -28,11 +28,11 @@ class Usuario extends AppModel {
 			'foreignKey' => 'usuario_alterou'
 		),
 		'Pedidos_usuario_cadastrou' => array(
-			'className' => 'PedidoVenda',
+			'className' => 'VendaPedido',
 			'foreignKey' => 'usuario_cadastrou'
 		),
 		'Pedidos_usuario_alterou' => array(
-			'className' => 'PedidoVenda',
+			'className' => 'VendaPedido',
 			'foreignKey' => 'usuario_alterou'
 		),
 		'ServicoOrdens_tecnico' => array(

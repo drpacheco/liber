@@ -15,8 +15,8 @@ class ServicoOrdensController extends AppController {
 		'conditions'=>array('Usuario.eh_tecnico'=>'1','Usuario.ativo'=>'1')));
 		$this->set('opcoes_tecnico',$consulta1);
 		
-		$this->ServicoOrdem->FormaPagamento->recursive = -1;
-		$consulta2 = $this->ServicoOrdem->FormaPagamento->find('list',array('fields'=>array('FormaPagamento.id','FormaPagamento.nome')));
+		$this->ServicoOrdem->PagamentoTipo->recursive = -1;
+		$consulta2 = $this->ServicoOrdem->PagamentoTipo->find('list',array('fields'=>array('PagamentoTipo.id','PagamentoTipo.nome')));
 		$this->set('opcoes_forma_pamamento',$consulta2);
 		
 		$this->ServicoOrdem->Empresa->recursive = -1;
@@ -119,7 +119,7 @@ class ServicoOrdensController extends AppController {
 			$dados = array_merge (
 				array('valor_total'=>$valor_total),
 				array('numero_documento'=>$this->ServicoOrdem->id),
-				array('plano_conta_id'=>$this->SistemaOpcao->field('item_plano_contas_ordem_servicos', array('id'=>1))),
+				array('conta_plano_id'=>$this->SistemaOpcao->field('item_conta_planos_ordem_servicos', array('id'=>1))),
 				$this->request->data['ServicoOrdem']
 				);
 			return $this->ContasReceber->gerarContaReceber($dados);
@@ -285,7 +285,7 @@ class ServicoOrdensController extends AppController {
 		}
 		$this->_obter_opcoes();
 		$this->set("title_for_layout","Ordem de serviço");
-		$this->ServicoOrdem->contain('Cliente.nome','FormaPagamento.nome','ServicoOrdemItem');
+		$this->ServicoOrdem->contain('Cliente.nome','PagamentoTipo.nome','ServicoOrdemItem');
 		$consulta = $this->ServicoOrdem->findById($id);
 		if (empty($consulta)) {
 			$this->Session->setFlash('Ordem de serviço não encontrada','flash_erro');

@@ -40,7 +40,7 @@
 	
 	<div class="span12">
 		<fieldset>
-			<legend class="descricao_cabecalho"><?php print __('Cadastrar categoria de fornecedor'); ?></legend>
+			<legend class="descricao_cabecalho"><?php print __('Cadastrar carregamento'); ?></legend>
 
 				<?php
 				// #XXX implementar o escolha automatica do veiculo assim que escolhe o motorista
@@ -80,17 +80,17 @@
 							<?php
 							$cont = 0;
 							foreach ($consulta_pedidos as $c):
-								$id_pedido = $c['PedidoVenda']['id'];
-								$id = "CarregamentoItemPedidoVendaId${id_pedido}";
-								$nome = "data[CarregamentoItem][${cont}][pedido_venda_id]";
+								$id_pedido = $c['VendaPedido']['id'];
+								$id = "CarregamentoItemVendaPedidoId${id_pedido}";
+								$nome = "data[CarregamentoItem][${cont}][venda_pedido_id]";
 								$valor = $id_pedido;
 							?>
 								<tr>
 									<td> <input type="checkbox" name="<?php print $nome;?>" id="<?php print $id;?>" value="<?php print $valor; ?>" /> </td>
-									<td><?php print $c['PedidoVenda']['id']?></td>
+									<td><?php print $c['VendaPedido']['id']?></td>
 									<td><?php print $c['Cliente']['nome']?></td>
-									<td><?php print $c['PedidoVenda']['valor_bruto']?></td>
-									<td><?php print $c['PedidoVenda']['valor_liquido']?></td>
+									<td><?php print $c['VendaPedido']['valor_bruto']?></td>
+									<td><?php print $c['VendaPedido']['valor_liquido']?></td>
 								</tr>
 							<?php
 								$cont++;

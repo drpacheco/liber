@@ -84,11 +84,11 @@
 				</ul>
 			</li>
 			<li>
-				<?php print $this->Html-> link('Pedido de venda', "/pedidoVendas",array('class' => 'ajax_link'));?>
+				<?php print $this->Html-> link('Pedido de venda', "/vendaPedidos",array('class' => 'ajax_link'));?>
 				<ul>
-					<li><?php print $this->Html-> link('Cadastrar', "/pedidoVendas/cadastrar");?></li>
-					<li><?php print $this->Html-> link('Pesquisar', "/pedidoVendas/pesquisar");?></li>
-					<li><?php print $this->Html-> link('Listar', "/pedidoVendas/",array('class' => 'ajax_link'));?></li>
+					<li><?php print $this->Html-> link('Cadastrar', "/vendaPedidos/cadastrar");?></li>
+					<li><?php print $this->Html-> link('Pesquisar', "/vendaPedidos/pesquisar");?></li>
+					<li><?php print $this->Html-> link('Listar', "/vendaPedidos/",array('class' => 'ajax_link'));?></li>
 				</ul>
 			</li>
 			<li>
@@ -201,60 +201,60 @@
 		<a href="#" >Financeiro</a>
 		<ul>
 			<li>
-				<?php print $this->Html-> link('Contas a receber', "/receberContas/",array('class' => 'ajax_link'));?>
+				<?php print $this->Html-> link('Contas a receber', "/contaReceber/",array('class' => 'ajax_link'));?>
 				<ul>
-					<li><?php print $this->Html-> link('Cadastrar', "/receberContas/cadastrar",array('class' => 'ajax_link'));?></li>
-					<li><?php print $this->Html-> link('Pesquisar', "/receberContas/pesquisar");?></li>
-					<li><?php print $this->Html-> link('Resumo', "/receberContas/resumo",array('class' => 'ajax_link'));?></li>
-					<li><?php print $this->Html-> link('Listar', "/receberContas/",array('class' => 'ajax_link'));?></li>
+					<li><?php print $this->Html-> link('Cadastrar', "/contaReceber/cadastrar",array('class' => 'ajax_link'));?></li>
+					<li><?php print $this->Html-> link('Pesquisar', "/contaReceber/pesquisar");?></li>
+					<li><?php print $this->Html-> link('Resumo', "/contaReceber/resumo",array('class' => 'ajax_link'));?></li>
+					<li><?php print $this->Html-> link('Listar', "/contaReceber/",array('class' => 'ajax_link'));?></li>
 				</ul>
 			</li>
 			<li>
-				<?php print $this->Html-> link('Contas a pagar', "/pagarContas/",array('class' => 'ajax_link'));?>
+				<?php print $this->Html-> link('Contas a pagar', "/contaPagar/",array('class' => 'ajax_link'));?>
 				<ul>
-					<li><?php print $this->Html-> link('Cadastrar', "/pagarContas/cadastrar",array('class' => 'ajax_link'));?></li>
-					<li><?php print $this->Html-> link('Pesquisar', "/pagarContas/pesquisar");?></li>
-					<li><?php print $this->Html-> link('Resumo', "/pagarContas/resumo",array('class' => 'ajax_link'));?></li>
-					<li><?php print $this->Html-> link('Listar', "/pagarContas/",array('class' => 'ajax_link'));?></li>
+					<li><?php print $this->Html-> link('Cadastrar', "/contaPagar/cadastrar",array('class' => 'ajax_link'));?></li>
+					<li><?php print $this->Html-> link('Pesquisar', "/contaPagar/pesquisar");?></li>
+					<li><?php print $this->Html-> link('Resumo', "/contaPagar/resumo",array('class' => 'ajax_link'));?></li>
+					<li><?php print $this->Html-> link('Listar', "/contaPagar/",array('class' => 'ajax_link'));?></li>
 				</ul>
 			</li>
 			<li>
-				<?php print $this->Html-> link('Plano de contas', "/planoContas/",array('class' => 'ajax_link'));?>
+				<?php print $this->Html-> link('Plano de contas', "/contaPlanos/",array('class' => 'ajax_link'));?>
 				<ul>
-					<li> <?php print $this->Html-> link('Cadastrar', "/planoContas/cadastrar",
+					<li> <?php print $this->Html-> link('Cadastrar', "/contaPlanos/cadastrar",
 						   array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'300',
 							'data-ajax_link_dialog_largura'=>'500',
 							'data-ajax_link_dialog_titulo'=>'Cadastro de item do plano de contas'));?>
 					</li>
-					<li> <?php print $this->Html-> link('Listar', "/planoContas/",array('class' => 'ajax_link'));?> </li>
+					<li> <?php print $this->Html-> link('Listar', "/contaPlanos/",array('class' => 'ajax_link'));?> </li>
 				</ul>
 			</li>
 			<li>
-				<?php print $this->Html-> link('Tipos de documentos', "/tipoDocumentos/",array('class' => 'ajax_link'));?>
+				<?php print $this->Html-> link('Tipos de documentos', "/documentoTipos/",array('class' => 'ajax_link'));?>
 				<ul>
 					<li>
-						<?php print $this->Html-> link('Cadastrar', "/tipoDocumentos/cadastrar",
+						<?php print $this->Html-> link('Cadastrar', "/documentoTipos/cadastrar",
 							   array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'300',
 							'data-ajax_link_dialog_largura'=>'500',
 							'data-ajax_link_dialog_titulo'=>'Cadastro de tipo de documento'));?>
 					</li>
-					<li> <?php print $this->Html-> link('Listar', "/tipoDocumentos/",array('class' => 'ajax_link'));?> </li>
+					<li> <?php print $this->Html-> link('Listar', "/documentoTipos/",array('class' => 'ajax_link'));?> </li>
 				</ul>
 			</li>
 			<li class="separador"></li>
 			<li>
-				<?php print $this->Html-> link('Formas de pagamento', "/formaPagamentos",array('class' => 'ajax_link'));?>
+				<?php print $this->Html-> link('Formas de pagamento', "/pagamentoTipos",array('class' => 'ajax_link'));?>
 				<ul>
 					<li>
-						<?php print $this->Html-> link('Cadastrar', "/formaPagamentos/cadastrar",
+						<?php print $this->Html-> link('Cadastrar', "/pagamentoTipos/cadastrar",
 							   array('class' => '-ajax_link_dialog',
 							'data-ajax_link_dialog_altura'=>'500',
 							'data-ajax_link_dialog_largura'=>'600',
 							'data-ajax_link_dialog_titulo'=>'Cadastro de forma de pagamento'));?>
 					</li>
-					<li>	<?php print $this->Html-> link('Listar', "/formaPagamentos",array('class' => 'ajax_link')); ?>	</li>
+					<li>	<?php print $this->Html-> link('Listar', "/pagamentoTipos",array('class' => 'ajax_link')); ?>	</li>
 				</ul>
 			</li>
 			<li>

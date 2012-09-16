@@ -2,14 +2,14 @@ jQuery(document).ready(function() {
 	
 	$(".datepicker").datepicker();
 	
-	$('#ReceberContaValor').priceFormat();
+	$('#ContaReceberValor').priceFormat();
 	
 	function valor_padrao() {
-		$('label[for=ReceberContaClienteFornecedorId]').html('Cód.');
+		$('label[for=ContaReceberClienteFornecedorId]').html('Cód.');
 		$('#pesquisar_cliente_fornecedor')
 			.attr('disabled','disabled')
 			.val('Selecione uma opção no menu acima.');
-		$("#ReceberContaClienteFornecedorId")
+		$("#ContaReceberClienteFornecedorId")
 			.attr('disabled','disabled')
 			.val('');
 	}
@@ -30,23 +30,23 @@ jQuery(document).ready(function() {
 				if (ui.item.bloqueado) {
 					alert (cliente_ou_fornecedor+' está bloqueado!');
 					$('#pesquisar_cliente_fornecedor').val('');
-					$("#ReceberContaClienteFornecedorId").val('');
+					$("#ContaReceberClienteFornecedorId").val('');
 					event.preventDefault();
 					return null;
 				}
 				if (ui.item.inativo) {
 					alert (cliente_ou_fornecedor+' está inativo!');
 					$('#pesquisar_cliente_fornecedor').val('');
-					$("#ReceberContaClienteFornecedorId").val('');
+					$("#ContaReceberClienteFornecedorId").val('');
 					event.preventDefault();
 					return null;
 				}
-				$("#ReceberContaClienteFornecedorId").val(ui.item.id);
+				$("#ContaReceberClienteFornecedorId").val(ui.item.id);
 				$('#pesquisar_cliente_fornecedor').val(ui.item.nome);
 			}
 		});
 		// ao digitar o codigo
-		$('#ReceberContaClienteFornecedorId')
+		$('#ContaReceberClienteFornecedorId')
 		.off()
 		.on('blur',function(){
 			codigo = $(this).val();
@@ -55,7 +55,7 @@ jQuery(document).ready(function() {
 				if (data == null) {
 					alert (cliente_ou_fornecedor+' com o código '+codigo+' não foi encontrado!');
 					$('#pesquisar_cliente_fornecedor').val('');
-					$("#ReceberContaClienteFornecedorId")
+					$("#ContaReceberClienteFornecedorId")
 						.val('')
 						.focus();
 				}
@@ -64,16 +64,16 @@ jQuery(document).ready(function() {
 					if (data.bloqueado) {
 						alert (cliente_ou_fornecedor+' está bloqueado!');
 						$('#pesquisar_cliente_fornecedor').val('');
-						$("#ReceberContaClienteFornecedorId").val('');
+						$("#ContaReceberClienteFornecedorId").val('');
 						return null;
 					}
 					if (data.inativo) {
 						alert (cliente_ou_fornecedor+' está inativo!');
 						$('#pesquisar_cliente_fornecedor').val('');
-						$("#ReceberContaClienteFornecedorId").val('');
+						$("#ContaReceberClienteFornecedorId").val('');
 						return null;
 					}
-					$("#ReceberContaClienteFornecedorId").val(data.id);
+					$("#ContaReceberClienteFornecedorId").val(data.id);
 					$('#pesquisar_cliente_fornecedor').val(data.nome);
 				}
 			});
@@ -81,21 +81,21 @@ jQuery(document).ready(function() {
 	}
 	
 	// de acordo com o selecionado, defino o que será pesquisado
-	$('#ReceberContaEhClienteOuFornecedor').change(function(){
+	$('#ContaReceberEhClienteOuFornecedor').change(function(){
 		
 		$('#pesquisar_cliente_fornecedor')
 			.removeAttr('disabled')
 			.val('');
-		$("#ReceberContaClienteFornecedorId")
+		$("#ContaReceberClienteFornecedorId")
 			.removeAttr('disabled')
 			.val('');
 		
 		if ($(this).val() == 'C') {
-			$('label[for=ReceberContaClienteFornecedorId]').html('Cliente');
+			$('label[for=ContaReceberClienteFornecedorId]').html('Cliente');
 			definir_pesquisa('cliente');
 		}
 		else if ($(this).val() == 'F') {
-			$('label[for=ReceberContaClienteFornecedorId]').html('Fornecedor');
+			$('label[for=ContaReceberClienteFornecedorId]').html('Fornecedor');
 			definir_pesquisa('fornecedor');
 		}
 		else {
@@ -105,14 +105,14 @@ jQuery(document).ready(function() {
 	});
 	
 	// para situações onde a página é carrega ja com as informacoes
-	if ($("#ReceberContaClienteFornecedorId").val() == '') valor_padrao();
+	if ($("#ContaReceberClienteFornecedorId").val() == '') valor_padrao();
 	
-	if ( $('#ReceberContaEhClienteOuFornecedor').val() == 'C' )  {
-		$('label[for=ReceberContaClienteFornecedorId]').html('Cliente');
+	if ( $('#ContaReceberEhClienteOuFornecedor').val() == 'C' )  {
+		$('label[for=ContaReceberClienteFornecedorId]').html('Cliente');
 		definir_pesquisa('cliente');
 	}
-	else if ($('#ReceberContaEhClienteOuFornecedor').val() == 'F') {
-		$('label[for=ReceberContaClienteFornecedorId]').html('Fornecedor');
+	else if ($('#ContaReceberEhClienteOuFornecedor').val() == 'F') {
+		$('label[for=ContaReceberClienteFornecedorId]').html('Fornecedor');
 		definir_pesquisa('fornecedor');
 	}
 	

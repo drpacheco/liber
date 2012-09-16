@@ -9,16 +9,16 @@ class Conta extends AppModel {
 		),
 	);
 	var $hasMany = array(
-		'forma_pagamentos' => array(
-			'className' => 'FormaPagamento',
+		'pagamento_tipos' => array(
+			'className' => 'PagamentoTipo',
 			'foreignKey' => 'conta_principal'
 		),
-		'pagar_contas' => array(
-			'className' => 'PagarConta',
+		'conta_pagar' => array(
+			'className' => 'ContaPagar',
 			'foreignKey' => 'conta_origem'
 		),
-		'receber_contas' => array(
-			'className' => 'ReceberConta',
+		'conta_receber' => array(
+			'className' => 'ContaReceber',
 			'foreignKey' => 'conta_origem'
 		)
 	);

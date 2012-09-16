@@ -4,9 +4,9 @@ class SistemaOpcoesController extends AppController {
 	var $name = 'SistemaOpcoes';
 
 	function _obter_opcoes() {
-		$this->SistemaOpcao->PlanoContaPedidoVenda->recursive = -1;
-		$r = $this->SistemaOpcao->PlanoContaPedidoVenda->find('list',array('fields'=>array('id','nome')));
-		$this->set('opcoes_plano_contas',$r);
+		$this->SistemaOpcao->ContaPlanoVendaPedido->recursive = -1;
+		$r = $this->SistemaOpcao->ContaPlanoVendaPedido->find('list',array('fields'=>array('id','nome')));
+		$this->set('opcoes_conta_planos',$r);
 	}
 	
 	public function beforeFilter() {

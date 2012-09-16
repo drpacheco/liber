@@ -88,7 +88,7 @@
 							<tr>
 								<th><?php print $this->Paginator->sort('id','Código'); ?></th>
 								<th><?php print $this->Paginator->sort('fornecedor_id','Fornecedor'); ?></th>
-								<th><?php print $this->Paginator->sort('forma_pagamento_id','Forma de pagamento'); ?></th>
+								<th><?php print $this->Paginator->sort('pagamento_tipo_id','Forma de pagamento'); ?></th>
 								<th><?php print $this->Paginator->sort('data_compra','Data compra'); ?></th>
 								<th><?php print $this->Paginator->sort('valor_bruto','Valor bruto'); ?></th>
 								<th><?php print $this->Paginator->sort('valor_liquido','Valor líquido'); ?></th>
@@ -105,7 +105,7 @@
 									<tr>
 										<td><?php print $c['CompraPedido']['id'];?></td>
 										<td><?php print $c['CompraPedido']['fornecedor_id'].' '.$c['Fornecedor']['nome']; ?></td>
-										<td><?php print $c['CompraPedido']['forma_pagamento_id'].' '.$c['FormaPagamento']['nome']; ?></td>
+										<td><?php print $c['CompraPedido']['pagamento_tipo_id'].' '.$c['PagamentoTipo']['nome']; ?></td>
 										<td><?php if(isset($c['CompraPedido']['data_compra']) && ($c['CompraPedido']['data_compra'] != '0000-00-00') ) print $this->Formatacao->data($c['CompraPedido']['data_compra']); ?></td>
 										<td><?php print $c['CompraPedido']['valor_bruto']; ?></td>
 										<td><?php print $c['CompraPedido']['valor_liquido']; ?></td>
